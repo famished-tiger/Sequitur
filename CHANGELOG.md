@@ -1,3 +1,6 @@
+### 0.0.07 / 2014-08-24
+* [CHANGE] `digram.rb`: Updated Digram class documentation.
+
 ### 0.0.06 / 2014-08-24
 * [CHANGE] `.rubocop.yml`: Enabled FileName cop and updated source file names accordingly.
 
