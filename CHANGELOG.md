@@ -1,3 +1,6 @@
+### 0.0.09 / 2014-08-24
+* [FIX] `sequitur.rb`: require still referred to old file name.
+
 ### 0.0.08 / 2014-08-24
 * [CHANGE] `production_spec.rb`: Improved tests in order to reach 100% code coverage for the Production class.
 
