@@ -3,6 +3,7 @@ Sequitur
 _Ruby gem implementing the Sequitur algorithm_  
 [Homepage](https://github.com/famished-tiger/Sequitur)  
 
+[![Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
 
 Copyright
 ---------
