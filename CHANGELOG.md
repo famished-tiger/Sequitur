@@ -1,3 +1,6 @@
+### 0.0.08 / 2014-08-24
+* [CHANGE] `production_spec.rb`: Improved tests in order to reach 100% code coverage for the Production class.
+
 ### 0.0.07 / 2014-08-24
 * [CHANGE] `digram.rb`: Updated Digram class documentation.
 

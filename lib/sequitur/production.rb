@@ -35,7 +35,7 @@ class Production
   end
 
 
-  # Return the set of productions appearing in the rhs
+  # Return the set of productions appearing in the rhs.
   def references()
     return rhs.select { |symb| symb.kind_of?(Production) }
   end
@@ -80,6 +80,8 @@ class Production
   end
 
   # Add a back reference to the given production.
+  # @param aProduction [Production] Assume that production P appears in the 
+  #   RHS of production Q, then a reference count of P is incremented in Q.
   def add_backref(aProduction)
     prod_id = aProduction.object_id
 
@@ -113,7 +115,7 @@ class Production
       case elem
         when String then "'#{elem}'"
         when Production then "#{elem.object_id}"
-      else "#{elem}"
+      else elem.to_s
       end
     end
 

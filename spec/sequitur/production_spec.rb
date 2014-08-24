@@ -125,9 +125,10 @@ describe Production do
     end
 
     it 'should emit its text representation' do
-      symbols = [:a, :b, 'c', :d, :e, :f]
+      instance = Production.new
+      symbols = [:a, :b, 'c', :d, :e, 1000, instance]
       symbols.each { |symb| subject.append_symbol(symb) }
-      expectation = "#{subject.object_id} : a b 'c' d e f."
+      expectation = "#{subject.object_id} : a b 'c' d e 1000 #{instance.object_id}."
       expect(subject.to_string).to eq(expectation)
     end
 
