@@ -1,3 +1,6 @@
+### 0.0.04 / 2014-08-24
+* [FIX] `.travis.yml`: removed JRuby from Travis CI. Rationale: ObjectSpace class is disabled!
+
 ### 0.0.03 / 2014-08-24
 * [FIX] `Rakefile`: removed unused Cucumber-based task
 
