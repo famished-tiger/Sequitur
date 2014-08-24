@@ -1,3 +1,6 @@
+### 0.0.06 / 2014-08-24
+* [CHANGE] `.rubocop.yml`: Enabled FileName cop and updated source file names accordingly.
+
 ### 0.0.05 / 2014-08-24
 * [CHANGE] `README.md`: added badge for Rubygems
 
