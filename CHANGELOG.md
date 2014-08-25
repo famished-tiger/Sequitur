@@ -1,3 +1,6 @@
+### 0.0.10 / 2014-08-24
+* [CHANGE] `README.md`: Added hyperlinks about Sequitur algorithm.
+
 ### 0.0.09 / 2014-08-24
 * [FIX] `sequitur.rb`: require still referred to old file name.
 
