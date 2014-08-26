@@ -15,7 +15,29 @@ Sequitur is an algorithm that generates a set of rules representing a sequence o
 It detects repeated token patterns and can represent them in a compact way.
 
 
-### TODO: Add documentation ###
+## Synopsis  
+
+```ruby  
+
+    require 'sequitur' # Load the Sequitur library
+
+    input_sequence =  'abcabdab'
+
+    # The SEQUITUR algorithm will detect the repeated 'ab' pattern
+    # and will generate a context-free grammar that represents the input string
+    grammar = Sequitur.build_from(input_sequence)
+
+    # Display the grammar rules
+    # Each rule is displayed with the format:
+    # rule_id : a_sequence_grammar_symbols
+    # Where: 
+    # - rule_id is the object id of a rule (in decimal)
+    # - a grammar symbol is either a terminal symbol 
+    # (i.e. a character from the input) or the id of a production
+    puts grammar.to_string
+```
+
+### TODO: Add more documentation ###
 
 
 Copyright

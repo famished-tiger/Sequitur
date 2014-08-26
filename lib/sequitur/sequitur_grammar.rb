@@ -41,7 +41,7 @@ class SequiturGrammar < DynamicGrammar
           msg << "\nOnce in production #{colliding.production_id}"
           msg << "\nSecond in production #{a_prod.object_id}"
           msg << "\n#{to_string}"
-          fail StandardError, msg
+          fail StandardError, msg unless colliding.production_id == a_prod.object_id
         else
           all_digrams[a_digram.key] = a_digram
         end
