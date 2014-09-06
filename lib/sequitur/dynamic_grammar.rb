@@ -47,10 +47,8 @@ class DynamicGrammar
     puts to_string if trace
     prod = productions.delete_at(anIndex)
     # TODO: remove output
-    puts prod.to_string if trace
+    puts('Removed: ' + prod.to_string) if trace
     prod.clear_rhs
-
-    check_backrefs  # TODO: configurable check
 
     return prod
   end
@@ -68,54 +66,17 @@ class DynamicGrammar
   end
 
 
-  # Check that any production reference in rhs is
+  # Check that every production reference in rhs is
   # pointing to a production of the grammar
   def check_rhs_of(aProduction)
     aProduction.references.each do |symb|
-      next if productions.include?(symb)
+      referenced_prod = symb.production
+      next if productions.include?(referenced_prod)
 
-      msg = "Production #{aProduction.object_id} refers to "
-      msg << "production #{symb.object_id}"
+      msg = "Production #{aProduction.object_id} refers to"
+      msg << " production #{referenced_prod.object_id}"
       msg << ' that is not part of the grammar.'
       fail StandardError, msg
-    end
-  end
-
-  # Check the invariants:
-  # Every back reference must must point to a production of the grammar
-  # Every back reference count must be equal to the number
-  # of occurrences in the referencing production.
-  def check_backrefs()
-    return if productions.size < 2
-
-    all_but_root = productions[1...productions.size]
-    all_but_root.each do |a_prod|
-      a_prod.backrefs.each do |other_prod_id, count|
-        begin
-          other_prod = ObjectSpace._id2ref(other_prod_id)
-        rescue RangeError => exc
-          msg = "Production #{a_prod.object_id} has a backref to "
-          msg << "recycled production #{other_prod_id}."
-          msg << "\n#{to_string}"
-          $stderr.puts msg
-          raise exc
-        end
-        found = productions.find { |elem| elem == other_prod }
-        unless found
-          msg = "Production #{a_prod.object_id} is referenced by the "
-          msg << "unknown production (#{other_prod_id})."
-          msg << "\n#{to_string}"
-          fail StandardError, msg
-        end
-
-        unless count == found.rhs.count { |symb| symb == a_prod }
-          msg = "Production #{a_prod.object_id} has a count mismatch"
-          msg << "\nIt expects #{count} references in rhs of #{other_prod_id} "
-          msg << "but actual count is #{other_prod.rhs.count}."
-          msg << "\n#{to_string}"
-          fail StandardError, msg
-        end
-      end
     end
   end
 

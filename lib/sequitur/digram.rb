@@ -10,11 +10,11 @@ class Digram
   # The sequence of two consecutive grammar symbols.
   attr_reader(:symbols)
   
-  # The object id of the production that contains this digram in its rhs.
-  attr_reader(:production_id)
-  
   # An unique Hash key of the digram
   attr_reader(:key)
+  
+  # The production in which the digram occurs
+  attr_reader(:production)
   
   # Constructor.
   # @param symbol1 [StringOrSymbol] First element of the digram
@@ -24,13 +24,15 @@ class Digram
   def initialize(symbol1, symbol2, aProduction)
     @symbols = [symbol1, symbol2]
     @key = "#{symbol1.hash.to_s(16)}:#{symbol2.hash.to_s(16)}" 
-    @production_id = aProduction.object_id
+    @production = aProduction
   end
-
-  # Return the production object of this digram
-  def production()
-    ObjectSpace._id2ref(production_id)
+  
+  # Equality testing.
+  # Returns true when keys of both digrams are equal
+  def ==(other)
+    return key == other.key
   end
+  
 end # class
 
 end # module

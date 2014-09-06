@@ -1,4 +1,5 @@
 require_relative 'digram'
+require_relative 'production_ref'
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
 
@@ -14,31 +15,74 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 class Production
   # The right-hand side (rhs) consists of a sequence of grammar symbols
   attr_reader(:rhs)
+  
+  # The reference count (= how times other productions reference this one)
+  attr_reader(:refcount)
 
-  # A Hash with pairs of the form:
-  # production id => reference count
-  # Where the reference count is the number of times this production
-  # appears in the rhs of the production with given id.
-  attr_reader(:backrefs)
+  # The sequence of digrams appearing in the RHS
+  attr_reader(:digrams)
 
   # Constructor. Build a production with an empty RHS.
   def initialize()
     clear_rhs
-    @backrefs = {}
+    @refcount = 0
+    @digrams = []
   end
 
   public
+
+  def ==(other)
+    return true if object_id == other.object_id
+
+    if other.is_a?(ProductionRef)
+      result = (other == self)
+    else
+      result = false
+    end
+
+    return result
+  end
+
 
   # Is the rhs empty?
   def empty?
     return rhs.empty?
   end
 
+  def incr_refcount()
+    @refcount += 1
+  end
+
+  def decr_refcount()
+    fail StandardError if @refcount == 0
+    @refcount -= 1
+  end
+
 
   # Return the set of productions appearing in the rhs.
   def references()
-    return rhs.select { |symb| symb.kind_of?(Production) }
+    return rhs.select { |symb| symb.is_a?(ProductionRef) }
   end
+
+  # Return the set of references to a given production
+  def references_of(aProduction)
+    refs = references
+    return refs.select { |a_ref| a_ref == aProduction }
+  end
+
+
+
+
+  # Return the list digrams found in rhs of this production.
+  def recalc_digrams()
+    return [] if rhs.size < 2
+
+    result = []
+    rhs.each_cons(2) { |couple| result << Digram.new(*couple, self) }
+
+    @digrams = result
+  end
+
 
 
   # Does the rhs have exactly one digram only (= 2 symbols)?
@@ -59,53 +103,14 @@ class Production
     same_key_found = all_keys.index(last_key)
     return !same_key_found.nil?
   end
-  
+
   # Return the last digram appearing in the RHS.
   def last_digram()
-    return nil if rhs.size < 2
-    
-    return Digram.new(rhs[-2], rhs[-1], self)
+    result = digrams.empty? ? nil : digrams.last
+    return result
   end
 
 
-
-  # The back reference count is the number of times this production
-  # appears in the rhs of all the productions of the grammar
-  def refcount()
-    total = backrefs.values.reduce(0) do |sub_result, count|
-      sub_result += count
-    end
-
-    return total
-  end
-
-  # Add a back reference to the given production.
-  # @param aProduction [Production] Assume that production P appears in the 
-  #   RHS of production Q, then a reference count of P is incremented in Q.
-  def add_backref(aProduction)
-    prod_id = aProduction.object_id
-
-    count = backrefs.fetch(prod_id, 0)
-    backrefs[prod_id] = count + 1
-    return count
-  end
-
-  # Decrement the reference count for the given production.
-  # If result is zero, then the entry is removed from the Hash.
-  def remove_backref(aProduction)
-    prod_id = aProduction.object_id
-
-    count = backrefs.fetch(prod_id)
-    fail StandardError if count < 1
-
-    if count > 1
-      backrefs[prod_id] = count - 1
-    else
-      backrefs.delete(prod_id)
-    end
-
-    return count
-  end
 
   # Emit a text representation of the production rule.
   # Text is of the form:
@@ -122,17 +127,24 @@ class Production
     return "#{object_id} : #{rhs_text.join(' ')}."
   end
 
-  # Return the digrams for this production as if
-  # the given symbol is appended at the end of the rhs
-  def calc_append_symbol(aSymbol)
-    return [] if empty?
-
-    return digrams + [ Digram.new(rhs.last, aSymbol, self) ]
-  end
-
+  # Add a (grammar) symbol at the end of the RHS.
   def append_symbol(aSymbol)
-    aSymbol.add_backref(self) if aSymbol.kind_of?(Production)
-    rhs << aSymbol
+    case aSymbol
+      when Production
+        new_symb = ProductionRef.new(aSymbol)
+      when ProductionRef
+        if aSymbol.unbound?
+          msg = 'Fail to append reference to nil production in '
+          msg << to_string
+          fail StandardError, msg
+        end
+        new_symb = aSymbol.dup       
+      else
+        new_symb = aSymbol
+    end
+    
+    rhs << new_symb
+    digrams << Digram.new(rhs[-2], rhs[-1], self) if rhs.size >= 2
   end
 
   # Clear the right-hand side.
@@ -140,61 +152,77 @@ class Production
   def clear_rhs()
     if rhs
       refs = references
-      refs.each { |a_ref| a_ref.remove_backref(self) }
+      refs.each { |a_ref| a_ref.unbind }
     end
     @rhs = []
   end
 
-  # Return the list digrams found in rhs of this production.
-  def digrams()
-    return [] if rhs.size < 2
+  # Find all the positions where the digram occurs in the rhs
+  # Synopsis:
+  # Given the production p -> a b c a b a b d
+  # Then p.positions_of(a, b) should returns [0, 3, 5]
+  # Caution: "overlapping" digrams shouldn't be counted
+  # Given the production p -> a a b a a a c d
+  # Then p.positions_of(a, a) should returns [0, 3]
+  def positions_of(symb1, symb2)
 
-    result = []
-    rhs.each_cons(2) { |couple| result << Digram.new(*couple, self) }
-
-    return result
-  end
-
-  # Substitute in self all occurence of the digram that
-  # appears in the rhs of the other production
-  # Pre-condition:
-  # another has a rhs with exactly one digram (= a two-symbol sequence).
-  def replace_digram(another)
     # Find the positions where the digram occur in rhs
-    (symb1, symb2) = another.rhs
     indices = [ -2 ] # Dummy index!
-
     (0...rhs.size).each do |i|
       next if i == indices.last + 1
       indices << i if (rhs[i] == symb1) && (rhs[i + 1] == symb2)
     end
+
     indices.shift
 
-    pos = indices.reverse
+    return indices
+  end
+
+
+  # Substitute in self all occurrences of the digram that
+  # appears in the rhs of the other production
+  # Pre-condition:
+  # another has a rhs with exactly one digram (= a two-symbol sequence).
+  def replace_digram(another)
+    (symb1, symb2) = another.rhs
+    pos = positions_of(symb1, symb2).reverse
 
     # Replace the two symbol sequence by the production
     pos.each do |index|
-      rhs[index].remove_backref(self) if rhs[index].kind_of?(Production)
-      rhs[index] = another
+      if rhs[index].is_a?(ProductionRef)
+        rhs[index].bind_to(another)
+      else
+        rhs[index] = ProductionRef.new(another)
+      end
       index1 = index + 1
-      rhs[index1].remove_backref(self) if rhs[index1].kind_of?(Production)
+      rhs[index1].unbind if rhs[index1].is_a?(ProductionRef)
       rhs.delete_at(index1)
-      another.add_backref(self)
     end
+    
+    recalc_digrams
   end
 
   # Replace every occurrence of 'another' production in rhs by
   # the rhs of 'another'.
+  # Given the production p_A -> a p_B b p_B c
+  # And the production p_B -> x y
+  # Then the call p_A.replace_production(p_B)
+  # Modifies p_A as into:
+  # p_A -> a x y b x y c
   def replace_production(another)
     (0...rhs.size).to_a.reverse.each do |index|
       next unless rhs[index] == another
-      rhs.insert(index + 1, *another.rhs)
-      another.rhs.each do |new_symb|
-        new_symb.add_backref(self) if new_symb.kind_of?(Production)
+      
+      # Avoid the aliasing of production reference
+      other_rhs = another.rhs.map do |symb| 
+        symb.is_a?(ProductionRef) ? symb.dup : symb
       end
-      another.remove_backref(self)
+      rhs.insert(index + 1, *other_rhs)
+      another.decr_refcount
       rhs.delete_at(index)
     end
+    
+    recalc_digrams
   end
 
 end # class

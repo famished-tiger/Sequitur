@@ -1,3 +1,8 @@
+### 0.0.12 / 2014-08-24
+* [CHANGE] Significant internal refactoring.
+* [CHANGE] Method `ObjectSpace::id2ref` is no more used => one obstacle to JRuby porting is removed.
+* [NEW] Added new class `ProductionReference`
+
 ### 0.0.11 / 2014-08-24
 * [FIX] `SequiturGrammar#check_unicity`: an exception was raised when it shouldn't. Added example in spec file.
 * [CHANGE] `sequitur.rb` : Added the convenience Sequitur::build_from method.

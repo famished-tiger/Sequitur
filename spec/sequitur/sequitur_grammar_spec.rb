@@ -74,6 +74,13 @@ describe SequiturGrammar do
       expect(p_a.rhs).to eq([:a, :b, :c])
       expect(instance.root.rhs).to eq([p_a, p_a])
     end
+    
+    it 'should cope with a pattern that caused an exception' do
+      input = 'aaac'  # This sequence raised an exception
+
+      # Creation
+      expect { SequiturGrammar.new(input.chars) }.not_to raise_error
+    end
 
 
     it 'should cope with the example from presentation' do

@@ -43,33 +43,52 @@ describe Production do
       expect(subject.last_digram).to be_nil
     end
   end # context
-  
+
   context 'Knowing its rhs:' do
-    
+
     it 'should know the productions in its rhs' do
       # Case 1: empty production
       expect(subject.references).to be_empty
-      
+
       # Case 2: production without references
       symbols = [:a, :b, :c]
       symbols.each { |symb| subject.append_symbol(symb) }
       expect(subject.references).to be_empty
+      expect(subject.references_of(p_a)).to be_empty
 
       # Case 2: production with one reference
       subject.append_symbol(p_a)
       expect(subject.references).to eq([p_a])
+      expect(subject.references_of(p_a)).to eq([p_a])
 
       # Case 3: production with repeated references
       subject.append_symbol(p_a) # second time
-      expect(subject.references).to eq([p_a, p_a]) 
+      expect(subject.references).to eq([p_a, p_a])
+      expect(subject.references_of(p_a)).to eq([p_a, p_a])
+
 
       # Case 4: production with multiple distinct references
       subject.append_symbol(p_bc)
-      expect(subject.references).to eq([p_a, p_a, p_bc])          
+      expect(subject.references).to eq([p_a, p_a, p_bc])
+      expect(subject.references_of(p_bc)).to eq([p_bc])
     end
-  
+
+    it 'should know the position(s) of a given digram' do
+      sequence1 = [:a, :b, :c, :a, :b, :a, :b, :d]
+      sequence1.each { |symb| subject.append_symbol(symb) }
+      positions = [0, 3, 5]
+      expect(subject.positions_of(:a, :b)).to eq(positions)
+
+      subject.clear_rhs
+      # Case of overlapping digrams
+      sequence2 = [:a, :a, :b, :a, :a, :a, :c, :d]
+      sequence2.each { |symb| subject.append_symbol(symb) }
+      positions = [0, 3]
+      expect(subject.positions_of(:a, :a)).to eq(positions)
+    end
+
   end # context
-  
+
   context 'Appending a symbol:' do
 
     it 'should append a symbol when empty' do
@@ -92,31 +111,48 @@ describe Production do
       expect(subject.last_digram.symbols).to eq([:e, :f])
     end
 
-    it 'should increment the refcount for each production in the rhs' do
+    it 'should append a production in its rhs' do
+      # Side-effect: refcount of production to append is incremented
       expect(p_a.refcount).to be(0)
 
       input = [p_a, :b, :c, :d, p_a, :e, :f]  # p_a appears twice
       input.each { |symb| subject.append_symbol(symb) }
       expect(p_a.refcount).to be(2)
     end
-
-    it 'should calculate the digrams before appending:' do
-      # Case: empty production
-      expect(subject.calc_append_symbol(:a)).to be_empty
-
-      # Case: single-symbol rhs
-      subject.append_symbol(:a)
-      expect(to_symbols(subject.calc_append_symbol(:b))).to eq([[:a, :b]])
-
-      # Case: two-symbols rhs
-      subject.append_symbol(:b)
-      expectation = [[:a, :b], [:b, :c]]
-      expect(to_symbols(subject.calc_append_symbol(:c))).to eq(expectation)
+    
+    it 'should append a production ref in its rhs' do
+      # Side-effect: refcount of production to append is incremented
+      ref_a = ProductionRef.new(p_a)
+      expect(p_a.refcount).to be(1)
+      
+      input = [ref_a, :b, :c, :d, ref_a]  # ref_a appears twice
+      input.each { |symb| subject.append_symbol(symb) }
+      
+      # References in rhs should point to p_a...
+      # ...but should be distinct reference objects
+      expect(subject.rhs[0]).to eq(p_a)
+      expect(subject.rhs[0].object_id).not_to eq(ref_a.object_id)
+      expect(subject.rhs[-1]).to eq(p_a)
+      expect(subject.rhs[-1].object_id).not_to eq(ref_a.object_id)
+      
+      # Reference count should be updated
+      expect(p_a.refcount).to be(3)
+    end
+    
+    it 'should complain when appending ref to nil production' do
+      # Side-effect: refcount of production to append is incremented
+      ref_a = ProductionRef.new(p_a)
+      expect(p_a.refcount).to be(1)
+      
+      # Unbind the reference
+      ref_a.unbind
+      
+      expect { subject.append_symbol(ref_a) }.to raise_error(StandardError)
     end
 
   end # context
-  
-  
+
+
   context 'Text representation of a production rule:' do
 
     it 'should emit minimal text when empty' do
@@ -128,7 +164,8 @@ describe Production do
       instance = Production.new
       symbols = [:a, :b, 'c', :d, :e, 1000, instance]
       symbols.each { |symb| subject.append_symbol(symb) }
-      expectation = "#{subject.object_id} : a b 'c' d e 1000 #{instance.object_id}."
+      expectation = "#{subject.object_id} : " 
+      expectation << "a b 'c' d e 1000 #{instance.object_id}."
       expect(subject.to_string).to eq(expectation)
     end
 
@@ -138,19 +175,19 @@ describe Production do
     it 'should report no repetition when empty' do
       expect(subject.repeated_digram?).to be_falsey
     end
-    
+
     it 'should report no repetition when rhs has less than 3 symbols' do
       subject.append_symbol(:a)
       expect(subject.repeated_digram?).to be_falsey
-      
+
       subject.append_symbol(:a)
-      expect(subject.repeated_digram?).to be_falsey      
+      expect(subject.repeated_digram?).to be_falsey
     end
-    
+
     it 'should detect shortest repetition' do
       'aaa'.each_char { |symb| subject.append_symbol(symb) }
-      expect(subject.repeated_digram?).to be_truthy      
-    end 
+      expect(subject.repeated_digram?).to be_truthy
+    end
 
     it 'should detect any repetition pattern' do
       # Positive cases
@@ -160,15 +197,15 @@ describe Production do
         word.each_char { |symb| instance.append_symbol(symb) }
         expect(instance.repeated_digram?).to be_truthy
       end
-      
+
       # Negative cases
       cases = %w(abc abb abba abcdef)
       cases.each do |word|
         instance = Production.new
         word.each_char { |symb| instance.append_symbol(symb) }
         expect(instance.repeated_digram?).to be_falsey
-      end      
-    end   
+      end
+    end
   end # context
 
   context 'Replacing a digram by a production:' do
@@ -182,12 +219,13 @@ describe Production do
 
     it 'should replace two-symbol sequence' do
       %w(a b c d e b c e).each { |symb| subject.append_symbol(symb) }
+      p_bc_before = p_bc.to_string
       subject.replace_digram(p_bc)
 
       expect(subject.rhs.size).to eq(6)
       expect(subject.rhs).to eq(['a', p_bc, 'd', 'e', p_bc, 'e'])
       expect(p_bc.refcount).to eq(2)
-      expect(p_bc.backrefs[subject.object_id]).to eq(2)
+      expect(p_bc.to_string).to eq(p_bc_before)
     end
 
 
@@ -198,7 +236,6 @@ describe Production do
       expect(subject.rhs.size).to eq(5)
       expect(subject.rhs).to eq([p_bc, 'd', 'e', p_bc, 'e'])
       expect(p_bc.refcount).to eq(2)
-      expect(p_bc.backrefs[subject.object_id]).to eq(2)
     end
 
 
@@ -209,7 +246,6 @@ describe Production do
       expect(subject.rhs.size).to eq(5)
       expect(subject.rhs).to eq(['a', p_bc, 'd', 'e', p_bc])
       expect(p_bc.refcount).to eq(2)
-      expect(p_bc.backrefs[subject.object_id]).to eq(2)
     end
 
     it 'should replace two consecutive two-symbol sequences' do
@@ -219,7 +255,6 @@ describe Production do
       expect(subject.rhs.size).to eq(4)
       expect(subject.rhs).to eq(['a', p_bc, p_bc, 'd'])
       expect(p_bc.refcount).to eq(2)
-      expect(p_bc.backrefs[subject.object_id]).to eq(2)
     end
 
   end # context
@@ -233,18 +268,23 @@ describe Production do
 
     it 'should replace a production at the start' do
       [p_bc, 'd'].each { |symb| subject.append_symbol(symb) }
+      expect(p_bc.refcount).to eq(1)
+      
       subject.replace_production(p_bc)
       expect(subject.rhs.size).to eq(3)
       expect(subject.rhs).to eq(%w(b c d))
+      expect(p_bc.refcount).to eq(0)
     end
 
 
     it 'should replace a production at the end' do
       ['d', p_bc].each { |symb| subject.append_symbol(symb) }
+      expect(p_bc.refcount).to eq(1)
       subject.replace_production(p_bc)
 
       expect(subject.rhs.size).to eq(3)
       expect(subject.rhs).to eq(%w(d b c))
+      expect(p_bc.refcount).to eq(0)
     end
 
     it 'should replace a production as sole symbol' do
