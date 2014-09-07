@@ -10,7 +10,7 @@ class DynamicGrammar
   attr_reader(:productions)
   
   # nodoc Trace the execution of the algorithm.
-  attr(:trace, true)
+  attr(:trace)
 
 
   # Constructor.

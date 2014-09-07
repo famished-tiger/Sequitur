@@ -43,6 +43,24 @@ describe Production do
       expect(subject.last_digram).to be_nil
     end
   end # context
+  
+  context 'Provided services:' do
+  
+    it 'should compare to another production' do
+      expect(p_a).to eq(p_a)
+      expect(p_a).not_to eq(p_bc)
+    end
+    
+    it 'should compare to a production reference' do
+      ref_a = ProductionRef.new(p_a)
+      expect(p_a).to eq(ref_a) 
+      expect(p_bc).not_to eq(ref_a)
+      
+      ref_bc = ProductionRef.new(p_bc)
+      expect(p_a).not_to eq(ref_bc) 
+      expect(p_bc).to eq(ref_bc)      
+    end
+  end # context
 
   context 'Knowing its rhs:' do
 

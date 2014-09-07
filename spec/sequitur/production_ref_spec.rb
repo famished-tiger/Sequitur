@@ -69,6 +69,12 @@ describe ProductionRef do
       expect(target.refcount).to eq(0)      
       expect(another_target.refcount).to eq(1)
     end
+    
+    it 'should complain when binding to something else than production' do
+      subject.bind_to(target)
+      msg = "Illegal production type String"
+      expect {subject.bind_to('WRONG') }.to raise_error(StandardError, msg)
+    end
   
     it 'should compare to other production (reference)' do
       same = ProductionRef.new(target)

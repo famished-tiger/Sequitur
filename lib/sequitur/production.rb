@@ -119,8 +119,7 @@ class Production
     rhs_text = rhs.map do |elem|
       case elem
         when String then "'#{elem}'"
-        when Production then "#{elem.object_id}"
-      else elem.to_s
+        else elem.to_s
       end
     end
 

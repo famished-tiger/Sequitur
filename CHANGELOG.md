@@ -1,3 +1,6 @@
+### 0.0.13 / 2014-08-24
+* [CHANGE] Test coverage for all classes but SequiturGrammar is 100%
+
 ### 0.0.12 / 2014-08-24
 * [CHANGE] Significant internal refactoring.
 * [CHANGE] Method `ObjectSpace::id2ref` is no more used => one obstacle to JRuby porting is removed.
