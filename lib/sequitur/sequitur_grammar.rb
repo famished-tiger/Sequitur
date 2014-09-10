@@ -28,28 +28,6 @@ class SequiturGrammar < DynamicGrammar
     super
   end
 
-  # Check the invariant:
-  # Every digram appearing in a rhs must occur at most once in the grammar.
-  def check_unicity()
-    all_digrams = {}
-    productions.each do |a_prod|
-      prod_digrams = a_prod.digrams
-      prod_digrams.each_with_index do |a_digram, index|
-        next if index && a_digram == a_prod.digrams[index - 1]
-        if all_digrams.include? a_digram.key
-          msg = "Digram #{a_digram.symbols} occurs twice!"
-          colliding = all_digrams[a_digram.key]
-          msg << "\nOnce in production #{colliding.production.object_id}"
-          msg << "\nSecond in production #{a_prod.object_id}"
-          msg << "\n#{to_string}"
-          fail StandardError, msg unless colliding == a_prod
-        else
-          all_digrams[a_digram.key] = a_digram
-        end
-      end
-    end
-  end
-
 
   private
 
@@ -77,7 +55,6 @@ class SequiturGrammar < DynamicGrammar
   end
 
   def append_symbol_to(aProduction, aSymbol)
-    check_digrams # TODO: remove this
     super
 
     prod_digrams = aProduction.digrams
@@ -131,8 +108,6 @@ class SequiturGrammar < DynamicGrammar
       aProduction.replace_digram(new_prod)
       add_production(new_prod)
       update_digrams_from(aProduction)
-      check_digrams # TODO: remove
-      check_unicity
     else
       # Duplicate digram used in distinct production
       # Two cases: other production is a single digram one or a multi-digram
@@ -151,7 +126,6 @@ class SequiturGrammar < DynamicGrammar
           preserve_unicity(aProduction)
         end
 
-        check_references # TODO: remove this
       else
         # aProduction, other_prod use both the same digram
         # Then create a new production with the digram as its rhs
@@ -168,11 +142,7 @@ class SequiturGrammar < DynamicGrammar
         # TODO: Check when aProduction and other_prod have same preceding symbol
         update_digrams_from(other_prod)
       end
-      check_unicity
     end
-
-    check_unicity
-    check_registered
   end
 
   # Rule utility: except for the root production, every production must occur
@@ -188,7 +158,6 @@ class SequiturGrammar < DynamicGrammar
   # Update digrams
   def enforce_rule_utility()
     return if productions.size < 2
-    check_references
 
     loop do
       all_refcount_ok = true
@@ -203,7 +172,6 @@ class SequiturGrammar < DynamicGrammar
         dependent.replace_production(productions[index])
         delete_production(index)
         update_digrams_from(dependent)
-        check_references
       end
 
       break if all_refcount_ok
@@ -231,88 +199,6 @@ class SequiturGrammar < DynamicGrammar
       digrams.delete(a_key) unless current_keys.include? a_key
     end
   end
-
-  # Check the invariant:
-  # Every reference in a rhs that is bound must point
-  # to a production of the grammar.
-  def check_references()
-    productions.each do |a_prod|
-      rhs_prods = a_prod.references
-      rhs_prods.each do |a_reference|
-        next if a_reference.unbound?
-        referenced_prod = a_reference.production
-        next if productions.include? referenced_prod
-
-        msg = "Production #{a_prod.object_id} #{a_prod.to_string}"
-        msg << " references the unknown production #{referenced_prod.object_id}"
-        msg << "\nOrphan production: #{referenced_prod.to_string}"
-        msg << "\n#{to_string}"
-        fail StandardError, msg
-      end
-    end
-  end
-
-  # Check the invariant:
-  # Every registered digram must reference a production from the grammar
-  def check_registered()
-    digrams.each do |_key, digr|
-      found = productions.find { |a_prod| digr.production == a_prod }
-      next if found
-
-      msg = "Digram #{digr.symbols} references the unknown "
-      msg << "production (#{digr.production.object_id})."
-      msg << "\n#{to_string}"
-      fail StandardError, msg
-    end
-  end
-
-  # Compare the contents of digrams Hash with
-  # All digrams from all productions
-  def check_digrams()
-    # Control that every registered digram refers
-    # to a production that really has that digram
-    digrams.each do |key, digr|
-      its_prod = digr.production
-      prod_digrams = its_prod.digrams
-      prod_keys = prod_digrams.map(&:key)
-      next if prod_keys.include? key
-
-      msg = "Production #{digr.production_id} doesn't have "
-      msg << "the digram #{digr.symbols}"
-      msg << "\n#{prod_digrams.map(&:symbols)}"
-      msg << "\n#{to_string}"
-      fail StandardError, msg
-    end
-
-    all_digrams = {}
-    productions.each do |a_prod|
-      its_digrams = a_prod.digrams
-      its_digrams.each do |digr|
-        check_unicity if all_digrams[digr.key]
-        all_digrams[digr.key] = digr
-      end
-    end
-
-    all_digrams.each do |key, digr|
-      registered = digrams[key]
-      if registered
-        if registered != digr
-          msg = "Production #{digr.production.object_id} has "
-          msg << "the digram #{digr.symbols} that collides"
-          msg << "\n with same digram from #{registered.production.object_id}"
-          msg << "\n#{to_string}"
-          fail StandardError, msg
-        end
-      else
-        its_prod = digr.production
-        msg = "Production #{its_prod.object_id} (#{its_prod.rhs}) "
-        msg << "has the digram #{digr.symbols} that isn't registered."
-        msg << "\n#{to_string}"
-        fail StandardError, msg
-      end
-    end
-  end
-
 
 end # class
 

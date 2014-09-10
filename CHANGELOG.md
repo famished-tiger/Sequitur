@@ -1,16 +1,20 @@
-### 0.0.13 / 2014-08-24
+### 0.0.14 / 2014-09-10
+* [CHANGE] Removal of invariant checking methods in `SequiturGrammar` class. These caused polynomial slowdown.
+
+
+### 0.0.13 / 2014-09-07
 * [CHANGE] Test coverage for all classes but SequiturGrammar is 100%
 
-### 0.0.12 / 2014-08-24
+### 0.0.12 / 2014-09-06
 * [CHANGE] Significant internal refactoring.
 * [CHANGE] Method `ObjectSpace::id2ref` is no more used => one obstacle to JRuby porting is removed.
 * [NEW] Added new class `ProductionReference`
 
-### 0.0.11 / 2014-08-24
+### 0.0.11 / 2014-08-26
 * [FIX] `SequiturGrammar#check_unicity`: an exception was raised when it shouldn't. Added example in spec file.
 * [CHANGE] `sequitur.rb` : Added the convenience Sequitur::build_from method.
 
-### 0.0.10 / 2014-08-24
+### 0.0.10 / 2014-08-25
 * [CHANGE] `README.md`: Added hyperlinks about Sequitur algorithm.
 
 ### 0.0.09 / 2014-08-24
