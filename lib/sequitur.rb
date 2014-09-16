@@ -4,6 +4,8 @@
 
 require_relative './sequitur/constants'
 require_relative './sequitur/sequitur_grammar'
+require_relative './sequitur/formatter/debug'
+require_relative './sequitur/formatter/base_text'
 
 
 module Sequitur

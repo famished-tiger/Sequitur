@@ -92,7 +92,17 @@ describe ProductionRef do
       subject.unbind
       expect { subject.hash }.to raise_error(StandardError)
     end
-  end
+    
+    it 'should accept a visitor' do
+      # Use a mock visitor
+      fake = double('fake_visitor')
+      
+      # Visitor should receive a visit message
+      expect(fake).to receive(:visit_prod_ref).once
+      expect { subject.accept(fake) }.not_to raise_error
+    end
+    
+  end # context
 
 end # describe
 

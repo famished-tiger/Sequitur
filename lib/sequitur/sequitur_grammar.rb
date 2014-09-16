@@ -41,7 +41,7 @@ class SequiturGrammar < DynamicGrammar
   end
 
   # Remove a production from the grammar
-  def delete_production(anIndex)
+  def remove_production(anIndex)
     prod = productions[anIndex]
 
     # Retrieve in the Hash all registered digrams from the removed production
@@ -170,7 +170,7 @@ class SequiturGrammar < DynamicGrammar
           !a_prod.references_of(curr_production).empty?
         end
         dependent.replace_production(productions[index])
-        delete_production(index)
+        remove_production(index)
         update_digrams_from(dependent)
       end
 

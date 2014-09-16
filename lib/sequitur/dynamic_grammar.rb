@@ -1,4 +1,5 @@
 require_relative 'production'
+require_relative 'grammar_visitor'
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
 
@@ -8,7 +9,7 @@ class DynamicGrammar
 
   # The set of production rules of the grammar
   attr_reader(:productions)
-  
+
   # nodoc Trace the execution of the algorithm.
   attr(:trace)
 
@@ -31,7 +32,7 @@ class DynamicGrammar
   end
 
 
-  # Add a production to the grammar.
+  # Add a given production to the grammar.
   def add_production(aProduction)
     # TODO: remove output
     puts "Adding #{aProduction.object_id}" if trace
@@ -42,7 +43,7 @@ class DynamicGrammar
 
 
   # Remove a production from the grammar
-  def delete_production(anIndex)
+  def remove_production(anIndex)
     puts "Before production removal #{productions[anIndex].object_id}" if trace
     puts to_string if trace
     prod = productions.delete_at(anIndex)
@@ -57,6 +58,19 @@ class DynamicGrammar
   # Add the given token to the grammar.
   def add_token(aToken)
     append_symbol_to(root, aToken)
+  end
+
+  # Part of the 'visitee' role.
+  # [aVisitor] a GrammarVisitor instance
+  def accept(aVisitor)
+    aVisitor.start_visit_grammar(self)
+    productions.each { |prod| prod.accept(aVisitor) }
+    aVisitor.end_visit_grammar(self)
+  end
+
+  # Factory method. Returns a visitor for this grammar.
+  def visitor()
+    return GrammarVisitor.new(self)
   end
 
   protected
@@ -80,6 +94,17 @@ class DynamicGrammar
     end
   end
 
+
+  # Visitor pattern.
+  # A visitee is expected to accept the visit from a visitor object
+  def accept(aVisitor)
+    aVisitor.start_visit_grammar(self)
+
+    # Let's proceed with the visit of productions
+    productions.each { |a_prod| a_prod.accept(aVisitor) }
+
+    aVisitor.end_visit_grammar(self)
+  end
 end # class
 
 end # module

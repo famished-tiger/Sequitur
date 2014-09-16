@@ -1,3 +1,7 @@
+### 0.1.00 / 2014-09-16
+* [CHANGE] Version number bumped. Added grammar rendering through specialized formatters.
+
+
 ### 0.0.14 / 2014-09-10
 * [CHANGE] Removal of invariant checking methods in `SequiturGrammar` class. These caused polynomial slowdown.
 

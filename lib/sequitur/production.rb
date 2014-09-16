@@ -15,7 +15,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 class Production
   # The right-hand side (rhs) consists of a sequence of grammar symbols
   attr_reader(:rhs)
-  
+
   # The reference count (= how times other productions reference this one)
   attr_reader(:refcount)
 
@@ -59,7 +59,7 @@ class Production
   end
 
 
-  # Return the set of productions appearing in the rhs.
+  # Return the set of references to production appearing in the rhs.
   def references()
     return rhs.select { |symb| symb.is_a?(ProductionRef) }
   end
@@ -69,8 +69,6 @@ class Production
     refs = references
     return refs.select { |a_ref| a_ref == aProduction }
   end
-
-
 
 
   # Return the list digrams found in rhs of this production.
@@ -137,11 +135,11 @@ class Production
           msg << to_string
           fail StandardError, msg
         end
-        new_symb = aSymbol.dup       
+        new_symb = aSymbol.dup
       else
         new_symb = aSymbol
     end
-    
+
     rhs << new_symb
     digrams << Digram.new(rhs[-2], rhs[-1], self) if rhs.size >= 2
   end
@@ -197,7 +195,7 @@ class Production
       rhs[index1].unbind if rhs[index1].is_a?(ProductionRef)
       rhs.delete_at(index1)
     end
-    
+
     recalc_digrams
   end
 
@@ -211,17 +209,34 @@ class Production
   def replace_production(another)
     (0...rhs.size).to_a.reverse.each do |index|
       next unless rhs[index] == another
-      
+
       # Avoid the aliasing of production reference
-      other_rhs = another.rhs.map do |symb| 
+      other_rhs = another.rhs.map do |symb|
         symb.is_a?(ProductionRef) ? symb.dup : symb
       end
       rhs.insert(index + 1, *other_rhs)
       another.decr_refcount
       rhs.delete_at(index)
     end
-    
+
     recalc_digrams
+  end
+
+
+  # Part of the 'visitee' role.
+  # [aVisitor] a GrammarVisitor instance
+  def accept(aVisitor)
+    aVisitor.start_visit_production(self)
+
+    rhs.each do |a_symb|
+      if a_symb.is_a?(ProductionRef)
+        a_symb.accept(aVisitor)
+      else
+        aVisitor.visit_terminal(a_symb)
+      end
+    end
+
+    aVisitor.end_visit_production(self)
   end
 
 end # class

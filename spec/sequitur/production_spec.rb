@@ -322,6 +322,45 @@ describe Production do
     end
 
   end # context
+  
+  context 'Visiting:' do
+    it 'should accept a visitor when its rhs is empty' do
+      # Use a mock visitor
+      fake = double('fake_visitor')
+      
+      # Empty production: visitor will receive a start and end visit messages
+      expect(fake).to receive(:start_visit_production).once.ordered
+      expect(fake).to receive(:end_visit_production).once.ordered
+
+      expect { subject.accept(fake) }.not_to raise_error
+    end
+    
+    it 'should accept a visitor when rhs consists of terminals only' do
+      # Use a mock visitor
+      fake = double('fake_visitor')      
+      expect(fake).to receive(:start_visit_production).once.ordered
+      expect(fake).to receive(:visit_terminal).with('b').ordered
+      expect(fake).to receive(:visit_terminal).with('c').ordered
+      expect(fake).to receive(:end_visit_production).once.ordered
+
+      expect { p_bc.accept(fake) }.not_to raise_error
+    end
+    
+    it 'should accept a visitor when rhs consists of non-terminals' do
+      # Add two production references (=non-terminals) to RHS of subject
+      subject.append_symbol(p_a)
+      subject.append_symbol(p_bc)
+      
+      fake = double('fake_visitor')      
+      expect(fake).to receive(:start_visit_production).once.ordered
+      expect(fake).to receive(:visit_prod_ref).with(p_a).ordered
+      expect(fake).to receive(:visit_prod_ref).with(p_bc).ordered
+      expect(fake).to receive(:end_visit_production).once.ordered
+
+      expect { subject.accept(fake) }.not_to raise_error
+    end
+  
+  end # context
 
 end # describe
 

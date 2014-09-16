@@ -81,6 +81,12 @@ class ProductionRef
   def unbound?()
     return production.nil?
   end
+  
+  # Part of the 'visitee' role.
+  # [aVisitor]  a GrammarVisitor instance
+  def accept(aVisitor)
+    aVisitor.visit_prod_ref(self)  
+  end
 
 end # class
 

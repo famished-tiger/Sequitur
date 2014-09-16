@@ -5,6 +5,7 @@ _Ruby gem implementing the Sequitur algorithm_
 
 [![Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
 [![Gem Version](https://badge.fury.io/rb/sequitur.svg)](http://badge.fury.io/rb/sequitur)
+[![Dependency Status](https://gemnasium.com/famished-tiger/Sequitur.png)](https://gemnasium.com/famished-tiger/Sequitur)
 
 
 ### What is the Sequitur algorithm? ###
@@ -19,22 +20,30 @@ It detects repeated token patterns and can represent them in a compact way.
 
 ```ruby  
 
-    require 'sequitur' # Load the Sequitur library
+    require 'sequitur'  # Load the Sequitur library
 
-    input_sequence =  'abcabdab'
+    input_sequence =  'abcabdabcabd'  # Let's analyze this string
 
     # The SEQUITUR algorithm will detect the repeated 'ab' pattern
     # and will generate a context-free grammar that represents the input string
     grammar = Sequitur.build_from(input_sequence)
 
-    # Display the grammar rules
-    # Each rule is displayed with the format:
-    # rule_id : a_sequence_grammar_symbols
+    # To display the grammar rules on the console output
+    # We use a formatter
+    formatter = Sequitur::Formatter::BaseText.new(STDOUT)
+
+    # Now render the rules. Each rule is displayed with the format:
+    # rule_id : a_sequence_grammar_symbols.
     # Where: 
-    # - rule_id is the object id of a rule (in decimal)
+    # - rule_id is either 'start' or a name like 'P_xxxx' (xxxx is a sequential number)
     # - a grammar symbol is either a terminal symbol 
-    # (i.e. a character from the input) or the id of a production
-    puts grammar.to_string
+    # (i.e. a character from the input) or a rule id
+    formatter.render(grammar.visitor)
+
+    # Rendered output is:
+    # start : P_2 P_2.
+    # P_1 : a b.
+    # P_2 : P_1 c P_1 d.
 ```
 
 ### TODO: Add more documentation ###
