@@ -1,3 +1,11 @@
+### 0.1.01 / 2014-09-17
+* [NEW] Added new `BaseFormatter` superclass. Sample formatters are inheriting from this one.  
+* [CHANGE] File `README.me`: added a brief intro to the Sequitur algorithm, expanded the Ruby examples 
+* [CHANGE] Private method `BaseText#prod_name` production name doesn't contain an underscore.
+* [CHANGE] Formatter class `BaseText` now inherits from `BaseFormatter`
+* [CHANGE] Formatter class `Debug` now inherits from `BaseFormatter`
+
+
 ### 0.1.00 / 2014-09-16
 * [CHANGE] Version number bumped. Added grammar rendering through specialized formatters.
 

@@ -1,3 +1,5 @@
+require_relative 'base_formatter'
+
 module Sequitur
   module Formatter
   
@@ -8,23 +10,16 @@ module Sequitur
     # formatter = Sequitur::Formatter::BaseText.new(STDOUT)
     # Render the grammar (through a visitor)
     # formatter.run(some_grammar.visitor)
-    class BaseText
-      attr(:output)
+    class BaseText < BaseFormatter
 
       # Constructor.
       # [anIO]
       def initialize(anIO)
-        @output = anIO
+        super(anIO)
         @prod_lookup = {}
       end
 
       public
-
-      def render(aVisitor)
-        aVisitor.subscribe(self)
-        aVisitor.start()
-        aVisitor.unsubscribe(self)
-      end
       
       def before_grammar(aGrammar)
         aGrammar.productions.each_with_index do |a_prod, index|
@@ -63,7 +58,7 @@ module Sequitur
       
       def prod_name(aProduction)
         prod_index = prod_lookup[aProduction]
-        name = (prod_index == 0) ? 'start' : "P_#{prod_index}"
+        name = (prod_index == 0) ? 'start' : "P#{prod_index}"
         return name
       end
 

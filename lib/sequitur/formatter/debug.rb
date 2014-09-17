@@ -1,23 +1,19 @@
+require_relative 'base_formatter'
+
+
 module Sequitur
   module Formatter
-    class Debug
+    class Debug < BaseFormatter
       attr(:indentation)
-      attr(:output)
 
       # Constructor.
       # [anIO]
       def initialize(anIO)
+        super(anIO)
         @indentation = 0
-        @output = anIO
       end
 
       public
-
-      def render(aVisitor)
-        aVisitor.subscribe(self)
-        aVisitor.start()
-        aVisitor.unsubscribe(self)
-      end
 
       def before_grammar(_)
         output_event(__method__, indentation)

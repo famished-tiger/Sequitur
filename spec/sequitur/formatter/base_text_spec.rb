@@ -60,16 +60,29 @@ SNIPPET
       expect(destination.string).to eq(expectations)
     end
     
-    it 'should support events of a non-empty grammar' do
+    it 'should support visit events with an explicit visitor' do
       instance = BaseText.new(destination)
-      a_visitor = sample_grammar.visitor
+      a_visitor = sample_grammar.visitor  # Use visitor explicitly
       instance.render(a_visitor)
       expectations =<<-SNIPPET
 start :.
-P_1 : a.
-P_2 : b.
-P_3 : c.
-P_4 : P_2 P_3.
+P1 : a.
+P2 : b.
+P3 : c.
+P4 : P2 P3.
+SNIPPET
+      expect(destination.string).to eq(expectations)
+    end
+
+    it 'should support visit events without an explicit visitor' do
+      instance = BaseText.new(destination)
+      instance.render(sample_grammar)
+      expectations =<<-SNIPPET
+start :.
+P1 : a.
+P2 : b.
+P3 : c.
+P4 : P2 P3.
 SNIPPET
       expect(destination.string).to eq(expectations)
     end
