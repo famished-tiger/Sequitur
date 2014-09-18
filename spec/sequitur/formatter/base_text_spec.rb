@@ -41,7 +41,7 @@ describe BaseText do
       expect { BaseText.new(StringIO.new('', 'w')) }.not_to raise_error
     end
     
-    it "should know its output destination" do
+    it 'should know its output destination' do
       instance = BaseText.new(destination)
       expect(instance.output).to eq(destination)
     end
@@ -54,7 +54,7 @@ describe BaseText do
       instance = BaseText.new(destination)
       a_visitor = empty_grammar.visitor
       instance.render(a_visitor)
-      expectations =<<-SNIPPET
+      expectations = <<-SNIPPET
 start :.
 SNIPPET
       expect(destination.string).to eq(expectations)
@@ -64,7 +64,7 @@ SNIPPET
       instance = BaseText.new(destination)
       a_visitor = sample_grammar.visitor  # Use visitor explicitly
       instance.render(a_visitor)
-      expectations =<<-SNIPPET
+      expectations = <<-SNIPPET
 start :.
 P1 : a.
 P2 : b.
@@ -77,7 +77,7 @@ SNIPPET
     it 'should support visit events without an explicit visitor' do
       instance = BaseText.new(destination)
       instance.render(sample_grammar)
-      expectations =<<-SNIPPET
+      expectations = <<-SNIPPET
 start :.
 P1 : a.
 P2 : b.

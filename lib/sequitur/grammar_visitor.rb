@@ -22,7 +22,7 @@ class GrammarVisitor
   end
   
   def unsubscribe(aSubscriber)
-    subscribers.delete_if { |entry| entry == aSubscriber}
+    subscribers.delete_if { |entry| entry == aSubscriber }
   end
   
   # The signal to start the visit.
@@ -66,6 +66,7 @@ class GrammarVisitor
   end
   
   private
+
   def broadcast(msg, *args)
     subscribers.each do |a_subscriber|
       next unless a_subscriber.respond_to?(msg)

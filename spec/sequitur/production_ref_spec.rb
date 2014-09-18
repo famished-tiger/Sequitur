@@ -72,8 +72,8 @@ describe ProductionRef do
     
     it 'should complain when binding to something else than production' do
       subject.bind_to(target)
-      msg = "Illegal production type String"
-      expect {subject.bind_to('WRONG') }.to raise_error(StandardError, msg)
+      msg = 'Illegal production type String'
+      expect { subject.bind_to('WRONG') }.to raise_error(StandardError, msg)
     end
   
     it 'should compare to other production (reference)' do

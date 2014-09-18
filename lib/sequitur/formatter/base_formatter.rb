@@ -17,17 +17,19 @@ module Sequitur
       # Given a grammar or a grammar visitor, perform the visit
       # and render the visit events in the output stream.
       def render(aGrmOrVisitor)
-        aVisitor = if aGrmOrVisitor.kind_of?(GrammarVisitor)
-          aGrmOrVisitor
+        if aGrmOrVisitor.kind_of?(GrammarVisitor)
+          a_visitor = aGrmOrVisitor
         else
-          aGrmOrVisitor.visitor
+          a_visitor = aGrmOrVisitor.visitor
         end
         
-        aVisitor.subscribe(self)
-        aVisitor.start()
-        aVisitor.unsubscribe(self)
+        a_visitor.subscribe(self)
+        a_visitor.start
+        a_visitor.unsubscribe(self)
       end
     
     end # class
   end # module
 end # module
+
+# End of file

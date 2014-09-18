@@ -16,7 +16,15 @@ SEQUITUR_GEMSPEC = Gem::Specification.new do |pkg|
   pkg.homepage = 'https://github.com/famished-tiger/Sequitur'
   pkg.platform = Gem::Platform::RUBY
   pkg.summary = Sequitur::Description
-  pkg.description = 'Ruby implementation of the Sequitur algorithm.'
+  pkg.description = <<-END_DESCR
+Ruby implementation of the Sequitur algorithm. This algorithm automatically 
+finds repetitions and hierarchical structures in a given sequence of input 
+tokens. It encodes the input into a context-free grammar. 
+The Sequitur algorithm can be used to 
+a) compress a sequence of items,
+b) discover patterns in an sequence, 
+c) generate grammar rules that can represent a given input.
+END_DESCR
   pkg.post_install_message = <<EOSTRING
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Thank you for installing Sequitur...

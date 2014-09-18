@@ -41,7 +41,7 @@ describe Debug do
       expect { Debug.new(StringIO.new('', 'w')) }.not_to raise_error
     end
     
-    it "should know its output destination" do
+    it 'should know its output destination' do
       instance = Debug.new(destination)
       expect(instance.output).to eq(destination)
     end
@@ -54,7 +54,7 @@ describe Debug do
       instance = Debug.new(destination)
       a_visitor = empty_grammar.visitor
       instance.render(a_visitor)
-      expectations =<<-SNIPPET
+      expectations = <<-SNIPPET
 before_grammar
   before_production
     before_rhs
@@ -69,7 +69,7 @@ SNIPPET
       instance = Debug.new(destination)
       a_visitor = sample_grammar.visitor
       instance.render(a_visitor)
-      expectations =<<-SNIPPET
+      expectations = <<-SNIPPET
 before_grammar
   before_production
     before_rhs
