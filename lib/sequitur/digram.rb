@@ -33,6 +33,11 @@ class Digram
     return key == other.key
   end
   
+  # Return true when the digram consists of twice the same symbols
+  def repeating?()
+    return symbols[0] == symbols[1]
+  end
+  
 end # class
 
 end # module

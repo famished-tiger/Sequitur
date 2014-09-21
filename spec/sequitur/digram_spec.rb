@@ -22,10 +22,18 @@ describe Digram do
       instance = Digram.new(:b, :c, production)
       expect(instance.production).to eq(production)
     end
+    
+    it 'should whether its symbols are the same' do
+       instance1 = Digram.new(:a, :a, production)
+       expect(instance1).to be_repeating
+       
+       instance1 = Digram.new(:a, :b, production)
+       expect(instance1).not_to be_repeating       
+    end
 
   end # context
 
-  context 'Standard creation & initialization:' do
+  context 'Provided services:' do
   
     it 'should compare itself to another digram' do
       instance1 = Digram.new(:a, :b, production)

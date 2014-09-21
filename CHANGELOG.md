@@ -1,3 +1,7 @@
+### 0.1.03 / 2014-09-21
+* [CHANGE] Class `Sequitur::SequiturGrammar` Code refactoring: cleaner and simpler implementation the algorithm.
+* [CHANGE] Class `Sequitur::Digram`. Added new method `repeating?` that tells whether digram members are the same.
+
 ### 0.1.02 / 2014-09-18
 * [CHANGE] File `README.md`: expanded introductory text.
 * [CHANGE] File `sequitur.gemspec` : expanded gem description in the specification.

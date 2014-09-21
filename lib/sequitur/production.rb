@@ -54,7 +54,7 @@ class Production
   end
 
   def decr_refcount()
-    fail StandardError if @refcount == 0
+    fail StandardError, 'Internal error' if @refcount == 0
     @refcount -= 1
   end
 
