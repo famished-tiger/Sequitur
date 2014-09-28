@@ -1,3 +1,6 @@
+### 0.1.04 / 2014-09-28
+* [CHANGE] All methods are now documented (YARD reports 100% coverage).
+
 ### 0.1.03 / 2014-09-21
 * [CHANGE] Class `Sequitur::SequiturGrammar` Code refactoring: cleaner and simpler implementation the algorithm.
 * [CHANGE] Class `Sequitur::Digram`. Added new method `repeating?` that tells whether digram members are the same.

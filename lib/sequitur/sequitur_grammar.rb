@@ -3,13 +3,18 @@ require_relative 'dynamic_grammar'
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
 
+# Specialization of the DynamicGrammar class.
+# A Sequitur grammar is a context-free grammar that is entirely built
+# from a sequence of input tokens through the Sequitur algorithm.
 class SequiturGrammar < DynamicGrammar
 
-  # Constructor. Build the grammar from an enumerator of tokens
+  # Build the grammar from an enumerator of tokens.
+  # @param anEnum [Enumerator] an enumerator that will iterate 
+  #   over the input tokens.
   def initialize(anEnum)
     super()
     # Make start production compliant with utility rule
-    2.times { root.incr_refcount }
+    2.times { start.incr_refcount }
 
     # Read the input sequence and apply the Sequitur algorithm
     anEnum.each do |a_token|
@@ -18,10 +23,14 @@ class SequiturGrammar < DynamicGrammar
     end
   end
 
-  public
+  private
 
-
-CollisionDiagnosis = Struct.new(:collision_found, :digram, :productions)
+# Struct used for internal purposes
+CollisionDiagnosis = Struct.new(
+  :collision_found, # true if collision detected
+  :digram, # The digram involved in a collision
+  :productions # The productions where the digram occurs
+)
 
 
   # Assuming that a new input token was added to the start production,
@@ -37,7 +46,7 @@ CollisionDiagnosis = Struct.new(:collision_found, :digram, :productions)
   #   end
   #  end until digram unicity and rule utility are met
   def enforce_rules()
-    begin
+    loop do
       unicity_diagnosis = detect_collision if unicity_diagnosis.nil?
       restore_unicity(unicity_diagnosis) if unicity_diagnosis.collision_found
       
@@ -46,8 +55,8 @@ CollisionDiagnosis = Struct.new(:collision_found, :digram, :productions)
 
       unicity_diagnosis = detect_collision
       useless_prod = detect_useless_production
-      
-    end while unicity_diagnosis.collision_found || useless_prod
+      break unless unicity_diagnosis.collision_found || useless_prod
+    end
   end
 
   # Check whether a digram is used twice in the grammar.
@@ -88,15 +97,11 @@ CollisionDiagnosis = Struct.new(:collision_found, :digram, :productions)
   # Then create a new production that will have
   # the symbols of d as its rhs members.
   def restore_unicity(aDiagnosis)
-    return if aDiagnosis.nil?
-
     digr = aDiagnosis.digram
     prods = aDiagnosis.productions
     if prods.any?(&:single_digram?)
-      (simple, compound) = prods.partition do |a_prod|
-        a_prod.single_digram?
-      end
-      compound[0].replace_digram(simple[0])
+      (simple, compound) = prods.partition(&:single_digram?)
+      compound[0].reduce_step(simple[0])
     else
       # Create a new production with the digram's symbols as its
       # sole rhs members.
@@ -104,9 +109,9 @@ CollisionDiagnosis = Struct.new(:collision_found, :digram, :productions)
       digr.symbols.each { |sym| new_prod.append_symbol(sym) }
       add_production(new_prod)
       if prods[0] == prods[1]
-        prods[0].replace_digram(new_prod)
+        prods[0].reduce_step(new_prod)
       else
-        prods.each { |a_prod| a_prod.replace_digram(new_prod) }
+        prods.each { |a_prod| a_prod.reduce_step(new_prod) }
       end
     end
   end
@@ -136,7 +141,7 @@ CollisionDiagnosis = Struct.new(:collision_found, :digram, :productions)
       break
     end
 
-    referencing.replace_production(useless_prod)
+    referencing.derive_step(useless_prod)
     remove_production(index)
   end
 

@@ -229,7 +229,7 @@ describe Production do
   context 'Replacing a digram by a production:' do
 
     it 'should have not effect on empty production' do
-      subject.replace_digram(p_bc)
+      subject.reduce_step(p_bc)
       expect(subject.rhs).to be_empty
       expect(p_bc.refcount).to eq(0)
     end
@@ -238,7 +238,7 @@ describe Production do
     it 'should replace two-symbol sequence' do
       %w(a b c d e b c e).each { |symb| subject.append_symbol(symb) }
       p_bc_before = p_bc.to_string
-      subject.replace_digram(p_bc)
+      subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(6)
       expect(subject.rhs).to eq(['a', p_bc, 'd', 'e', p_bc, 'e'])
@@ -249,7 +249,7 @@ describe Production do
 
     it 'should replace a starting two-symbol sequence' do
       %w(b c d e b c e).each { |symb| subject.append_symbol(symb) }
-      subject.replace_digram(p_bc)
+      subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(5)
       expect(subject.rhs).to eq([p_bc, 'd', 'e', p_bc, 'e'])
@@ -259,7 +259,7 @@ describe Production do
 
     it 'should replace an ending two-symbol sequence' do
       %w(a b c d e b c).each { |symb| subject.append_symbol(symb) }
-      subject.replace_digram(p_bc)
+      subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(5)
       expect(subject.rhs).to eq(['a', p_bc, 'd', 'e', p_bc])
@@ -268,7 +268,7 @@ describe Production do
 
     it 'should replace two consecutive two-symbol sequences' do
       %w(a b c b c d).each { |symb| subject.append_symbol(symb) }
-      subject.replace_digram(p_bc)
+      subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(4)
       expect(subject.rhs).to eq(['a', p_bc, p_bc, 'd'])
@@ -280,7 +280,7 @@ describe Production do
   context 'Replacing a production occurrence by its rhs:' do
 
     it 'should have not effect on empty production' do
-      subject.replace_production(p_bc)
+      subject.derive_step(p_bc)
       expect(subject.rhs).to be_empty
     end
 
@@ -288,7 +288,7 @@ describe Production do
       [p_bc, 'd'].each { |symb| subject.append_symbol(symb) }
       expect(p_bc.refcount).to eq(1)
       
-      subject.replace_production(p_bc)
+      subject.derive_step(p_bc)
       expect(subject.rhs.size).to eq(3)
       expect(subject.rhs).to eq(%w(b c d))
       expect(p_bc.refcount).to eq(0)
@@ -298,7 +298,7 @@ describe Production do
     it 'should replace a production at the end' do
       ['d', p_bc].each { |symb| subject.append_symbol(symb) }
       expect(p_bc.refcount).to eq(1)
-      subject.replace_production(p_bc)
+      subject.derive_step(p_bc)
 
       expect(subject.rhs.size).to eq(3)
       expect(subject.rhs).to eq(%w(d b c))
@@ -307,7 +307,7 @@ describe Production do
 
     it 'should replace a production as sole symbol' do
       subject.append_symbol(p_bc)
-      subject.replace_production(p_bc)
+      subject.derive_step(p_bc)
 
       expect(subject.rhs.size).to eq(2)
       expect(subject.rhs).to eq(%w(b c))
@@ -315,7 +315,7 @@ describe Production do
 
     it 'should replace a production in the middle' do
       ['a', p_bc, 'd'].each { |symb| subject.append_symbol(symb) }
-      subject.replace_production(p_bc)
+      subject.derive_step(p_bc)
 
       expect(subject.rhs.size).to eq(4)
       expect(subject.rhs).to eq(%w(a b c d))

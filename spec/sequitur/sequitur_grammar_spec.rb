@@ -22,8 +22,8 @@ describe SequiturGrammar do
 
       # Initialization
       expect(instance.productions.size).to eq(1)
-      expect(instance.root).to eq(instance.productions.first)
-      expect(instance.root).to be_empty
+      expect(instance.start).to eq(instance.productions.first)
+      expect(instance.start).to be_empty
     end
 
     it 'could be created with single token' do
@@ -32,8 +32,8 @@ describe SequiturGrammar do
 
       # Initialization
       expect(instance.productions.size).to eq(1)
-      expect(instance.root).to eq(instance.productions.first)
-      expect(instance.root.rhs).to eq([:a])
+      expect(instance.start).to eq(instance.productions.first)
+      expect(instance.start.rhs).to eq([:a])
     end
 
     it 'could be created with multiple unique tokens' do
@@ -42,8 +42,8 @@ describe SequiturGrammar do
 
       # Initialization
       expect(instance.productions.size).to eq(1)
-      expect(instance.root).to eq(instance.productions.first)
-      expect(instance.root.rhs).to eq([:a, :b, :c, :d])
+      expect(instance.start).to eq(instance.productions.first)
+      expect(instance.start.rhs).to eq([:a, :b, :c, :d])
     end
 
     it 'could be created with a repeating digram' do
@@ -55,7 +55,7 @@ describe SequiturGrammar do
       expect(instance.productions.size).to eq(2)
       p_a = instance.productions[1]
       expect(p_a.rhs).to eq([:a, :b])
-      expect(instance.root.rhs).to eq([p_a, p_a])
+      expect(instance.start.rhs).to eq([p_a, p_a])
     end
 
     it 'should enforce the utility rule' do
@@ -72,7 +72,7 @@ describe SequiturGrammar do
       expect(instance.productions.size).to eq(2)
       p_a = instance.productions.last
       expect(p_a.rhs).to eq([:a, :b, :c])
-      expect(instance.root.rhs).to eq([p_a, p_a])
+      expect(instance.start.rhs).to eq([p_a, p_a])
     end
     
     it 'should cope with a pattern that caused an exception' do
@@ -96,7 +96,7 @@ describe SequiturGrammar do
       # P3: b P2 e
       expect(instance.productions.size).to eq(4)
       (p1, p2, p3) = instance.productions[1..3]
-      expect(instance.root.rhs).to eq([p3, p2, p3])
+      expect(instance.start.rhs).to eq([p3, p2, p3])
       expect(p1.rhs).to eq(%w(b e))
       expect(p2.rhs).to eq([p1, p1])
       expect(p3.rhs).to eq(['b', p2, 'e'])
@@ -113,7 +113,7 @@ describe SequiturGrammar do
 
       expect(instance.productions.size).to eq(3)
       (p1, p2) = instance.productions[1..2]
-      expect(instance.root.rhs).to eq([p2, p2])
+      expect(instance.start.rhs).to eq([p2, p2])
       expect(p1.rhs).to eq(%w(a b))
       expect(p2.rhs).to eq([p1, 'c', p1, 'd'])
     end
@@ -129,7 +129,7 @@ describe SequiturGrammar do
 
       expect(instance.productions.size).to eq(3)
       (p_a, p_c) = instance.productions[1..2]
-      expect(instance.root.rhs).to eq([p_c, p_c])
+      expect(instance.start.rhs).to eq([p_c, p_c])
       expect(p_a.rhs).to eq(%w(b c))
       expect(p_c.rhs).to eq(['a', p_a, 'd', p_a])
     end
@@ -165,7 +165,7 @@ SNIPPET
 
       instance = SequiturGrammar.new(input.chars)
       expect(instance.productions.size).to eq(13)
-      p0 = instance.root
+      p0 = instance.start
       expect(p0.rhs.size).to eq(13)
 
       (p1, p2, p3, p4, p5, p6, p7, p8, p9) = instance.productions[1..9]
@@ -196,20 +196,36 @@ SNIPPET
       ].flatten
       expect(p12.rhs).to eq(p12_expectation)  # Rule 5 above
     end
+    
+    it 'should work with a sequence of Ruby Symbols' do
+      input = 'abcabdabcabd'.chars.map(&:to_sym)
+      instance = SequiturGrammar.new(input.to_enum)
+
+      # Expectations:
+      # start : P2 P2.
+      # P1 : :a :b
+      # P2 : P1 :c P1 :d.
+
+      expect(instance.productions.size).to eq(3)
+      (p1, p2) = instance.productions[1..2]
+      expect(instance.start.rhs).to eq([p2, p2])
+      expect(p1.rhs).to eq([:a, :b])
+      expect(p2.rhs).to eq([p1, :c, p1, :d])
+    end
   end # context
 
   context 'Generating a text representation of itself:' do
 
     it 'should generate a text representation when empty' do
       instance = SequiturGrammar.new(empty_enum)
-      expectation = "#{instance.root.object_id} : ."
+      expectation = "#{instance.start.object_id} : ."
 
       expect(instance.to_string).to eq(expectation)
     end
 
     it 'should generate a text representation of a simple production' do
       instance = SequiturGrammar.new([:a].to_enum)
-      expectation = "#{instance.root.object_id} : a."
+      expectation = "#{instance.start.object_id} : a."
       expect(instance.to_string).to eq(expectation)
     end
   end # context

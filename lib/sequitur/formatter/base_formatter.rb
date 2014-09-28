@@ -1,4 +1,6 @@
 module Sequitur
+
+  # Namespace dedicated to grammar formatters.
   module Formatter
   
     # Superclass for grammar formatters.
@@ -7,7 +9,8 @@ module Sequitur
       attr(:output)
 
       # Constructor.
-      # [anIO] an output IO where the formatter's result will be placed.
+      # @param anIO [IO] an output IO where the formatter's result will 
+      # be placed.
       def initialize(anIO)
         @output = anIO
       end
@@ -16,6 +19,7 @@ module Sequitur
       
       # Given a grammar or a grammar visitor, perform the visit
       # and render the visit events in the output stream.
+      # @param aGrmOrVisitor [DynamicGrammar or GrammarVisitor]
       def render(aGrmOrVisitor)
         if aGrmOrVisitor.kind_of?(GrammarVisitor)
           a_visitor = aGrmOrVisitor

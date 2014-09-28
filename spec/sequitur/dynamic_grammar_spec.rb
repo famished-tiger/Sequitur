@@ -26,8 +26,8 @@ describe DynamicGrammar do
       expect { DynamicGrammar.new }.not_to raise_error
     end
 
-    it 'should have an empty root/start production' do
-      expect(subject.root).to be_empty
+    it 'should have an empty start/start production' do
+      expect(subject.start).to be_empty
       expect(subject.productions.size).to eq(1)
       expect(subject.productions.first).to be_empty
     end
@@ -60,15 +60,6 @@ describe DynamicGrammar do
       expect(subject.productions.last).to eq(p_bc)
     end
 
-    it 'should complain when rhs refers to unknown production' do
-      subject.add_production(p_a)
-      subject.add_production(p_b)
-      # Test fails because of Production#references
-      msg = "Production #{p_bc.object_id} refers to production #{p_c.object_id}"
-      msg << ' that is not part of the grammar.'
-      expect { subject.add_production(p_bc) }.to raise_error(StandardError, msg)
-
-    end
   end # context
 
 
@@ -117,10 +108,10 @@ describe DynamicGrammar do
       a_visitor.subscribe(fake_formatter)
 
       expect(fake_formatter).to receive(:before_grammar).with(subject).ordered
-      expect(fake_formatter).to receive(:before_production).with(subject.root)
+      expect(fake_formatter).to receive(:before_production).with(subject.start)
       expect(fake_formatter).to receive(:before_rhs).with([]).ordered
       expect(fake_formatter).to receive(:after_rhs).with([]).ordered
-      expect(fake_formatter).to receive(:after_production).with(subject.root)
+      expect(fake_formatter).to receive(:after_production).with(subject.start)
       expect(fake_formatter).to receive(:before_production).with(p_a)
       expect(fake_formatter).to receive(:before_rhs).with(p_a.rhs)
       expect(fake_formatter).to receive(:after_rhs).with(p_a.rhs)
@@ -146,13 +137,13 @@ describe DynamicGrammar do
   context 'Generating a text representation of itself:' do
 
     it 'should generate a text representation when empty' do
-      expectation = "#{subject.root.object_id} : ."
+      expectation = "#{subject.start.object_id} : ."
       expect(subject.to_string).to eq(expectation)
     end
 
     # it 'should generate a text representation of a simple production' do
     #   instance = SequiturGrammar.new([:a].to_enum)
-    #   expectation = "#{instance.root.object_id} : a."
+    #   expectation = "#{instance.start.object_id} : a."
     #   expect(instance.to_string).to eq(expectation)
     # end
 

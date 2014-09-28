@@ -10,12 +10,12 @@ require_relative './sequitur/formatter/base_text'
 
 module Sequitur
 
-  # Convenience method. Builds a Sequitur-generated grammar based
-  # on the sequence of input tokens
+  # Build a Sequitur-generated grammar based on the sequence of input tokens.
+  #
   # @param tokens [StringOrEnumerator] The input sequence of input tokens.
-  # Can be a sequence of characters (i.e. a String) or an Enumerator
-  # Tokens returned by enumerator should respond to the :hash message.
-  # Returns a SequiturGrammar instance.
+  #   Can be a sequence of characters (i.e. a String) or an Enumerator.
+  #   Tokens returned by enumerator should respond to the :hash message.
+  # @return [SequiturGrammar] a grammar that encodes the input.
   def self.build_from(tokens)
     input_sequence = case tokens
       when String then tokens.chars
