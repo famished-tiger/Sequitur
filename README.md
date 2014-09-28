@@ -6,6 +6,7 @@ _Ruby gem implementing the Sequitur algorithm_
 [![Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
 [![Gem Version](https://badge.fury.io/rb/sequitur.svg)](http://badge.fury.io/rb/sequitur)
 [![Dependency Status](https://gemnasium.com/famished-tiger/Sequitur.png)](https://gemnasium.com/famished-tiger/Sequitur)
+[![Inline docs](http://inch-ci.org/github/famished-tiger/Sequitur.svg?branch=master)](http://inch-ci.org/github/famished-tiger/Sequitur)
 
 
 ### What is the Sequitur algorithm? ###

@@ -1,3 +1,6 @@
+### 0.1.05 / 2014-09-28
+* [CHANGE] File `README.md`: added badge from inch-ci.org (documentation quality).
+
 ### 0.1.04 / 2014-09-28
 * [CHANGE] All methods are now documented (YARD reports 100% coverage).
 

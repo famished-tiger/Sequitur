@@ -3,7 +3,7 @@
 
 module Sequitur # Module used as a namespace
   # The version number of the gem.
-  Version = '0.1.04'
+  Version = '0.1.05'
 
   # Brief description of the gem.
   Description = 'Ruby implementation of the Sequitur algorithm'
