@@ -4,7 +4,7 @@ _Ruby gem implementing the Sequitur algorithm_
 [Homepage](https://github.com/famished-tiger/Sequitur)  
 
 [![Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
-[![Coverage Status]https://coveralls.io/repos/famished-tiger/Sequitur/badge.png?branch=master)(https://coveralls.io/r/famished-tiger/Sequitur)
+[![Coverage Status](https://coveralls.io/repos/famished-tiger/Sequitur/badge.png?branch=master)](https://coveralls.io/r/famished-tiger/Sequitur)
 [![Gem Version](https://badge.fury.io/rb/sequitur.svg)](http://badge.fury.io/rb/sequitur)
 [![Dependency Status](https://gemnasium.com/famished-tiger/Sequitur.png)](https://gemnasium.com/famished-tiger/Sequitur)
 [![Inline docs](http://inch-ci.org/github/famished-tiger/Sequitur.svg?branch=master)](http://inch-ci.org/github/famished-tiger/Sequitur)

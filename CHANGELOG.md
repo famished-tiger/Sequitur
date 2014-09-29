@@ -1,3 +1,6 @@
+### 0.1.07 / 2014-09-29
+* [CHANGE] File `README.md`: Fixed bad Markdown syntax in badge part.
+
 ### 0.1.06 / 2014-09-29
 * [NEW] New file `.coveralls.yml` Coveralls configured to use Travis CI
 * [CHANGE] File `README.md`: added badge from coveralls (test coverage).
