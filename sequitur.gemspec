@@ -49,6 +49,7 @@ EOSTRING
   pkg.add_development_dependency('rake', ['>= 0.8.0'])
   pkg.add_development_dependency('rspec', ['>= 3.0.0'])
   pkg.add_development_dependency('simplecov', ['>= 0.5.0'])
+  pkg.add_development_dependency('coveralls', ['>= 0.7.0'])
   pkg.add_development_dependency('rubygems', ['>= 2.0.0'])
 
   # pkg.bindir = 'bin'

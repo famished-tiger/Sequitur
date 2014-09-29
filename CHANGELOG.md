@@ -1,3 +1,10 @@
+### 0.1.06 / 2014-09-29
+* [NEW] New file `.coveralls.yml` Coveralls configured to use Travis CI
+* [CHANGE] File `README.md`: added badge from coveralls (test coverage).
+* [CHANGE] Files `Gemfile`, `sequitur.gemspec`: added development dependency on coveralls gem.
+* [CHANGE] File `spec_helper.rb` Added Coveralls customization code
+
+
 ### 0.1.05 / 2014-09-28
 * [CHANGE] File `README.md`: added badge from inch-ci.org (documentation quality).
 
