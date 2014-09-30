@@ -1,3 +1,7 @@
+### 0.1.08 / 2014-09-30
+* [CHANGE] Method `SequiturGrammar#restore_unicity` Code refactored to reduce code complexity reported by CodeClimate.
+* [CHANGE] File `README.md`: Minor cosmetic enhancements.
+
 ### 0.1.07 / 2014-09-29
 * [CHANGE] File `README.md`: Fixed bad Markdown syntax in badge part.
 

@@ -97,7 +97,6 @@ CollisionDiagnosis = Struct.new(
   # Then create a new production that will have
   # the symbols of d as its rhs members.
   def restore_unicity(aDiagnosis)
-    digr = aDiagnosis.digram
     prods = aDiagnosis.productions
     if prods.any?(&:single_digram?)
       (simple, compound) = prods.partition(&:single_digram?)
@@ -105,14 +104,9 @@ CollisionDiagnosis = Struct.new(
     else
       # Create a new production with the digram's symbols as its
       # sole rhs members.
-      new_prod = Production.new
-      digr.symbols.each { |sym| new_prod.append_symbol(sym) }
-      add_production(new_prod)
-      if prods[0] == prods[1]
-        prods[0].reduce_step(new_prod)
-      else
-        prods.each { |a_prod| a_prod.reduce_step(new_prod) }
-      end
+      new_prod = build_production_for(aDiagnosis.digram)
+      prods[0].reduce_step(new_prod)
+      prods[1].reduce_step(new_prod) unless prods[1] == prods[0]
     end
   end
 
@@ -145,7 +139,15 @@ CollisionDiagnosis = Struct.new(
     remove_production(index)
   end
 
-
+  # Create a new production that will have the symbols from digram
+  # as its rhs members.
+  def build_production_for(aDigram)
+    new_prod = Production.new
+    aDigram.symbols.each { |sym| new_prod.append_symbol(sym) }
+    add_production(new_prod)
+    
+    return new_prod
+  end
 end # class
 
 end # module

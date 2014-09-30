@@ -23,7 +23,7 @@ in a very compact way.
 Of interest is the fact that the algorithm runs in time linear in the length of the input sequence.
 
 **Can you give a simple example?**  
-Sure. Let's begin with a very basic case. Assume that 'abcabcabc' is our input string.
+Sure. Let's begin with a very basic case. Assume that *'abcabcabc'* is our input string.
 Notice that it is the same as the text 'abc' repeated three times. The Sequitur algorithm captures
 this repetition and will generate the two following rules:
 
@@ -32,13 +32,13 @@ start : P1 P1 P1.
 P1 : a b c.
 ```
 
-In plain English:
+In plain English:  
 -The first rule (named start) always represents the whole input. Here, it indicates that the input
-is three time the pattern encoded by the rule called P1.
--The second rule (named P1) represents the sequence a b c.
+is three time the pattern encoded by the rule called P1.  
+-The second rule (named P1) represents the sequence a b c.  
 
 **Can you give another example?**  
-Yep. Assume this time that the input is 'ababcabcdabcde'. 
+Yep. Assume this time that the input is *'ababcabcdabcde'*. 
 Then Sequitur algorithm will generate the rule set:  
 ```
 start : P1 P2 P3 P3 e.  
