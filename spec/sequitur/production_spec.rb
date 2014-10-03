@@ -330,6 +330,8 @@ describe Production do
       
       # Empty production: visitor will receive a start and end visit messages
       expect(fake).to receive(:start_visit_production).once.ordered
+      expect(fake).to receive(:start_visit_rhs).once.ordered
+      expect(fake).to receive(:end_visit_rhs).once.ordered
       expect(fake).to receive(:end_visit_production).once.ordered
 
       expect { subject.accept(fake) }.not_to raise_error
@@ -339,8 +341,10 @@ describe Production do
       # Use a mock visitor
       fake = double('fake_visitor')      
       expect(fake).to receive(:start_visit_production).once.ordered
+      expect(fake).to receive(:start_visit_rhs).once.ordered
       expect(fake).to receive(:visit_terminal).with('b').ordered
       expect(fake).to receive(:visit_terminal).with('c').ordered
+      expect(fake).to receive(:end_visit_rhs).once.ordered
       expect(fake).to receive(:end_visit_production).once.ordered
 
       expect { p_bc.accept(fake) }.not_to raise_error
@@ -353,8 +357,10 @@ describe Production do
       
       fake = double('fake_visitor')      
       expect(fake).to receive(:start_visit_production).once.ordered
+      expect(fake).to receive(:start_visit_rhs).once.ordered
       expect(fake).to receive(:visit_prod_ref).with(p_a).ordered
       expect(fake).to receive(:visit_prod_ref).with(p_bc).ordered
+      expect(fake).to receive(:end_visit_rhs).once.ordered
       expect(fake).to receive(:end_visit_production).once.ordered
 
       expect { subject.accept(fake) }.not_to raise_error

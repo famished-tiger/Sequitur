@@ -78,16 +78,6 @@ describe GrammarVisitor do
       
       subject.start_visit_grammar(fake)
     end
-    
-    it 'should react to the start_visit_production message' do
-      expect(mock_production).to receive(:rhs).and_return([1, 2, 3])
-      
-      # Notify subscribers when start the visit of the production
-      expect(listener1).to receive(:before_production).with(mock_production)
-      expect(listener1).to receive(:before_rhs).with([1, 2, 3])
-      
-      subject.start_visit_production(mock_production)
-    end
 
   end # context  
 

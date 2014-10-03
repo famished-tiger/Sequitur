@@ -1,4 +1,5 @@
 require_relative 'digram'
+require_relative 'symbol_sequence'
 require_relative 'production_ref'
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
@@ -25,10 +26,12 @@ class Production
   # Constructor. 
   # Build a production with an empty RHS.
   def initialize()
-    clear_rhs
+    @rhs = SymbolSequence.new
     @refcount = 0
     @digrams = []
   end
+  
+  
 
   public
 
@@ -69,7 +72,7 @@ class Production
   # Select the references to production appearing in the rhs.
   # @return [Array of ProductionRef]
   def references()
-    return rhs.select { |symb| symb.is_a?(ProductionRef) }
+    return rhs.references
   end
 
   # Look in the rhs all the references to a production passed a argument.
@@ -87,8 +90,7 @@ class Production
     return [] if rhs.size < 2
 
     result = []
-    rhs.each_cons(2) { |couple| result << Digram.new(*couple, self) }
-
+    rhs.symbols.each_cons(2) { |couple| result << Digram.new(*couple, self) }
     @digrams = result
   end
 
@@ -129,14 +131,7 @@ class Production
   # object id of production : rhs as space-separated sequence of symbols.
   # @return [String]
   def to_string()
-    rhs_text = rhs.map do |elem|
-      case elem
-        when String then "'#{elem}'"
-        else elem.to_s
-      end
-    end
-
-    return "#{object_id} : #{rhs_text.join(' ')}."
+    return "#{object_id} : #{rhs.to_string}."
   end
 
   # Add a (grammar) symbol at the end of the RHS.
@@ -163,11 +158,7 @@ class Production
   # Clear the right-hand side.
   # Any referenced production has its reference counter decremented.
   def clear_rhs()
-    if rhs
-      refs = references
-      refs.each(&:unbind)
-    end
-    @rhs = []
+    rhs.clear()
   end
 
   # Find all the positions where the digram occurs in the rhs
@@ -203,20 +194,11 @@ class Production
   # @param another [Production or ProductionRef] a production that
   #   consists exactly of one digram (= 2 symbols).
   def reduce_step(another)
-    (symb1, symb2) = another.rhs
+    (symb1, symb2) = another.rhs.symbols
     pos = positions_of(symb1, symb2).reverse
 
     # Replace the two symbol sequence by the production
-    pos.each do |index|
-      if rhs[index].is_a?(ProductionRef)
-        rhs[index].bind_to(another)
-      else
-        rhs[index] = ProductionRef.new(another)
-      end
-      index1 = index + 1
-      rhs[index1].unbind if rhs[index1].is_a?(ProductionRef)
-      rhs.delete_at(index1)
-    end
+    pos.each { |index| rhs.reduce_step(index, another) }
 
     recalc_digrams
   end
@@ -235,11 +217,7 @@ class Production
     (0...rhs.size).to_a.reverse.each do |index|
       next unless rhs[index] == another
 
-      # Avoid the aliasing of production reference
-      other_rhs = another.rhs.map do |symb|
-        symb.is_a?(ProductionRef) ? symb.dup : symb
-      end
-      rhs.insert(index + 1, *other_rhs)
+      rhs.insert_at(index + 1, another.rhs)
       another.decr_refcount
       rhs.delete_at(index)
     end
@@ -253,13 +231,7 @@ class Production
   def accept(aVisitor)
     aVisitor.start_visit_production(self)
 
-    rhs.each do |a_symb|
-      if a_symb.is_a?(ProductionRef)
-        a_symb.accept(aVisitor)
-      else
-        aVisitor.visit_terminal(a_symb)
-      end
-    end
+    rhs.accept(aVisitor)
 
     aVisitor.end_visit_production(self)
   end

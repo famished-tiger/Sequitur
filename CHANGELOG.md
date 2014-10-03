@@ -1,3 +1,8 @@
+### 0.1.09 / 2014-10-03
+* [NEW] Class `SymbolSequence`. Part of code refactoring that reduces code complexity reported by CodeClimate.
+* [CHANGE] Class `Production` refactored to use a SymbolSequence instance as its rhs.
+* [CHANGE] File `README.md`: Minor cosmetic enhancements.
+
 ### 0.1.08 / 2014-09-30
 * [CHANGE] Method `SequiturGrammar#restore_unicity` Code refactored to reduce code complexity reported by CodeClimate.
 * [CHANGE] File `README.md`: Minor cosmetic enhancements.

@@ -47,7 +47,12 @@ class GrammarVisitor
   # @param aProduction [Production] the production to visit.
   def start_visit_production(aProduction)
     broadcast(:before_production, aProduction)
-    broadcast(:before_rhs, aProduction.rhs)
+  end
+  
+  # Visit event. The visitor is about to visit the given rhs of production.
+  # @param rhs [SymbolSequence] the rhs of a production to visit. 
+  def start_visit_rhs(rhs)
+    broadcast(:before_rhs, rhs)  
   end
 
   # Visit event. The visitor is visiting the 
@@ -66,13 +71,17 @@ class GrammarVisitor
     broadcast(:before_terminal, aTerminal)
     broadcast(:after_terminal, aTerminal)
   end
+  
+  # Visit event. The visitor has completed its visit of the given rhs.
+  # @param rhs [SymbolSequence] the rhs of a production to visit.
+  def end_visit_rhs(rhs)
+    broadcast(:after_rhs, rhs) 
+  end
 
   # Visit event. The visitor has completed its visit of the given production.
   # @param aProduction [Production] the production to visit.
   def end_visit_production(aProduction)
-    broadcast(:after_rhs, aProduction.rhs)
     broadcast(:after_production, aProduction)
-
   end
 
   # Visit event. The visitor has completed the visit of the grammar.

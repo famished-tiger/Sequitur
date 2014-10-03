@@ -108,9 +108,12 @@ describe DynamicGrammar do
       a_visitor.subscribe(fake_formatter)
 
       expect(fake_formatter).to receive(:before_grammar).with(subject).ordered
-      expect(fake_formatter).to receive(:before_production).with(subject.start)
-      expect(fake_formatter).to receive(:before_rhs).with([]).ordered
-      expect(fake_formatter).to receive(:after_rhs).with([]).ordered
+      expect(fake_formatter).to receive(:before_production)
+        .with(subject.start).ordered
+      expect(fake_formatter).to receive(:before_rhs)
+        .with(subject.start.rhs).ordered
+      expect(fake_formatter).to receive(:after_rhs)
+        .with(subject.start.rhs).ordered
       expect(fake_formatter).to receive(:after_production).with(subject.start)
       expect(fake_formatter).to receive(:before_production).with(p_a)
       expect(fake_formatter).to receive(:before_rhs).with(p_a.rhs)
