@@ -9,7 +9,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 class SequiturGrammar < DynamicGrammar
 
   # Build the grammar from an enumerator of tokens.
-  # @param anEnum [Enumerator] an enumerator that will iterate 
+  # @param anEnum [Enumerator] an enumerator that will iterate
   #   over the input tokens.
   def initialize(anEnum)
     super()
@@ -25,12 +25,12 @@ class SequiturGrammar < DynamicGrammar
 
   private
 
-# Struct used for internal purposes
-CollisionDiagnosis = Struct.new(
-  :collision_found, # true if collision detected
-  :digram, # The digram involved in a collision
-  :productions # The productions where the digram occurs
-)
+  # Struct used for internal purposes
+  CollisionDiagnosis = Struct.new(
+    :collision_found, # true if collision detected
+    :digram, # The digram involved in a collision
+    :productions # The productions where the digram occurs
+  )
 
 
   # Assuming that a new input token was added to the start production,
@@ -49,13 +49,13 @@ CollisionDiagnosis = Struct.new(
     loop do
       unicity_diagnosis = detect_collision if unicity_diagnosis.nil?
       restore_unicity(unicity_diagnosis) if unicity_diagnosis.collision_found
-      
-      useless_prod = detect_useless_production
-      restore_utility(useless_prod) if useless_prod
+
+      prod_index = detect_useless_production
+      restore_utility(prod_index) unless prod_index.nil?
 
       unicity_diagnosis = detect_collision
-      useless_prod = detect_useless_production
-      break unless unicity_diagnosis.collision_found || useless_prod
+      prod_index = detect_useless_production
+      break unless unicity_diagnosis.collision_found || !prod_index.nil?
     end
   end
 
@@ -72,7 +72,7 @@ CollisionDiagnosis = Struct.new(
         its_key = a_digr.key
         if found_so_far.include? its_key
           orig_digr = found_so_far[its_key]
-          # Disregard sequence like a a a 
+          # Disregard sequence like a a a
           if ((orig_digr.production == a_prod) && a_digr.repeating? &&
             (orig_digr == a_digr))
             next
@@ -112,20 +112,23 @@ CollisionDiagnosis = Struct.new(
 
   # Return a production that is used less than twice in the grammar.
   def detect_useless_production()
-    useless = productions.find { |prod| prod.refcount < 2 }
-    return (useless == productions[0]) ? nil : useless
+    useless = productions.index { |prod| prod.refcount < 2 }
+    unless useless.nil?
+      useless = nil if useless == 0
+    end
+    return useless
   end
 
   # Given the passed production P is referenced only once.
   # Then replace P by its RHS where it is referenced.
   # And delete P
-  def restore_utility(useless_prod)
-    # Retrieve index of useless_prod
-    index =  productions.index(useless_prod)
+  def restore_utility(prod_index)
+    # Retrieve useless prod from its index
+    useless_prod =  productions[prod_index]
 
     # Retrieve production referencing useless one
     referencing = nil
-    productions.each do |a_prod|
+    productions.reverse.each do |a_prod|
       # Next line assumes non-recursive productions
       next if a_prod == useless_prod
 
@@ -136,7 +139,7 @@ CollisionDiagnosis = Struct.new(
     end
 
     referencing.derive_step(useless_prod)
-    remove_production(index)
+    remove_production(prod_index)
   end
 
   # Create a new production that will have the symbols from digram
@@ -145,7 +148,7 @@ CollisionDiagnosis = Struct.new(
     new_prod = Production.new
     aDigram.symbols.each { |sym| new_prod.append_symbol(sym) }
     add_production(new_prod)
-    
+
     return new_prod
   end
 end # class

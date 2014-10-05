@@ -77,18 +77,19 @@ describe Production do
       # Case 2: production with one reference
       subject.append_symbol(p_a)
       expect(subject.references).to eq([p_a])
-      expect(subject.references_of(p_a)).to eq([p_a])
+      expect(subject.references_of(p_a).map(&:production)).to eq([p_a])
+
 
       # Case 3: production with repeated references
       subject.append_symbol(p_a) # second time
       expect(subject.references).to eq([p_a, p_a])
-      expect(subject.references_of(p_a)).to eq([p_a, p_a])
+      expect(subject.references_of(p_a).map(&:production)).to eq([p_a, p_a])
 
 
       # Case 4: production with multiple distinct references
       subject.append_symbol(p_bc)
       expect(subject.references).to eq([p_a, p_a, p_bc])
-      expect(subject.references_of(p_bc)).to eq([p_bc])
+      expect(subject.references_of(p_bc).map(&:production)).to eq([p_bc])
     end
 
     it 'should know the position(s) of a given digram' do

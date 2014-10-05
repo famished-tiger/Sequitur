@@ -17,6 +17,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       @symbols = orig.symbols.map do |sym|
         sym.is_a?(Symbol) ? sym : sym.dup
       end
+      invalidate_refs
     end
 
     public
@@ -26,6 +27,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       refs = references
       refs.each(&:unbind)      
       @symbols = []
+      invalidate_refs
     end
 
     # Tell whether the sequence is empty.
@@ -44,6 +46,10 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @param aSymbol [Object] The symbol to append.
     def <<(aSymbol)
       symbols << aSymbol
+      if aSymbol.is_a?(ProductionRef)
+        @memo_references ||= []
+        @memo_references << aSymbol
+      end
     end
 
     # Retrieve the element from the sequence at given position.
@@ -58,13 +64,13 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @return true when an item from self equals the corresponding
     #   item from 'other'
     def ==(other)
-      return true if self.object_id == other.object_id
+      return true if object_id == other.object_id
 
       case other
-      when SymbolSequence
-        same = self.symbols == other.symbols
-      when Array
-        same = self.symbols == other
+        when SymbolSequence
+          same = symbols == other.symbols
+        when Array
+          same = symbols == other
       else
         same = false
       end
@@ -76,7 +82,18 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Select the references to production appearing in the rhs.
     # @return [Array of ProductionRef]
     def references()
-      return symbols.select { |symb| symb.is_a?(ProductionRef) }
+      @memo_references ||= symbols.select { |symb| symb.is_a?(ProductionRef) }
+      return @memo_references
+    end
+
+
+    # Select the references of the given production appearing in the rhs.
+    # @param aProduction [Production]
+    # @return [Array of ProductionRef]
+    def references_of(aProduction)
+      return [] if references.empty?
+      result = references.select { |a_ref| a_ref == aProduction }
+      return result
     end
 
 
@@ -96,11 +113,12 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
   
     # Insert at position the elements from another sequence.
     # @param position [Fixnum] A zero-based index of the symbols to replace.
-    # @param another [Production] A production with a two-elements rhs
+    # @param another [SymbolSequence] A production with a two-elements rhs
     #   (a single digram).
     def insert_at(position, another)
       klone = another.dup
       symbols.insert(position, *klone.symbols)
+      invalidate_refs
     end
     
     # Given that the production P passed as argument has exactly 2 symbols
@@ -114,16 +132,23 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       if symbols[index].is_a?(ProductionRef)
         symbols[index].bind_to(aProduction)
       else
-        symbols[index] = ProductionRef.new(aProduction)
+        new_ref = ProductionRef.new(aProduction)
+        symbols[index] = new_ref
+        @memo_references ||= []
+        @memo_references << new_ref
       end
       index1 = index + 1
-      symbols[index1].unbind if symbols[index1].is_a?(ProductionRef)
+      if symbols[index1].is_a?(ProductionRef)
+        symbols[index1].unbind
+        invalidate_refs
+      end
       delete_at(index1)
     end
 
     # Remove the element at given position
     # @param position [Fixnum] a zero-based index.
     def delete_at(position)
+      invalidate_refs if symbols[position].is_a?(ProductionRef)
       symbols.delete_at(position)
     end
 
@@ -143,6 +168,13 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       end
 
       aVisitor.end_visit_rhs(self)
+    end
+    
+    private
+    
+    def invalidate_refs()
+      @memo_references = nil
+      @lookup_references = nil
     end
 
   end # class

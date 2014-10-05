@@ -1,3 +1,6 @@
+### 0.1.10 / 2014-10-05
+* [CHANGE] Code refactoring for performance. Impacted classes: `SequiturGrammar`, `SymbolSequence` and `Production`.
+
 ### 0.1.09 / 2014-10-03
 * [NEW] Class `SymbolSequence`. Part of code refactoring that reduces code complexity reported by CodeClimate.
 * [CHANGE] Class `Production` refactored to use a SymbolSequence instance as its rhs.

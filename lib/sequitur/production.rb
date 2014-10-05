@@ -78,9 +78,9 @@ class Production
   # Look in the rhs all the references to a production passed a argument.
   # aProduction [aProduction or ProductionRef] The production to search for.
   # @return [Array] the array of ProductionRef to the passed production
-  def references_of(aProduction)
-    refs = references
-    return refs.select { |a_ref| a_ref == aProduction }
+  def references_of(a_prod)
+    real_prod = a_prod.is_a?(ProductionRef) ? a_prod.production : a_prod
+    return rhs.references_of(real_prod)
   end
 
 
@@ -158,7 +158,7 @@ class Production
   # Clear the right-hand side.
   # Any referenced production has its reference counter decremented.
   def clear_rhs()
-    rhs.clear()
+    rhs.clear
   end
 
   # Find all the positions where the digram occurs in the rhs
