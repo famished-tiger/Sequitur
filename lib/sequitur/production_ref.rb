@@ -100,7 +100,7 @@ class ProductionRef
   end
 
   # Check that the this object doesn't refer to any production.
-  # @return [true / false] true when this object doesn't 
+  # @return [true / false] true when this object doesn't
   #   point to a production.
   def unbound?()
     return production.nil?

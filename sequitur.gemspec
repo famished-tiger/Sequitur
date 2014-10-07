@@ -37,7 +37,8 @@ EOSTRING
     'CHANGELOG.md',
     'LICENSE.txt', 'README.md',
     'lib/*.*', 'lib/**/*.rb',
-    'spec/**/*.rb'
+    'spec/**/*.rb',
+    'examples/*.*'
   ]
   pkg.files = file_list
   pkg.test_files = Dir[ 'spec/**/*_spec.rb' ]

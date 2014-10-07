@@ -1,3 +1,7 @@
+### 0.1.11 / 2014-10-07
+* [CHANGE] File `README.md`: Added an example showing that Sequitur can work on a sequence of integers.
+* [NEW] Folder `examples` Added a few code sample.
+
 ### 0.1.10 / 2014-10-05
 * [CHANGE] Code refactoring for performance. Impacted classes: `SequiturGrammar`, `SymbolSequence` and `Production`.
 

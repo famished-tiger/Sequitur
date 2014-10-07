@@ -10,7 +10,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 #   Each production has a rhs that is a sequence of grammar symbols.
 #   Grammar symbols are categorized into
 #   -terminal symbols (i.e. String, Ruby Symbol,...)
-#   -non-terminal symbols (i.e. ProductionRef) 
+#   -non-terminal symbols (i.e. ProductionRef)
 class DynamicGrammar
   # Link to the start production.
   attr_reader(:start)
@@ -78,10 +78,10 @@ class DynamicGrammar
   # @param aVisitor [GrammarVisitor] the visitor object
   def accept(aVisitor)
     aVisitor.start_visit_grammar(self)
-    
+
     # Let's proceed with the visit of productions
     productions.each { |prod| prod.accept(aVisitor) }
-    
+
     aVisitor.end_visit_grammar(self)
   end
 
@@ -92,7 +92,7 @@ class DynamicGrammar
   end
 
   protected
-  
+
   # Append a given symbol to the rhs of passed production.
   # @param aProduction [Production]
   # @param aSymbol [Object]

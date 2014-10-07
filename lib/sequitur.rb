@@ -22,7 +22,7 @@ module Sequitur
       when Enumerator then tokens
       else tokens.to_enum
     end
-    
+
     return SequiturGrammar.new(input_sequence)
   end
 end # module

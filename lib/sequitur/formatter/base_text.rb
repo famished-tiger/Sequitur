@@ -32,7 +32,7 @@ module Sequitur
       end
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
-      # Notification of a visit event: the visitor is about to visit 
+      # Notification of a visit event: the visitor is about to visit
       # a production
       # @param aProduction [aProduction]
       def before_production(aProduction)
@@ -41,7 +41,7 @@ module Sequitur
       end
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
-      # Notification of a visit event: the visitor is about to visit 
+      # Notification of a visit event: the visitor is about to visit
       # the rhs of a production
       # @param _ [Array]
       def before_rhs(_)
@@ -49,7 +49,7 @@ module Sequitur
       end
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
-      # Notification of a visit event: the visitor is about to visit 
+      # Notification of a visit event: the visitor is about to visit
       # a terminal symbol from the rhs of a production
       # @param aSymbol [Object]
       def before_terminal(aSymbol)
@@ -57,8 +57,8 @@ module Sequitur
       end
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
-      # Notification of a visit event: the visitor is about to visit 
-      # a non-terminal (= an allusion to a production) in the rhs of a 
+      # Notification of a visit event: the visitor is about to visit
+      # a non-terminal (= an allusion to a production) in the rhs of a
       # production
       # @param aProduction [Production] a production occurring in the rhs
       def before_non_terminal(aProduction)
@@ -67,21 +67,21 @@ module Sequitur
       end
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
-      # Notification of a visit event: the visitor complete the visit 
+      # Notification of a visit event: the visitor complete the visit
       # of a production
       def after_production(_)
         output.print ".\n"
       end
 
       private
-      
+
       # Read accessor of the production lookup
       def prod_lookup()
         return @prod_lookup
       end
 
       # Generate a name of a given production.
-      # @param aProduction [Production] 
+      # @param aProduction [Production]
       def prod_name(aProduction)
         prod_index = prod_lookup[aProduction]
         name = (prod_index == 0) ? 'start' : "P#{prod_index}"

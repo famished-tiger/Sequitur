@@ -9,23 +9,23 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def initialize()
       @symbols = []
     end
-    
+
     # Copy constructor invoked by dup or clone methods.
     # @param orig [SymbolSequence]
     def initialize_copy(orig)
       # Deep copy to avoid the aliasing of production reference
       @symbols = orig.symbols.map do |sym|
-        sym.is_a?(Symbol) ? sym : sym.dup
+        sym.is_a?(ProductionRef) ? sym.dup : sym
       end
       invalidate_refs
     end
 
     public
-    
+
     # Clear the symbol sequence.
     def clear()
       refs = references
-      refs.each(&:unbind)      
+      refs.each(&:unbind)
       @symbols = []
       invalidate_refs
     end
@@ -41,7 +41,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def size()
       return symbols.size
     end
-    
+
     # Append a grammar symbol at the end of the sequence.
     # @param aSymbol [Object] The symbol to append.
     def <<(aSymbol)
@@ -110,7 +110,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 
       return rhs_text.join(' ')
     end
-  
+
     # Insert at position the elements from another sequence.
     # @param position [Fixnum] A zero-based index of the symbols to replace.
     # @param another [SymbolSequence] A production with a two-elements rhs
@@ -120,9 +120,9 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       symbols.insert(position, *klone.symbols)
       invalidate_refs
     end
-    
+
     # Given that the production P passed as argument has exactly 2 symbols
-    #   in its rhs s1 s2, substitute in the rhs of self all occurrences of 
+    #   in its rhs s1 s2, substitute in the rhs of self all occurrences of
     #   s1 s2 by a reference to P.
     # @param index [Fixnum] the position of a two symbol sequence to be replaced
     #   by the production
@@ -169,9 +169,9 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 
       aVisitor.end_visit_rhs(self)
     end
-    
+
     private
-    
+
     def invalidate_refs()
       @memo_references = nil
       @lookup_references = nil

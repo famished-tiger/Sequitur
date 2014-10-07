@@ -74,7 +74,7 @@ describe SequiturGrammar do
       expect(p_a.rhs).to eq([:a, :b, :c])
       expect(instance.start.rhs).to eq([p_a, p_a])
     end
-    
+
     it 'should cope with a pattern that caused an exception' do
       input = 'aaac'  # This sequence raised an exception
 
@@ -100,6 +100,78 @@ describe SequiturGrammar do
       expect(p1.rhs).to eq(%w(b e))
       expect(p2.rhs).to eq([p1, p1])
       expect(p3.rhs).to eq(['b', p2, 'e'])
+    end
+
+    it 'should work with strings instead of single char input tokens' do
+      # Raw input is sequence of chars
+      raw_input = 'bbebeebebebbebee'
+
+      # Convert them into multichar strings
+      input = raw_input.chars.map do |ch|
+        'letter_' + ch
+      end
+
+      # Creation
+      instance = SequiturGrammar.new(input.to_enum)
+
+      # Expectations:
+      # S: P3 P2 P3
+      # P1: b e
+      # P2: P1 P1
+      # P3: b P2 e
+      expect(instance.productions.size).to eq(4)
+      (p1, p2, p3) = instance.productions[1..3]
+      expect(instance.start.rhs).to eq([p3, p2, p3])
+      expect(p1.rhs).to eq(%w(letter_b letter_e))
+      expect(p2.rhs).to eq([p1, p1])
+      expect(p3.rhs).to eq(['letter_b',p2, 'letter_e'])
+    end
+    
+    it 'should work with Symbol instead of single char input tokens' do
+      # Raw input is sequence of single characters
+      raw_input = 'bbebeebebebbebee'
+
+      # Convert them into symbols
+      input = raw_input.chars.map(&:to_sym)
+
+      # Creation
+      instance = SequiturGrammar.new(input.to_enum)
+
+      # Expectations:
+      # S: P3 P2 P3
+      # P1: b e
+      # P2: P1 P1
+      # P3: b P2 e
+      expect(instance.productions.size).to eq(4)
+      (p1, p2, p3) = instance.productions[1..3]
+      expect(instance.start.rhs).to eq([p3, p2, p3])
+      expect(p1.rhs).to eq([:b, :e])
+      expect(p2.rhs).to eq([p1, p1])
+      expect(p3.rhs).to eq([:b, p2, :e])
+    end
+
+
+    it 'should work with integer values as input tokens' do
+      # Raw input is sequence of hex digits
+      raw_input = 'bbebeebebebbebee'
+
+      # Convert them into Fixnums
+      input = raw_input.chars.map { |ch| ch.to_i(16) }
+
+      # Creation
+      instance = SequiturGrammar.new(input.to_enum)
+
+      # Expectations:
+      # S: P3 P2 P3
+      # P1: b e
+      # P2: P1 P1
+      # P3: b P2 e
+      expect(instance.productions.size).to eq(4)
+      (p1, p2, p3) = instance.productions[1..3]
+      expect(instance.start.rhs).to eq([p3, p2, p3])
+      expect(p1.rhs).to eq([0xb, 0xe])
+      expect(p2.rhs).to eq([p1, p1])
+      expect(p3.rhs).to eq([0xb, p2, 0xe])
     end
 
     it 'should cope with the example from sequitur.info website' do
@@ -153,7 +225,7 @@ SNIPPET
       # 2 → h o t                                         hot
       # 3 → 10 1                                          ,↵pease_porridge_
       # 4 → c 11                                          cold
-      # 5 → 12 _ t h 8 t 10 n 12 9 d a y s _ 11 . ↵ 
+      # 5 → 12 _ t h 8 t 10 n 12 9 d a y s _ 11 . ↵
       #   in_the_pot,↵nine_days_old.↵
       # 6 → s o m 9 l i k 9 i t _                         some_like_it_
       # 7 → 10 6                                          ,↵some_like_it_
@@ -196,7 +268,7 @@ SNIPPET
       ].flatten
       expect(p12.rhs).to eq(p12_expectation)  # Rule 5 above
     end
-    
+
     it 'should work with a sequence of Ruby Symbols' do
       input = 'abcabdabcabd'.chars.map(&:to_sym)
       instance = SequiturGrammar.new(input.to_enum)

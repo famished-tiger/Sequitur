@@ -23,15 +23,15 @@ class Production
   # The sequence of digrams appearing in the RHS
   attr_reader(:digrams)
 
-  # Constructor. 
+  # Constructor.
   # Build a production with an empty RHS.
   def initialize()
     @rhs = SymbolSequence.new
     @refcount = 0
     @digrams = []
   end
-  
-  
+
+
 
   public
 
@@ -171,7 +171,7 @@ class Production
   #   p.positions_of(a, b) # => [0, 3, 5]
   #   # Caution: "overlapping" digrams shouldn't be counted
   #   # Given the production p : a a b a a a c d
-  #   # Then ... 
+  #   # Then ...
   #   p.positions_of(a, a) # => [0, 3]
   def positions_of(symb1, symb2)
 
@@ -189,7 +189,7 @@ class Production
 
 
   # Given that the production P passed as argument has exactly 2 symbols
-  #   in its rhs s1 s2, substitute in the rhs of self all occurrences of 
+  #   in its rhs s1 s2, substitute in the rhs of self all occurrences of
   #   s1 s2 by a reference to P.
   # @param another [Production or ProductionRef] a production that
   #   consists exactly of one digram (= 2 symbols).
