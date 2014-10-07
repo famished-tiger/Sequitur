@@ -205,14 +205,6 @@ character tokens. This is simply not true.
 This implementation is flexible enough to cope with other kinds of input values.  
 The next example shows how integer values can be correctly processed by Sequitur.  
 Assume that the input is the array of Fixnums *[1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5]*. 
-Then Sequitur algorithm will generate the rule set:  
-```
-start : P1 P2 P3 P3 e.  
-P1 : a b.  
-P2 : P1 c.  
-P3 : P2 d.   
-```
-
 
 ```ruby
 require 'sequitur'  # Load the Sequitur library

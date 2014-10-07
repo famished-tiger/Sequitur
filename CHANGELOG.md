@@ -1,3 +1,7 @@
+### 0.1.12 / 2014-10-07
+* [CHANGE] File `README.md`: Fixed documentation inaccuracy.
+
+
 ### 0.1.11 / 2014-10-07
 * [CHANGE] File `README.md`: Added an example showing that Sequitur can work on a sequence of integers.
 * [NEW] Folder `examples` Added a few code sample.
