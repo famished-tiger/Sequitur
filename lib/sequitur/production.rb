@@ -31,8 +31,6 @@ class Production
     @digrams = []
   end
 
-
-
   public
 
   # Identity testing.
@@ -123,7 +121,6 @@ class Production
     result = digrams.empty? ? nil : digrams.last
     return result
   end
-
 
 
   # Emit a text representation of the production rule.

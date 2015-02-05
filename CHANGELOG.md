@@ -1,3 +1,8 @@
+### 0.1.13 / 2014-10-07
+* [FIX] File `LICENSE.txt`: was missing in the distribuation but was referenced in README.
+* [CHANGE] File `README.md`: added badge from license (MIT).
+
+
 ### 0.1.12 / 2014-10-07
 * [CHANGE] File `README.md`: Fixed documentation inaccuracy.
 

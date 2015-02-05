@@ -9,6 +9,7 @@ _Ruby gem implementing the Sequitur algorithm_
 [![Dependency Status](https://gemnasium.com/famished-tiger/Sequitur.png)](https://gemnasium.com/famished-tiger/Sequitur)
 [![Inline docs](http://inch-ci.org/github/famished-tiger/Sequitur.svg?branch=master)](http://inch-ci.org/github/famished-tiger/Sequitur)
 [![Code Climate](https://codeclimate.com/github/famished-tiger/Sequitur.png)](https://codeclimate.com/github/famished-tiger/Sequitur)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt)
 
 ### What is the Sequitur algorithm? ###
 The following are good entry points to learn about the algorithm:  
