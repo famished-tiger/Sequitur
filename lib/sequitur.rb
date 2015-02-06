@@ -9,7 +9,6 @@ require_relative './sequitur/formatter/base_text'
 
 
 module Sequitur
-
   # Build a Sequitur-generated grammar based on the sequence of input tokens.
   #
   # @param tokens [StringOrEnumerator] The input sequence of input tokens.

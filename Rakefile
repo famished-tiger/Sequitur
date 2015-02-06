@@ -2,12 +2,10 @@ require 'rubygems'
 require_relative './lib/sequitur/constants'
 
 namespace :gem do
-
-desc 'Push the gem to rubygems.org'
-task :push do
-  system("gem push sequitur-#{Sequitur::Version}.gem")
-end
-
+  desc 'Push the gem to rubygems.org'
+  task :push do
+    system("gem push sequitur-#{Sequitur::Version}.gem")
+  end
 end # namespace
 
 # Testing-specific tasks

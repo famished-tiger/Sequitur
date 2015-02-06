@@ -4,7 +4,6 @@ require_relative '../spec_helper'
 require_relative '../../lib/sequitur/dynamic_grammar'
 
 module Sequitur # Re-open the module to get rid of qualified names
-
 describe DynamicGrammar do
   # Factory method. Build a production with the given sequence
   # of symbols as its rhs.
@@ -21,7 +20,6 @@ describe DynamicGrammar do
 
 
   context 'Creation & initialization:' do
-
     it 'should be created without parameter' do
       expect { DynamicGrammar.new }.not_to raise_error
     end
@@ -31,7 +29,6 @@ describe DynamicGrammar do
       expect(subject.productions.size).to eq(1)
       expect(subject.productions.first).to be_empty
     end
-
   end # context
 
 
@@ -59,7 +56,6 @@ describe DynamicGrammar do
       expect(subject.productions.size).to eq(5)
       expect(subject.productions.last).to eq(p_bc)
     end
-
   end # context
 
 
@@ -88,7 +84,6 @@ describe DynamicGrammar do
       expect(p_c.refcount).to eq(0)
       expect(subject.productions).not_to include(p_bc)
     end
-
   end # context
 
   context 'Visiting:' do
@@ -138,22 +133,12 @@ describe DynamicGrammar do
 
 
   context 'Generating a text representation of itself:' do
-
     it 'should generate a text representation when empty' do
       expectation = "#{subject.start.object_id} : ."
       expect(subject.to_string).to eq(expectation)
     end
-
-    # it 'should generate a text representation of a simple production' do
-    #   instance = SequiturGrammar.new([:a].to_enum)
-    #   expectation = "#{instance.start.object_id} : a."
-    #   expect(instance.to_string).to eq(expectation)
-    # end
-
   end # context
-
 end # describe
-
 end # module
 
 # End of file

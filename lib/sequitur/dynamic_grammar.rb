@@ -2,7 +2,6 @@ require_relative 'production'
 require_relative 'grammar_visitor'
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
-
 # A dynamic grammar is a context-free grammar that can be built incrementally.
 #   Formally, a grammar has:
 #   One start production
@@ -100,7 +99,5 @@ class DynamicGrammar
     aProduction.append_symbol(aSymbol)
   end
 end # class
-
 end # module
-
 # End of file

@@ -3,6 +3,5 @@ doc
 gems
 lab
 Gemfile.lock
-*.txt
 *.bat
 *.html

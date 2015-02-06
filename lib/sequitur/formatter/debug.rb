@@ -3,7 +3,6 @@ require_relative 'base_formatter'
 
 module Sequitur
   module Formatter
-
     # A formatter class that can render the notification events
     # from a grammar visitor
     # @example
@@ -123,9 +122,7 @@ module Sequitur
       def output_event(anEvent, indentationLevel)
         output.puts "#{' ' * 2 * indentationLevel}#{anEvent}"
       end
-
     end # class
   end # module
 end # module
-
 # End of file

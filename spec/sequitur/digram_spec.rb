@@ -4,13 +4,11 @@ require_relative '../spec_helper'
 require_relative '../../lib/sequitur/digram'
 
 module Sequitur # Re-open the module to get rid of qualified names
-
 describe Digram do
   let(:two_symbols) { [:b, :c] }
   let(:production) { double('sample-production') }
 
   context 'Standard creation & initialization:' do
-  
     it 'should be created with 3 arguments' do
       instance = Digram.new(:b, :c, production)
       
@@ -30,11 +28,9 @@ describe Digram do
        instance1 = Digram.new(:a, :b, production)
        expect(instance1).not_to be_repeating       
     end
-
   end # context
 
   context 'Provided services:' do
-  
     it 'should compare itself to another digram' do
       instance1 = Digram.new(:a, :b, production)
       same = Digram.new(:a, :b, production)
@@ -45,12 +41,8 @@ describe Digram do
       expect(instance1).not_to eq(different)
       expect(same).not_to eq(different)       
     end
-  
   end # context
-  
-
 end # describe
-
 end # module
 
 # End of file

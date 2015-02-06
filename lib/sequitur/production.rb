@@ -3,8 +3,6 @@ require_relative 'symbol_sequence'
 require_relative 'production_ref'
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
-
-
 # In a context-free grammar, a production is a rule in which
 # its left-hand side (LHS) consists solely of a non-terminal symbol
 # and the right-hand side (RHS) consists of a sequence of symbols.
@@ -171,7 +169,6 @@ class Production
   #   # Then ...
   #   p.positions_of(a, a) # => [0, 3]
   def positions_of(symb1, symb2)
-
     # Find the positions where the digram occur in rhs
     indices = [ -2 ] # Dummy index!
     (0...rhs.size).each do |i|
@@ -232,9 +229,7 @@ class Production
 
     aVisitor.end_visit_production(self)
   end
-
 end # class
-
 end # module
 
 # End of file

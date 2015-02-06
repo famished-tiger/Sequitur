@@ -2,12 +2,10 @@ require_relative 'dynamic_grammar'
 
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
-
 # Specialization of the DynamicGrammar class.
 # A Sequitur grammar is a context-free grammar that is entirely built
 # from a sequence of input tokens through the Sequitur algorithm.
 class SequiturGrammar < DynamicGrammar
-
   # Build the grammar from an enumerator of tokens.
   # @param anEnum [Enumerator] an enumerator that will iterate
   #   over the input tokens.
@@ -152,7 +150,5 @@ class SequiturGrammar < DynamicGrammar
     return new_prod
   end
 end # class
-
 end # module
-
 # End of file

@@ -6,13 +6,10 @@ require_relative '../../lib/sequitur/production_ref'
 require_relative '../../lib/sequitur/production'
 
 module Sequitur # Re-open the module to get rid of qualified names
-
 describe SymbolSequence do
-
   let(:instance) { SymbolSequence.new }
 
   context 'Creation and initialization:' do
-
     it 'should be created without argument' do
       expect { SymbolSequence.new }.not_to raise_error
     end
@@ -20,7 +17,6 @@ describe SymbolSequence do
     it 'should be empty at creation' do
       expect(subject).to be_empty
     end
-
   end # context
 
   context 'Provided services:' do
@@ -112,13 +108,8 @@ describe SymbolSequence do
       specific_refs = subject.references_of(another)
       expect(specific_refs).to eq([another])
     end
-
   end # context
-
-
-
 end # describe
-
 end # module
 
 # End of file

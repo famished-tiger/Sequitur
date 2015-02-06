@@ -1,8 +1,6 @@
 module Sequitur
-
   # Namespace dedicated to grammar formatters.
   module Formatter
-
     # Superclass for grammar formatters.
     class BaseFormatter
       # The IO output stream in which the formatter's result will be sent.
@@ -31,7 +29,6 @@ module Sequitur
         a_visitor.start
         a_visitor.unsubscribe(self)
       end
-
     end # class
   end # module
 end # module

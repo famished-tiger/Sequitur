@@ -8,7 +8,6 @@ require_relative '../../../lib/sequitur/formatter/base_text'
 
 module Sequitur # Re-open the module to get rid of qualified names
 module Formatter
-
 describe BaseText do
   # Factory method. Build a production with the given sequence
   # of symbols as its rhs.
@@ -22,7 +21,7 @@ describe BaseText do
   let(:p_b) { build_production(:b) }
   let(:p_c) { build_production(:c) }
   let(:p_bc) { build_production(p_b, p_c) }
-  
+
   let(:empty_grammar) { DynamicGrammar.new }
   let(:sample_grammar) do
     grm = DynamicGrammar.new
@@ -32,23 +31,22 @@ describe BaseText do
     grm.add_production(p_bc)
     grm
   end
-  
+
   let(:destination) { StringIO.new('', 'w') }
 
   context 'Standard creation & initialization:' do
-
     it 'should be initialized with an IO argument' do
       expect { BaseText.new(StringIO.new('', 'w')) }.not_to raise_error
     end
-    
+
     it 'should know its output destination' do
       instance = BaseText.new(destination)
       expect(instance.output).to eq(destination)
     end
   end # context
-  
 
- 
+
+
   context 'Formatting events:' do
     it 'should support events of an empty grammar' do
       instance = BaseText.new(destination)
@@ -59,7 +57,7 @@ start :.
 SNIPPET
       expect(destination.string).to eq(expectations)
     end
-    
+
     it 'should support visit events with an explicit visitor' do
       instance = BaseText.new(destination)
       a_visitor = sample_grammar.visitor  # Use visitor explicitly
@@ -88,7 +86,6 @@ SNIPPET
     end
   end # context
 end # describe
-
 end # module
 end # module
 

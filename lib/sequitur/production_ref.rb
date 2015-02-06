@@ -1,7 +1,6 @@
 
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
-
 # A production reference is a grammar symbol that may appear in the right-hand
 # side of a production P1 and that refers to a production P2.
 # Every time a production P2 appears in the left-hand side of
@@ -18,7 +17,6 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 #   # ... Production reference count is updated...
 #   puts prod.refcount # outputs 1
 class ProductionRef
-
   # Link to the production to reference.
   attr_reader(:production)
 
@@ -111,9 +109,7 @@ class ProductionRef
   def accept(aVisitor)
     aVisitor.visit_prod_ref(self)
   end
-
 end # class
-
 end # module
 
 # End of file

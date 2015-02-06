@@ -46,10 +46,10 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @param aSymbol [Object] The symbol to append.
     def <<(aSymbol)
       symbols << aSymbol
-      if aSymbol.is_a?(ProductionRef)
-        @memo_references ||= []
-        @memo_references << aSymbol
-      end
+      return unless aSymbol.is_a?(ProductionRef)
+
+      @memo_references ||= []
+      @memo_references << aSymbol
     end
 
     # Retrieve the element from the sequence at given position.
@@ -71,8 +71,8 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
           same = symbols == other.symbols
         when Array
           same = symbols == other
-      else
-        same = false
+        else
+          same = false
       end
 
       return same
@@ -176,7 +176,5 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       @memo_references = nil
       @lookup_references = nil
     end
-
   end # class
-
 end # module

@@ -3,7 +3,11 @@ AllCops:
     - 'examples/**/*'
     - 'features/**/*'
     - 'gems/**/*'
+    - 'lab/**/*'
 
+AbcSize:
+  Max: 20
+    
 # This is disabled because some demos use UTF-8
 AsciiComments:
   Enabled: false
@@ -34,10 +38,7 @@ Documentation:
   Enabled: false
   
 EmptyLines:
-  Enabled: false
-  
-EmptyLinesAroundBody:
-  Enabled: false  
+  Enabled: false 
 
 Encoding:
   Enabled: false

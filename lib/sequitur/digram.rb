@@ -1,7 +1,6 @@
 # File: digram.rb
 
 module Sequitur # Module for classes implementing the Sequitur algorithm
-
 # In linguistics, a digram is a sequence of two letters.
 # In Sequitur, a digram is a sequence of two consecutive symbols that
 # appear in a production rule. Each symbol in a digram
@@ -44,9 +43,7 @@ class Digram
   def repeating?()
     return symbols[0] == symbols[1]
   end
-
 end # class
-
 end # module
 
 # End of file

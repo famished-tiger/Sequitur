@@ -2,7 +2,6 @@ require_relative 'base_formatter'
 
 module Sequitur
   module Formatter
-
     # A formatter class that can render a dynamic grammar in plain text.
     # @example
     #   some_grammar = ... # Points to a DynamicGrammar-like object
@@ -11,7 +10,6 @@ module Sequitur
     #   # Render the grammar (through a visitor)
     #   formatter.run(some_grammar.visitor)
     class BaseText < BaseFormatter
-
       # Constructor.
       # @param anIO [IO] The output stream to which the rendered grammar
       # is written.
@@ -87,7 +85,6 @@ module Sequitur
         name = (prod_index == 0) ? 'start' : "P#{prod_index}"
         return name
       end
-
     end # class
   end # module
 end # module

@@ -8,7 +8,6 @@ require_relative '../../../lib/sequitur/formatter/debug'
 
 module Sequitur # Re-open the module to get rid of qualified names
 module Formatter
-
 describe Debug do
   # Factory method. Build a production with the given sequence
   # of symbols as its rhs.
@@ -22,7 +21,7 @@ describe Debug do
   let(:p_b) { build_production(:b) }
   let(:p_c) { build_production(:c) }
   let(:p_bc) { build_production(p_b, p_c) }
-  
+
   let(:empty_grammar) { DynamicGrammar.new }
   let(:sample_grammar) do
     grm = DynamicGrammar.new
@@ -32,23 +31,22 @@ describe Debug do
     grm.add_production(p_bc)
     grm
   end
-  
+
   let(:destination) { StringIO.new('', 'w') }
 
   context 'Standard creation & initialization:' do
-
     it 'should be initialized with an IO argument' do
       expect { Debug.new(StringIO.new('', 'w')) }.not_to raise_error
     end
-    
+
     it 'should know its output destination' do
       instance = Debug.new(destination)
       expect(instance.output).to eq(destination)
     end
   end # context
-  
 
- 
+
+
   context 'Formatting events:' do
     it 'should support events of an empty grammar' do
       instance = Debug.new(destination)
@@ -64,7 +62,7 @@ after_grammar
 SNIPPET
       expect(destination.string).to eq(expectations)
     end
-    
+
     it 'should support events of a non-empty grammar' do
       instance = Debug.new(destination)
       a_visitor = sample_grammar.visitor
@@ -107,7 +105,6 @@ SNIPPET
     end
   end # context
 end # describe
-
 end # module
 end # module
 

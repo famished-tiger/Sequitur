@@ -4,7 +4,6 @@ require_relative '../spec_helper'
 require_relative '../../lib/sequitur/sequitur_grammar'
 
 module Sequitur # Re-open the module to get rid of qualified names
-
 describe SequiturGrammar do
   # Factory method. Returns an empty enumerator (
   # i.e. without elements to iterate)
@@ -13,7 +12,6 @@ describe SequiturGrammar do
   end
 
   context 'Creation from an enumeration of tokens:' do
-
     it 'could be created with an empty enumerator' do
       expect { SequiturGrammar.new(empty_enum) }.not_to raise_error
 
@@ -124,7 +122,7 @@ describe SequiturGrammar do
       expect(instance.start.rhs).to eq([p3, p2, p3])
       expect(p1.rhs).to eq(%w(letter_b letter_e))
       expect(p2.rhs).to eq([p1, p1])
-      expect(p3.rhs).to eq(['letter_b',p2, 'letter_e'])
+      expect(p3.rhs).to eq(['letter_b', p2, 'letter_e'])
     end
     
     it 'should work with Symbol instead of single char input tokens' do
@@ -287,7 +285,6 @@ SNIPPET
   end # context
 
   context 'Generating a text representation of itself:' do
-
     it 'should generate a text representation when empty' do
       instance = SequiturGrammar.new(empty_enum)
       expectation = "#{instance.start.object_id} : ."
@@ -301,7 +298,6 @@ SNIPPET
       expect(instance.to_string).to eq(expectation)
     end
   end # context
-
 end # describe
 end # module
 

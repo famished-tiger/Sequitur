@@ -1,5 +1,4 @@
 module Sequitur # Module for classes implementing the Sequitur algorithm
-
 # A visitor class dedicated in the visit of Grammar.
 class GrammarVisitor
   # Link to the grammar to visit
@@ -101,10 +100,7 @@ class GrammarVisitor
       a_subscriber.send(msg, *args)
     end
   end
-
-
 end # class
-
 end # module
 
 # End of file

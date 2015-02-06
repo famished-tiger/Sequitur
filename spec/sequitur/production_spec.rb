@@ -4,7 +4,6 @@ require_relative '../spec_helper'
 require_relative '../../lib/sequitur/production'
 
 module Sequitur # Re-open the module to get rid of qualified names
-
 describe Production do
   # Helper method: convert list of digrams into an array
   # of symbol couples.
@@ -43,27 +42,25 @@ describe Production do
       expect(subject.last_digram).to be_nil
     end
   end # context
-  
+
   context 'Provided services:' do
-  
     it 'should compare to another production' do
       expect(p_a).to eq(p_a)
       expect(p_a).not_to eq(p_bc)
     end
-    
+
     it 'should compare to a production reference' do
       ref_a = ProductionRef.new(p_a)
-      expect(p_a).to eq(ref_a) 
+      expect(p_a).to eq(ref_a)
       expect(p_bc).not_to eq(ref_a)
-      
+
       ref_bc = ProductionRef.new(p_bc)
-      expect(p_a).not_to eq(ref_bc) 
-      expect(p_bc).to eq(ref_bc)      
+      expect(p_a).not_to eq(ref_bc)
+      expect(p_bc).to eq(ref_bc)
     end
   end # context
 
   context 'Knowing its rhs:' do
-
     it 'should know the productions in its rhs' do
       # Case 1: empty production
       expect(subject.references).to be_empty
@@ -105,11 +102,9 @@ describe Production do
       positions = [0, 3]
       expect(subject.positions_of(:a, :a)).to eq(positions)
     end
-
   end # context
 
   context 'Appending a symbol:' do
-
     it 'should append a symbol when empty' do
       expect { subject.append_symbol(:a) }.not_to raise_error
       expect(subject.rhs).to eq([:a])
@@ -138,42 +133,40 @@ describe Production do
       input.each { |symb| subject.append_symbol(symb) }
       expect(p_a.refcount).to be(2)
     end
-    
+
     it 'should append a production ref in its rhs' do
       # Side-effect: refcount of production to append is incremented
       ref_a = ProductionRef.new(p_a)
       expect(p_a.refcount).to be(1)
-      
+
       input = [ref_a, :b, :c, :d, ref_a]  # ref_a appears twice
       input.each { |symb| subject.append_symbol(symb) }
-      
+
       # References in rhs should point to p_a...
       # ...but should be distinct reference objects
       expect(subject.rhs[0]).to eq(p_a)
       expect(subject.rhs[0].object_id).not_to eq(ref_a.object_id)
       expect(subject.rhs[-1]).to eq(p_a)
       expect(subject.rhs[-1].object_id).not_to eq(ref_a.object_id)
-      
+
       # Reference count should be updated
       expect(p_a.refcount).to be(3)
     end
-    
+
     it 'should complain when appending ref to nil production' do
       # Side-effect: refcount of production to append is incremented
       ref_a = ProductionRef.new(p_a)
       expect(p_a.refcount).to be(1)
-      
+
       # Unbind the reference
       ref_a.unbind
-      
+
       expect { subject.append_symbol(ref_a) }.to raise_error(StandardError)
     end
-
   end # context
 
 
   context 'Text representation of a production rule:' do
-
     it 'should emit minimal text when empty' do
       expectation = "#{subject.object_id} : ."
       expect(subject.to_string).to eq(expectation)
@@ -183,11 +176,10 @@ describe Production do
       instance = Production.new
       symbols = [:a, :b, 'c', :d, :e, 1000, instance]
       symbols.each { |symb| subject.append_symbol(symb) }
-      expectation = "#{subject.object_id} : " 
+      expectation = "#{subject.object_id} : "
       expectation << "a b 'c' d e 1000 #{instance.object_id}."
       expect(subject.to_string).to eq(expectation)
     end
-
   end # context
 
   context 'Detecting digram repetition:' do
@@ -228,7 +220,6 @@ describe Production do
   end # context
 
   context 'Replacing a digram by a production:' do
-
     it 'should have not effect on empty production' do
       subject.reduce_step(p_bc)
       expect(subject.rhs).to be_empty
@@ -275,11 +266,9 @@ describe Production do
       expect(subject.rhs).to eq(['a', p_bc, p_bc, 'd'])
       expect(p_bc.refcount).to eq(2)
     end
-
   end # context
 
   context 'Replacing a production occurrence by its rhs:' do
-
     it 'should have not effect on empty production' do
       subject.derive_step(p_bc)
       expect(subject.rhs).to be_empty
@@ -288,7 +277,7 @@ describe Production do
     it 'should replace a production at the start' do
       [p_bc, 'd'].each { |symb| subject.append_symbol(symb) }
       expect(p_bc.refcount).to eq(1)
-      
+
       subject.derive_step(p_bc)
       expect(subject.rhs.size).to eq(3)
       expect(subject.rhs).to eq(%w(b c d))
@@ -321,14 +310,13 @@ describe Production do
       expect(subject.rhs.size).to eq(4)
       expect(subject.rhs).to eq(%w(a b c d))
     end
-
   end # context
-  
+
   context 'Visiting:' do
     it 'should accept a visitor when its rhs is empty' do
       # Use a mock visitor
       fake = double('fake_visitor')
-      
+
       # Empty production: visitor will receive a start and end visit messages
       expect(fake).to receive(:start_visit_production).once.ordered
       expect(fake).to receive(:start_visit_rhs).once.ordered
@@ -337,10 +325,10 @@ describe Production do
 
       expect { subject.accept(fake) }.not_to raise_error
     end
-    
+
     it 'should accept a visitor when rhs consists of terminals only' do
       # Use a mock visitor
-      fake = double('fake_visitor')      
+      fake = double('fake_visitor')
       expect(fake).to receive(:start_visit_production).once.ordered
       expect(fake).to receive(:start_visit_rhs).once.ordered
       expect(fake).to receive(:visit_terminal).with('b').ordered
@@ -350,13 +338,13 @@ describe Production do
 
       expect { p_bc.accept(fake) }.not_to raise_error
     end
-    
+
     it 'should accept a visitor when rhs consists of non-terminals' do
       # Add two production references (=non-terminals) to RHS of subject
       subject.append_symbol(p_a)
       subject.append_symbol(p_bc)
-      
-      fake = double('fake_visitor')      
+
+      fake = double('fake_visitor')
       expect(fake).to receive(:start_visit_production).once.ordered
       expect(fake).to receive(:start_visit_rhs).once.ordered
       expect(fake).to receive(:visit_prod_ref).with(p_a).ordered
@@ -366,11 +354,8 @@ describe Production do
 
       expect { subject.accept(fake) }.not_to raise_error
     end
-  
   end # context
-
 end # describe
-
 end # module
 
 # End of file

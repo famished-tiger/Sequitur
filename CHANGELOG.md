@@ -1,5 +1,10 @@
-### 0.1.13 / 2014-10-07
-* [FIX] File `LICENSE.txt`: was missing in the distribuation but was referenced in README.
+### 0.1.14 / 2015-02-06
+* [CHANGE] Code re-formatted to please Rubocop 0.29
+* [FIX] File `.rubocop.yml`: removal of setting for obsolete EmptyLinesAroundBody cop.
+
+
+### 0.1.13 / 2015-02-05
+* [FIX] File `LICENSE.txt`: was missing in the distribution but was referenced in README.
 * [CHANGE] File `README.md`: added badge from license (MIT).
 
 
