@@ -31,7 +31,8 @@ describe SymbolSequence do
     it 'should deep-copy clone itself' do
       ref = ProductionRef.new(a_prod)
 
-      a,  c = 'a', 'c'
+      a = 'a'
+      c = 'c'
       [a, ref, c].each { |ch| instance << ch }
       clone_a = instance.clone
 

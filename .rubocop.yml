@@ -11,7 +11,10 @@ AbcSize:
 # This is disabled because some demos use UTF-8
 AsciiComments:
   Enabled: false
-
+  
+Attr:
+  Enabled: false
+  
 CaseIndentation:
   IndentWhenRelativeTo: end
   IndentOneStep: true
@@ -51,6 +54,10 @@ IndentationWidth :
 MethodLength:
   Max: 50
   CountComments: false 
+ 
+# Avoid modules longer than 400 lines of code 
+ModuleLength:
+  Max: 400
  
 NonNilCheck:
   Enabled: false

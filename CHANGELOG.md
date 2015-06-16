@@ -1,3 +1,7 @@
+### 0.1.15 / 2015-06-16
+* [CHANGE] Code re-formatted to please Rubocop 0.32.0
+* [FIX] File `.rubocop.yml`: change some cop settings.
+
 ### 0.1.14 / 2015-02-06
 * [CHANGE] Code re-formatted to please Rubocop 0.29
 * [FIX] File `.rubocop.yml`: removal of setting for obsolete EmptyLinesAroundBody cop.

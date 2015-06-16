@@ -208,7 +208,7 @@ class Production
   # p_A.derive_step(p_B)
   # #Modifies p_A as into: p_A -> a x y b x y c
   def derive_step(another)
-    (0...rhs.size).to_a.reverse.each do |index|
+    (0...rhs.size).to_a.reverse_each do |index|
       next unless rhs[index] == another
 
       rhs.insert_at(index + 1, another.rhs)
