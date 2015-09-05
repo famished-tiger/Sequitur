@@ -72,8 +72,8 @@ describe ProductionRef do
 
     it 'should compare to other production (reference)' do
       same = ProductionRef.new(target)
-      expect(subject).to eq(subject)  # Strict identity
-      expect(subject).to eq(same)   # 2 references pointing to same production
+      expect(subject).to eq(subject) # Strict identity
+      expect(subject).to eq(same) # 2 references pointing to same production
       expect(subject).to eq(target)
     end
 

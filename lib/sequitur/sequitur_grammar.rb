@@ -121,7 +121,7 @@ class SequiturGrammar < DynamicGrammar
   # And delete P
   def restore_utility(prod_index)
     # Retrieve useless prod from its index
-    useless_prod =  productions[prod_index]
+    useless_prod = productions[prod_index]
 
     # Retrieve production referencing useless one
     referencing = nil

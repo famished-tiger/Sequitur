@@ -71,7 +71,7 @@ describe DynamicGrammar do
       expect(p_b.refcount).to eq(1)
       expect(p_c.refcount).to eq(1)
 
-      subject.remove_production(1)  # 1 => p_a
+      subject.remove_production(1) # 1 => p_a
       expect(subject.productions.size).to eq(4)
       expect(p_b.refcount).to eq(1)
       expect(p_c.refcount).to eq(1)

@@ -1,3 +1,7 @@
+### 0.1.16 / 2015-09-05
+* [CHANGE] Minor. Code re-formatted to please Rubocop 0.34.0
+* [FIX] File `sequitur.gemspec`: updated gem version in development dependencies
+
 ### 0.1.15 / 2015-06-16
 * [CHANGE] Code re-formatted to please Rubocop 0.32.0
 * [FIX] File `.rubocop.yml`: change some cop settings.

@@ -129,7 +129,7 @@ describe Production do
       # Side-effect: refcount of production to append is incremented
       expect(p_a.refcount).to be(0)
 
-      input = [p_a, :b, :c, :d, p_a, :e, :f]  # p_a appears twice
+      input = [p_a, :b, :c, :d, p_a, :e, :f] # p_a appears twice
       input.each { |symb| subject.append_symbol(symb) }
       expect(p_a.refcount).to be(2)
     end
@@ -139,7 +139,7 @@ describe Production do
       ref_a = ProductionRef.new(p_a)
       expect(p_a.refcount).to be(1)
 
-      input = [ref_a, :b, :c, :d, ref_a]  # ref_a appears twice
+      input = [ref_a, :b, :c, :d, ref_a] # ref_a appears twice
       input.each { |symb| subject.append_symbol(symb) }
 
       # References in rhs should point to p_a...

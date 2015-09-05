@@ -60,7 +60,7 @@ SNIPPET
 
     it 'should support visit events with an explicit visitor' do
       instance = BaseText.new(destination)
-      a_visitor = sample_grammar.visitor  # Use visitor explicitly
+      a_visitor = sample_grammar.visitor # Use visitor explicitly
       instance.render(a_visitor)
       expectations = <<-SNIPPET
 start :.

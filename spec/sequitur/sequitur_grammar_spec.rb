@@ -74,7 +74,7 @@ describe SequiturGrammar do
     end
 
     it 'should cope with a pattern that caused an exception' do
-      input = 'aaac'  # This sequence raised an exception
+      input = 'aaac' # This sequence raised an exception
 
       # Creation
       expect { SequiturGrammar.new(input.chars) }.not_to raise_error
@@ -247,24 +247,24 @@ SNIPPET
         p2, p8, p3, p10, p3, p12, "\n",
         p9, p8, p11, p10, p11, p12
       ]
-      expect(p0.rhs).to eq(p0_expectation)  # Rule 0 above
-      expect(p1.rhs).to eq(['e', ' '])  # Rule 9 above
+      expect(p0.rhs).to eq(p0_expectation) # Rule 0 above
+      expect(p1.rhs).to eq(['e', ' ']) # Rule 9 above
       expect(p2.rhs).to eq([%w(p e a s), p4, %w(r r i d g), p1].flatten) # R1
-      expect(p3.rhs).to eq([p5, p2])  # Rule 3 above
-      expect(p4.rhs).to eq([p1, 'p', 'o'])  # Rule 8 above
-      expect(p5.rhs).to eq([',', "\n"])  # Rule 10 above
-      expect(p6.rhs).to eq(%w(i n))  # Rule 12 above
-      expect(p7.rhs).to eq(%w(o l d))  # Rule 11 above
-      expect(p8.rhs).to eq(%w(h o t))  # Rule 2 above
+      expect(p3.rhs).to eq([p5, p2]) # Rule 3 above
+      expect(p4.rhs).to eq([p1, 'p', 'o']) # Rule 8 above
+      expect(p5.rhs).to eq([',', "\n"]) # Rule 10 above
+      expect(p6.rhs).to eq(%w(i n)) # Rule 12 above
+      expect(p7.rhs).to eq(%w(o l d)) # Rule 11 above
+      expect(p8.rhs).to eq(%w(h o t)) # Rule 2 above
       p9_expectation = [%w(s o m), p1, %w(l i k), p1, 'i', 't', ' '].flatten
-      expect(p9.rhs).to eq(p9_expectation)  # Rule 6 above
-      expect(p10.rhs).to eq(['c', p7])  # Rule 4 above
-      expect(p11.rhs).to eq([p5, p9])  # Rule 7 above
+      expect(p9.rhs).to eq(p9_expectation) # Rule 6 above
+      expect(p10.rhs).to eq(['c', p7]) # Rule 4 above
+      expect(p11.rhs).to eq([p5, p9]) # Rule 7 above
       p12_expectation = [
         p6, ' ', 't', 'h', p4, 't', p5, 'n', p6, p1,
         %w(d a y s), ' ', p7, '.', "\n"
       ].flatten
-      expect(p12.rhs).to eq(p12_expectation)  # Rule 5 above
+      expect(p12.rhs).to eq(p12_expectation) # Rule 5 above
     end
 
     it 'should work with a sequence of Ruby Symbols' do
