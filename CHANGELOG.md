@@ -1,3 +1,6 @@
+### 0.1.17 / 2015-09-05
+* [CHANGE] File `.travis.yml`: Added versions MRI 2.2.0, JRuby 9.0.1.0
+
 ### 0.1.16 / 2015-09-05
 * [CHANGE] Minor. Code re-formatted to please Rubocop 0.34.0
 * [FIX] File `sequitur.gemspec`: updated gem version in development dependencies
