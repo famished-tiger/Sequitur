@@ -1,3 +1,13 @@
+### 0.1.18 / 2016-12-21
+* [NEW] Added AppVeyor CI to Github commits. AppVeyor allows to build and test commits on Windows servers.
+This is complementary to Travis CI which does Linux builds.
+* [NEW] File `appveyor.yml` Contains the AppVeyor configuration.
+* [CHANGE] File `README.md` Added AppVeyor badge.
+* [CHANGE] File `.travis.yml`: updated Ruby versions to test for. Added MRI 2.3.x, dropped MRI 1.9.3
+* [CHANGE] File 'sequitur.gemspec' Lowest supported Ruby version is now 2.0.0.
+* [CHANGE] Many files. Code re-styling in order to please Rubocop 0.46.0
+
+
 ### 0.1.17 / 2015-09-05
 * [CHANGE] File `.travis.yml`: Added versions MRI 2.2.0, JRuby 9.0.1.0
 
