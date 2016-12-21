@@ -3,7 +3,8 @@ Sequitur
 _Ruby gem implementing the Sequitur algorithm_  
 [Homepage](https://github.com/famished-tiger/Sequitur)  
 
-[![Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
+[![Linux Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/nvi1be8mb0494dqw?svg=true)](https://ci.appveyor.com/project/famished-tiger/sequitur)
 [![Coverage Status](https://coveralls.io/repos/famished-tiger/Sequitur/badge.png?branch=master)](https://coveralls.io/r/famished-tiger/Sequitur)
 [![Gem Version](https://badge.fury.io/rb/sequitur.svg)](http://badge.fury.io/rb/sequitur)
 [![Dependency Status](https://gemnasium.com/famished-tiger/Sequitur.png)](https://gemnasium.com/famished-tiger/Sequitur)
@@ -24,8 +25,8 @@ The following are good entry points to learn about the algorithm:
 * Algorithm works with different input token types (no limited to single character)
 
 ### The theory in a nutshell ###
-Given a sequence of input tokens (say, characters), the Sequitur algorithm 
-will represent that input sequence as a set of rules. As the algorithm detects 
+Given a sequence of input tokens (say, characters), the Sequitur algorithm
+will represent that input sequence as a set of rules. As the algorithm detects
 automatically repeated token patterns, the resulting rule set can encode repetitions in the input
 in a very compact way.  
 Of interest is the fact that the algorithm runs in time linear in the length of the input sequence.
@@ -46,7 +47,7 @@ is three time the pattern encoded by the rule called P1.
 -The second rule (named P1) represents the sequence a b c.  
 
 **Can you give another example?**  
-Yep. Assume this time that the input is *'ababcabcdabcde'*. 
+Yep. Assume this time that the input is *'ababcabcdabcde'*.
 Then Sequitur algorithm will generate the rule set:  
 ```
 start : P1 P2 P3 P3 e.  
@@ -73,7 +74,7 @@ repeated elements)
 
 **Time for a quick demo**
 
-The following Ruby snippet show how to apply Sequitur on the input string from the last example above. 
+The following Ruby snippet show how to apply Sequitur on the input string from the last example above.
 
 ```ruby  
 
@@ -91,7 +92,7 @@ can you make good use of the algorithm's result.
 **Printing the resulting rules**  
 The very first natural step is to be able to print out the (grammar) rules.
 Here's how:
- 
+
 
 ```ruby  
     require 'sequitur'
@@ -104,9 +105,9 @@ Here's how:
 
     # Now render the rules. Each rule is displayed with the format:
     # rule_id : a_sequence_grammar_symbols.
-    # Where: 
+    # Where:
     # - rule_id is either 'start' or a name like 'Pxxxx' (xxxx is a sequential number)
-    # - a grammar symbol is either a terminal symbol 
+    # - a grammar symbol is either a terminal symbol
     # (i.e. a character from the input) or a rule id
     formatter.render(grammar.visitor)
 
@@ -121,7 +122,7 @@ Here's how:
 The Sequitur algorithm generates a -simplified- context-free grammar, therefore we dedicate this section
 to the terminology about context-free grammars. As the Internet provides tons of information can be found
 on the subject, we limit ourselves to the minimal terminology of interest when using the sequitur gem.
- 
+
 First of all, what is a **grammar**? To simplify the matter, one can see a grammar as a set of
 grammar rules. These rules are called production rules or more briefly **productions**.  
 
@@ -133,12 +134,12 @@ P : body.
 Where:
 - The colon ':' character separates the head (= left-hand side) and the body (right-hand side, *rhs* in short)
 of the rule.
-- The left-hand side consists just of one symbol, P. P is a categorized as a *nonterminal symbol* and for our purposes 
-a nonterminal symbol can be seen as the "name" of the production. By contrast, a terminal symbol is just one element 
-from the input sequence (symbols as defined in formal grammar theory shouldn't be confused with Ruby's `Symbol` class). 
-- the body is a sequence -possibly empty- of *symbols* (terminal or nonterminal). 
+- The left-hand side consists just of one symbol, P. P is a categorized as a *nonterminal symbol* and for our purposes
+a nonterminal symbol can be seen as the "name" of the production. By contrast, a terminal symbol is just one element
+from the input sequence (symbols as defined in formal grammar theory shouldn't be confused with Ruby's `Symbol` class).
+- the body is a sequence -possibly empty- of *symbols* (terminal or nonterminal).
 
-Basically, a production rule tells that P is equivalent to the sequence of symbols found in the 
+Basically, a production rule tells that P is equivalent to the sequence of symbols found in the
 right-hand side of the production. A nonterminal symbol that appears in the rhs of a production can be
 seen as a reference to the production with same name.
 
@@ -166,7 +167,7 @@ that returns the productions of the grammar as an array of `Sequitur::Production
 
 	# Retrieve all productions of the grammar
 	all_prods = grammar.productions
-	
+
 	# Retrieve the start production
 	start_prod = grammar.production[0]
 ```
@@ -193,7 +194,7 @@ A ProductionRef is reference to a Production object. The latter one can be acces
 ### Installation ###
 The sequitur gem installation is fairly standard.  
 If your project has a `Gemfile` file, add `sequitur` to it. Otherwise, install the gem like this:
- 
+
 ```bash  
 $[sudo] gem install sequitur
 ```
@@ -201,11 +202,11 @@ $[sudo] gem install sequitur
 
 
 ### Good to know ###
-The above examples might give the impression that the input stream must consist of single 
+The above examples might give the impression that the input stream must consist of single
 character tokens. This is simply not true.  
 This implementation is flexible enough to cope with other kinds of input values.  
 The next example shows how integer values can be correctly processed by Sequitur.  
-Assume that the input is the array of Fixnums *[1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5]*. 
+Assume that the input is the array of Fixnums *[1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5]*.
 
 ```ruby
 require 'sequitur'  # Load the Sequitur library
@@ -247,4 +248,4 @@ More examples are available in the examples folder.
 
 Copyright
 ---------
-Copyright (c) 2014, Dimitri Geshef. Sequitur is released under the MIT License see [LICENSE.txt](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt) for details.
+Copyright (c) 2014-2017, Dimitri Geshef. Sequitur is released under the MIT License see [LICENSE.txt](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt) for details.

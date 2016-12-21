@@ -33,7 +33,8 @@ EOSTRING
   pkg.rdoc_options << '--charset=UTF-8 --exclude="examples|features|spec"'
   file_list = Dir[
     '.rubocop.yml', '.rspec', '.ruby-gemset', '.ruby-version', '.simplecov',
-    '.travis.yml',  '.yardopts', 'cucumber.yml', 'Gemfile', 'Rakefile',
+    '.travis.yml',  '.yardopts', 'appveyor.yml', 'cucumber.yml', 'Gemfile', 
+    'Rakefile',
     'CHANGELOG.md',
     'LICENSE.txt', 'README.md',
     'lib/*.*', 'lib/**/*.rb',
