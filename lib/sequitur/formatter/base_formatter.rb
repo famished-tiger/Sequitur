@@ -13,17 +13,15 @@ module Sequitur
         @output = anIO
       end
 
-      public
-
       # Given a grammar or a grammar visitor, perform the visit
       # and render the visit events in the output stream.
       # @param aGrmOrVisitor [DynamicGrammar or GrammarVisitor]
       def render(aGrmOrVisitor)
-        if aGrmOrVisitor.kind_of?(GrammarVisitor)
-          a_visitor = aGrmOrVisitor
-        else
-          a_visitor = aGrmOrVisitor.visitor
-        end
+        a_visitor = if aGrmOrVisitor.kind_of?(GrammarVisitor)
+                      aGrmOrVisitor
+                    else
+                      aGrmOrVisitor.visitor
+                    end
 
         a_visitor.subscribe(self)
         a_visitor.start

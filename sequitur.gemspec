@@ -56,7 +56,7 @@ EOSTRING
   # pkg.bindir = 'bin'
   # pkg.executables = %w(sequitur)
   pkg.license = 'MIT'
-  pkg.required_ruby_version = '>= 1.9.1'
+  pkg.required_ruby_version = '>= 2.0.0'
 end
 
 if $PROGRAM_NAME == __FILE__

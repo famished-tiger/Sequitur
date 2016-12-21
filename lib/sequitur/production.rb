@@ -29,19 +29,17 @@ class Production
     @digrams = []
   end
 
-  public
-
   # Identity testing.
   # @param other [] another production or production reference.
   # @return true when the receiver and other are the same.
   def ==(other)
     return true if object_id == other.object_id
 
-    if other.is_a?(ProductionRef)
-      result = (other == self)
-    else
-      result = false
-    end
+    result = if other.is_a?(ProductionRef)
+               (other == self)
+             else
+               false
+             end
 
     return result
   end
@@ -60,7 +58,7 @@ class Production
 
   # Decrement the reference count by one.
   def decr_refcount()
-    fail StandardError, 'Internal error' if @refcount == 0
+    raise StandardError, 'Internal error' if @refcount.zero?
     @refcount -= 1
   end
 
@@ -139,7 +137,7 @@ class Production
         if aSymbol.unbound?
           msg = 'Fail to append reference to nil production in '
           msg << to_string
-          fail StandardError, msg
+          raise StandardError, msg
         end
         new_symb = aSymbol.dup
       else

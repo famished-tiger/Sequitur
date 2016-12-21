@@ -1,18 +1,20 @@
 language: ruby
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
-  - 2.2.0
-  - jruby-head
-  - jruby-9.0.1.0
+  - ruby-head
+  - jruby-head  
+  - 2.3.3
+  - 2.2.6
+  - 2.1.9
+  - 2.0.0  
+  - jruby    
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
 
 gemfile:
   - Gemfile
-  
-matrix:
-  allow_failures:
-    - rvm: jruby-head
   
 # whitelist
 branches:  

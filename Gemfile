@@ -3,9 +3,8 @@ source 'https://rubygems.org'
 
 
 group :development do
-  gem 'rake', '>= 10.0.0' 
-  gem 'rspec', '>= 2.1.0'
-  gem 'simplecov', '>= 0.8.0'
   gem 'coveralls', '>= 0.7.0'
+  gem 'rake', '>= 10.0.0'  
+  gem 'rspec', '>= 2.1.0'  
+  gem 'simplecov', '>= 0.8.0'
 end
-

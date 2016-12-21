@@ -77,3 +77,6 @@ SpaceInsideBrackets:
 TrailingWhitespace:
   Enabled: false
   
+VariableName:
+  Enabled: false
+  

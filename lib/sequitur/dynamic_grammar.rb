@@ -29,8 +29,6 @@ class DynamicGrammar
     @trace = false
   end
 
-  public
-
   # Emit a text representation of the grammar.
   # Each production rule is emitted per line.
   # @return [String]

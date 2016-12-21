@@ -3,10 +3,10 @@
 
 module Sequitur # Module used as a namespace
   # The version number of the gem.
-  Version = '0.1.17'
+  Version = '0.1.18'.freeze
 
   # Brief description of the gem.
-  Description = 'Ruby implementation of the Sequitur algorithm'
+  Description = 'Ruby implementation of the Sequitur algorithm'.freeze
 
   # Constant Sequitur::RootDir contains the absolute path of Sequitur's
   # start directory. Note: it also ends with a slash character.

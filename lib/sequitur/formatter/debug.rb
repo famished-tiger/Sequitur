@@ -23,8 +23,6 @@ module Sequitur
         @indentation = 0
       end
 
-      public
-
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit a grammar
       # @param _ [DynamicGrammar-like object]

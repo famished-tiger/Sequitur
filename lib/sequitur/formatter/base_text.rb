@@ -18,8 +18,6 @@ module Sequitur
         @prod_lookup = {}
       end
 
-      public
-
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit a grammar
       # @param aGrammar [DynamicGrammar-like object]
@@ -82,7 +80,7 @@ module Sequitur
       # @param aProduction [Production]
       def prod_name(aProduction)
         prod_index = prod_lookup[aProduction]
-        name = (prod_index == 0) ? 'start' : "P#{prod_index}"
+        name = prod_index.zero? ? 'start' : "P#{prod_index}"
         return name
       end
     end # class

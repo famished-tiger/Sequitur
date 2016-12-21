@@ -42,10 +42,10 @@ class ProductionRef
   # Emit the text representation of a production reference.
   # @return [String]
   def to_s()
-    return "#{production.object_id}"
+    return production.object_id.to_s
   end
 
-  alias_method :to_string, :to_s
+  alias to_string to_s
 
 
   # Equality testing.
@@ -57,11 +57,11 @@ class ProductionRef
   def ==(other)
     return true if object_id == other.object_id
 
-    if other.is_a?(ProductionRef)
-      result = (production == other.production)
-    else
-      result = (production == other)
-    end
+    result = if other.is_a?(ProductionRef)
+               (production == other.production)
+             else
+               (production == other)
+             end
 
     return result
   end
@@ -72,7 +72,7 @@ class ProductionRef
   #   referenced production
   # @return [Fixnum] the hash value
   def hash()
-    fail StandardError, 'Nil production' if production.nil?
+    raise StandardError, 'Nil production' if production.nil?
     return production.hash
   end
 
@@ -84,7 +84,7 @@ class ProductionRef
 
     production.decr_refcount if production
     unless aProduction.kind_of?(Production)
-      fail StandardError, "Illegal production type #{aProduction.class}"
+      raise StandardError, "Illegal production type #{aProduction.class}"
     end
     @production = aProduction
     production.incr_refcount

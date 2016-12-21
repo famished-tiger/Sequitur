@@ -202,7 +202,7 @@ describe Production do
 
     it 'should detect any repetition pattern' do
       # Positive cases
-      cases = %w(abab abcdab abcdcd abcdefcd )
+      cases = %w(abab abcdab abcdcd abcdefcd)
       cases.each do |word|
         instance = Production.new
         word.each_char { |symb| instance.append_symbol(symb) }

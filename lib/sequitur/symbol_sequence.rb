@@ -20,8 +20,6 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       invalidate_refs
     end
 
-    public
-
     # Clear the symbol sequence.
     def clear()
       refs = references
@@ -66,14 +64,14 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def ==(other)
       return true if object_id == other.object_id
 
-      case other
-        when SymbolSequence
-          same = symbols == other.symbols
-        when Array
-          same = symbols == other
-        else
-          same = false
-      end
+      same = case other
+               when SymbolSequence
+                 symbols == other.symbols
+               when Array
+                 symbols == other
+               else
+                 false
+             end
 
       return same
     end

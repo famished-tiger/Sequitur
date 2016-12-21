@@ -14,8 +14,6 @@ class GrammarVisitor
     @subscribers = []
   end
 
-  public
-
   # Add a subscriber for the visit event notification.
   # @param aSubscriber [Object]
   def subscribe(aSubscriber)

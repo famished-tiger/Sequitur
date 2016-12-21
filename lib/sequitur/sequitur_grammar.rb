@@ -71,8 +71,8 @@ class SequiturGrammar < DynamicGrammar
         if found_so_far.include? its_key
           orig_digr = found_so_far[its_key]
           # Disregard sequence like a a a
-          if ((orig_digr.production == a_prod) && a_digr.repeating? &&
-            (orig_digr == a_digr))
+          if (orig_digr.production == a_prod) && a_digr.repeating? &&
+             (orig_digr == a_digr)
             next
           end
 
@@ -111,7 +111,7 @@ class SequiturGrammar < DynamicGrammar
   # Return a production that is used less than twice in the grammar.
   def detect_useless_production()
     useless = productions.index { |prod| prod.refcount < 2 }
-    useless = nil if useless && useless == 0
+    useless = nil if useless && useless.zero?
 
     return useless
   end
