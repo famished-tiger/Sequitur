@@ -1,23 +1,26 @@
 language: ruby
 rvm:
   - ruby-head
-  - jruby-head  
-  - 2.3.3
-  - 2.2.6
-  - 2.1.9
-  - 2.0.0  
-  - jruby    
+  - jruby-head
+  - 2.5.1
+  - 2.4.4
+  - 2.3.7
+  - 2.2.10
+  - 2.1.10
+  - 2.0.0
+  - jruby
 
 matrix:
   allow_failures:
-    - rvm: jruby  
+    - rvm: jruby
     - rvm: ruby-head
     - rvm: jruby-head
+  fast_finish: true
 
 gemfile:
   - Gemfile
-  
+
 # whitelist
-branches:  
+branches:
   only:
     - master
