@@ -17,7 +17,7 @@ environment:
   
 matrix:
   allow_failures:
-    - ruby_version: "25"
+    - ruby_version: 25
 
 install:
   - set PATH=C:\Ruby%Ruby_version%\bin;%PATH%
