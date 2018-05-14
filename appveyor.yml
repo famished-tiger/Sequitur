@@ -14,6 +14,10 @@ environment:
   - Ruby_version: 21-x64  
   - Ruby_version: 200
   - Ruby_version: 200-x64
+  
+matrix:
+  allow_failures:
+    - ruby_version: "25"
 
 install:
   - set PATH=C:\Ruby%Ruby_version%\bin;%PATH%
