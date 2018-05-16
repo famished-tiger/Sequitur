@@ -66,7 +66,7 @@ describe Production do
       expect(subject.references).to be_empty
 
       # Case 2: production without references
-      symbols = [:a, :b, :c]
+      symbols = %i[a b c]
       symbols.each { |symb| subject.append_symbol(symb) }
       expect(subject.references).to be_empty
       expect(subject.references_of(p_a)).to be_empty
@@ -90,14 +90,14 @@ describe Production do
     end
 
     it 'should know the position(s) of a given digram' do
-      sequence1 = [:a, :b, :c, :a, :b, :a, :b, :d]
+      sequence1 = %i[a b c a b a b d]
       sequence1.each { |symb| subject.append_symbol(symb) }
       positions = [0, 3, 5]
       expect(subject.positions_of(:a, :b)).to eq(positions)
 
       subject.clear_rhs
       # Case of overlapping digrams
-      sequence2 = [:a, :a, :b, :a, :a, :a, :c, :d]
+      sequence2 = %i[a a b a a a c d]
       sequence2.each { |symb| subject.append_symbol(symb) }
       positions = [0, 3]
       expect(subject.positions_of(:a, :a)).to eq(positions)
@@ -114,15 +114,15 @@ describe Production do
     it 'should append a symbol when has one symbol' do
       subject.append_symbol(:a)
       subject.append_symbol(:b)
-      expect(subject.rhs).to eq([:a, :b])
-      expect(subject.last_digram.symbols).to eq([:a, :b])
+      expect(subject.rhs).to eq(%i[a b])
+      expect(subject.last_digram.symbols).to eq(%i[a b])
     end
 
     it 'should append a symbol when rhs has several symbols' do
-      symbols = [:a, :b, :c, :d, :e, :f]
+      symbols = %i[a b c d e f]
       symbols.each { |symb| subject.append_symbol(symb) }
       expect(subject.rhs).to eq(symbols)
-      expect(subject.last_digram.symbols).to eq([:e, :f])
+      expect(subject.last_digram.symbols).to eq(%i[e f])
     end
 
     it 'should append a production in its rhs' do

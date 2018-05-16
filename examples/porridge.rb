@@ -1,9 +1,7 @@
-require 'sequitur'  # Load the Sequitur library
-
+require 'sequitur' # Load the Sequitur library
 
 # Purpose: demo to show that sequitur gem works on example from sequitur.info website
-input_sequence =        
-      input = <<-SNIPPET
+input_sequence = <<-SNIPPET
 pease porridge hot,
 pease porridge cold,
 pease porridge in the pot,
@@ -21,7 +19,7 @@ grammar = Sequitur.build_from(input_sequence)
 # We use a formatter
 formatter = Sequitur::Formatter::BaseText.new(STDOUT)
 
-# Now render the rules. 
+# Now render the rules.
 formatter.render(grammar.visitor)
 
 # Rendered output is:
@@ -38,4 +36,4 @@ formatter.render(grammar.visitor)
 # P9 : s o m P1 l i k P1 i t  .
 # P10 : c P7.
 # P11 : P5 P9.
-# P12 : P6   t h P4 t P5 n P6 P1 d a y s   P7 .
+# P12 : P6   t h P4 t P5 n P6 P1 d a y s P7 .

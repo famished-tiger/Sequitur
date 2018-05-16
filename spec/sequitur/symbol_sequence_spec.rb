@@ -24,7 +24,7 @@ describe SymbolSequence do
 
     subject do
       an_instance = SymbolSequence.new
-      [:a, :b, :c].each { |a_sym| an_instance << a_sym }
+      %i[a b c].each { |a_sym| an_instance << a_sym }
       an_instance
     end
 
@@ -63,7 +63,7 @@ describe SymbolSequence do
       expect(instance).to eq(instance)
 
       expect(subject).not_to eq(instance)
-      [:a, :b, :c].each { |a_sym| instance << a_sym }
+      %i[a b c].each { |a_sym| instance << a_sym }
       expect(subject).to eq(instance)
 
       # Check that element order is relevant
@@ -72,10 +72,10 @@ describe SymbolSequence do
     end
 
     it 'should know whether it is equal to an array' do
-      expect(subject).to eq([:a, :b, :c])
+      expect(subject).to eq(%i[a b c])
 
       # Check that element order is relevant
-      expect(subject).not_to eq([:c, :b, :a])
+      expect(subject).not_to eq(%i[c b a])
     end
 
     it 'should know that is not equal to something else' do

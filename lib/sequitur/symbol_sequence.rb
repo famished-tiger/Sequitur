@@ -6,7 +6,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     attr_reader(:symbols)
 
     # Create an empty sequence
-    def initialize()
+    def initialize
       @symbols = []
     end
 
@@ -21,7 +21,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Clear the symbol sequence.
-    def clear()
+    def clear
       refs = references
       refs.each(&:unbind)
       @symbols = []
@@ -30,13 +30,13 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 
     # Tell whether the sequence is empty.
     # @return [true / false] true only if the sequence has no symbol in it.
-    def empty?()
+    def empty?
       return symbols.empty?
     end
 
     # Count the number of elements in the sequence.
     #  @return [Fixnum] the number of elements
-    def size()
+    def size
       return symbols.size
     end
 
@@ -76,14 +76,12 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       return same
     end
 
-
     # Select the references to production appearing in the rhs.
     # @return [Array of ProductionRef]
-    def references()
+    def references
       @memo_references ||= symbols.select { |symb| symb.is_a?(ProductionRef) }
       return @memo_references
     end
-
 
     # Select the references of the given production appearing in the rhs.
     # @param aProduction [Production]
@@ -94,11 +92,10 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       return result
     end
 
-
     # Emit a text representation of the symbol sequence.
     # Text is of the form: space-separated sequence of symbols.
     # @return [String]
-    def to_string()
+    def to_string
       rhs_text = symbols.map do |elem|
         case elem
           when String then "'#{elem}'"
@@ -150,7 +147,6 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       symbols.delete_at(position)
     end
 
-
     # Part of the 'visitee' role in Visitor design pattern.
     # @param aVisitor[GrammarVisitor]
     def accept(aVisitor)
@@ -170,7 +166,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 
     private
 
-    def invalidate_refs()
+    def invalidate_refs
       @memo_references = nil
       @lookup_references = nil
     end

@@ -1,3 +1,12 @@
+### 0.1.19 / 2018-05-16
+Maintenance release.
+* [CHANGE] File `.travis.yml`: updated Ruby versions.
+* [CHANGE] File `appveyor.yml` updated Ruby versions, updated for syntax changes.
+* [CHANGE] File 'sequitur.gemspec' Updated versions in dependencies.
+* [CHANGE] File 'Gemfile' Updated versions in dependencies.
+* [CHANGE] File 'Gemfile' Code re-styling to please Rubocop 0.55.0.
+
+
 ### 0.1.18 / 2016-12-21
 * [NEW] Added AppVeyor CI to Github commits. AppVeyor allows to build and test commits on Windows servers.
 This is complementary to Travis CI which does Linux builds.

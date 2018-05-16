@@ -43,7 +43,7 @@ class SequiturGrammar < DynamicGrammar
   #     remove P from grammar
   #   end
   #  end until digram unicity and rule utility are met
-  def enforce_rules()
+  def enforce_rules
     loop do
       unicity_diagnosis = detect_collision if unicity_diagnosis.nil?
       restore_unicity(unicity_diagnosis) if unicity_diagnosis.collision_found
@@ -61,7 +61,7 @@ class SequiturGrammar < DynamicGrammar
   # Return an empty Hash if each digram appears once.
   # Otherwise return a Hash with a pair of the form: digram => [Pi, Pk]
   # Where Pi, Pk are two productions where the digram occurs.
-  def detect_collision()
+  def detect_collision
     diagnosis = CollisionDiagnosis.new(false)
     found_so_far = {}
     productions.each do |a_prod|
@@ -109,7 +109,7 @@ class SequiturGrammar < DynamicGrammar
   end
 
   # Return a production that is used less than twice in the grammar.
-  def detect_useless_production()
+  def detect_useless_production
     useless = productions.index { |prod| prod.refcount < 2 }
     useless = nil if useless && useless.zero?
 

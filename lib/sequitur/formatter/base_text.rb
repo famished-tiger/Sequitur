@@ -72,7 +72,7 @@ module Sequitur
       private
 
       # Read accessor of the production lookup
-      def prod_lookup()
+      def prod_lookup
         return @prod_lookup
       end
 

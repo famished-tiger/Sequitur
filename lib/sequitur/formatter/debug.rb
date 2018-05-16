@@ -109,11 +109,11 @@ module Sequitur
 
       private
 
-      def indent()
+      def indent
         @indentation += 1
       end
 
-      def dedent()
+      def dedent
         @indentation -= 1
       end
 

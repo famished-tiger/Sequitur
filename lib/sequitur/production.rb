@@ -23,7 +23,7 @@ class Production
 
   # Constructor.
   # Build a production with an empty RHS.
-  def initialize()
+  def initialize
     @rhs = SymbolSequence.new
     @refcount = 0
     @digrams = []
@@ -44,7 +44,6 @@ class Production
     return result
   end
 
-
   # Is the rhs empty?
   # @ return true if the rhs has no members.
   def empty?
@@ -52,20 +51,19 @@ class Production
   end
 
   # Increment the reference count by one.
-  def incr_refcount()
+  def incr_refcount
     @refcount += 1
   end
 
   # Decrement the reference count by one.
-  def decr_refcount()
+  def decr_refcount
     raise StandardError, 'Internal error' if @refcount.zero?
     @refcount -= 1
   end
 
-
   # Select the references to production appearing in the rhs.
   # @return [Array of ProductionRef]
-  def references()
+  def references
     return rhs.references
   end
 
@@ -77,10 +75,9 @@ class Production
     return rhs.references_of(real_prod)
   end
 
-
   # Enumerate the digrams appearing in the right-hand side (rhs)
   # @return [Array] the list of digrams found in rhs of this production.
-  def recalc_digrams()
+  def recalc_digrams
     return [] if rhs.size < 2
 
     result = []
@@ -88,20 +85,17 @@ class Production
     @digrams = result
   end
 
-
-
   # Does the rhs have exactly one digram only (= 2 symbols)?
   # @return [true/false] true when the rhs contains exactly two symbols.
   def single_digram?
     return rhs.size == 2
   end
 
-
   # Detect whether the last digram occurs twice
   # Assumption: when a digram occurs twice in a production then it must occur
   # at the end of the rhs
   # @return [true/false] true when the digram occurs twice in rhs.
-  def repeated_digram?()
+  def repeated_digram?
     return false if rhs.size < 3
 
     my_digrams = digrams
@@ -113,17 +107,16 @@ class Production
 
   # Retrieve the last digram appearing in the RHS (if any).
   # @return [Digram] last digram in the rhs otherwise nil.
-  def last_digram()
+  def last_digram
     result = digrams.empty? ? nil : digrams.last
     return result
   end
-
 
   # Emit a text representation of the production rule.
   # Text is of the form:
   # object id of production : rhs as space-separated sequence of symbols.
   # @return [String]
-  def to_string()
+  def to_string
     return "#{object_id} : #{rhs.to_string}."
   end
 
@@ -150,7 +143,7 @@ class Production
 
   # Clear the right-hand side.
   # Any referenced production has its reference counter decremented.
-  def clear_rhs()
+  def clear_rhs
     rhs.clear
   end
 
@@ -168,7 +161,7 @@ class Production
   #   p.positions_of(a, a) # => [0, 3]
   def positions_of(symb1, symb2)
     # Find the positions where the digram occur in rhs
-    indices = [ -2 ] # Dummy index!
+    indices = [-2] # Dummy index!
     (0...rhs.size).each do |i|
       next if i == indices.last + 1
       indices << i if (rhs[i] == symb1) && (rhs[i + 1] == symb2)
@@ -178,7 +171,6 @@ class Production
 
     return indices
   end
-
 
   # Given that the production P passed as argument has exactly 2 symbols
   #   in its rhs s1 s2, substitute in the rhs of self all occurrences of
@@ -216,7 +208,6 @@ class Production
 
     recalc_digrams
   end
-
 
   # Part of the 'visitee' role in Visitor design pattern.
   # @param aVisitor[GrammarVisitor]

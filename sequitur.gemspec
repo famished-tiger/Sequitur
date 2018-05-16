@@ -1,4 +1,3 @@
-# encoding: utf-8
 # File: sequitur.gemspec
 # Gem specification file for the Sequitur project.
 
@@ -17,12 +16,12 @@ SEQUITUR_GEMSPEC = Gem::Specification.new do |pkg|
   pkg.platform = Gem::Platform::RUBY
   pkg.summary = Sequitur::Description
   pkg.description = <<-END_DESCR
-Ruby implementation of the Sequitur algorithm. This algorithm automatically 
-finds repetitions and hierarchical structures in a given sequence of input 
-tokens. It encodes the input into a context-free grammar. 
-The Sequitur algorithm can be used to 
+Ruby implementation of the Sequitur algorithm. This algorithm automatically
+finds repetitions and hierarchical structures in a given sequence of input
+tokens. It encodes the input into a context-free grammar.
+The Sequitur algorithm can be used to
 a) compress a sequence of items,
-b) discover patterns in an sequence, 
+b) discover patterns in an sequence,
 c) generate grammar rules that can represent a given input.
 END_DESCR
   pkg.post_install_message = <<EOSTRING
@@ -33,7 +32,7 @@ EOSTRING
   pkg.rdoc_options << '--charset=UTF-8 --exclude="examples|features|spec"'
   file_list = Dir[
     '.rubocop.yml', '.rspec', '.ruby-gemset', '.ruby-version', '.simplecov',
-    '.travis.yml',  '.yardopts', 'appveyor.yml', 'cucumber.yml', 'Gemfile', 
+    '.travis.yml',  '.yardopts', 'appveyor.yml', 'cucumber.yml', 'Gemfile',
     'Rakefile',
     'CHANGELOG.md',
     'LICENSE.txt', 'README.md',
@@ -42,17 +41,17 @@ EOSTRING
     'examples/*.*'
   ]
   pkg.files = file_list
-  pkg.test_files = Dir[ 'spec/**/*_spec.rb' ]
+  pkg.test_files = Dir['spec/**/*_spec.rb']
 
   pkg.require_path = 'lib'
 
   pkg.extra_rdoc_files = ['README.md']
-
-  pkg.add_development_dependency 'rake', '~> 10.0.0', '>= 10.0.0'
-  pkg.add_development_dependency 'rspec', '~> 2.1.0', '>= 2.1.0'
-  pkg.add_development_dependency('simplecov', ['>= 0.8.0'])
   pkg.add_development_dependency('coveralls', ['>= 0.7.0'])
-  pkg.add_development_dependency 'rubygems', '~> 2.0', '>= 2.0.0'
+  pkg.add_development_dependency 'rake', '~> 10.0.0', '>= 10.0.0'
+  pkg.add_development_dependency 'rspec', '~> 3.0.0', '>= 3.0.0'
+  pkg.add_development_dependency 'rubygems', '~> 2.0', '>= 2.0.0
+  pkg.add_development_dependency('simplecov', ['>= 0.8.0'])
+'
 
   # pkg.bindir = 'bin'
   # pkg.executables = %w(sequitur)

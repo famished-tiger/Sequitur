@@ -1,4 +1,4 @@
-require 'sequitur'  # Load the Sequitur library
+require 'sequitur' # Load the Sequitur library
 
 #
 # Purpose: show how to apply Sequitur on a stream of text words
@@ -27,4 +27,3 @@ formatter.render(grammar.visitor)
 # start : P2 6 Error illegal P1 20 P2 9.
 # P1 : character at position.
 # P2 : Error unknown P1.
-

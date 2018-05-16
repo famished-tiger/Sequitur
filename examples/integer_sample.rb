@@ -1,9 +1,9 @@
-require 'sequitur'  # Load the Sequitur library
+require 'sequitur' # Load the Sequitur library
 
 #
 # Purpose: show how to apply Sequitur on a stream of integer values
 #
-input_sequence =  [1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5]
+input_sequence = [1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5]
 
 # Generate the grammar from the sequence
 grammar = Sequitur.build_from(input_sequence)
@@ -23,11 +23,10 @@ formatter.render(grammar.visitor)
 
 # Playing a bit with the API
 # Access last symbol from rhs of start production:
-last_symbol_p0 = grammar.start.rhs.symbols[-1]  
-puts last_symbol_p0     # => 5
+last_symbol_p0 = grammar.start.rhs.symbols[-1]
+puts last_symbol_p0 # => 5
 
 # Access first symbol from rhs of P1 production:
 first_symbol_p1 = grammar.productions[1].rhs.symbols[0]
 
-puts first_symbol_p1    # => 1
-
+puts first_symbol_p1 # => 1

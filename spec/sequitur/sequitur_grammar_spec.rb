@@ -7,7 +7,7 @@ module Sequitur # Re-open the module to get rid of qualified names
 describe SequiturGrammar do
   # Factory method. Returns an empty enumerator (
   # i.e. without elements to iterate)
-  def empty_enum()
+  def empty_enum
     return [].to_enum
   end
 
@@ -36,28 +36,28 @@ describe SequiturGrammar do
 
     it 'could be created with multiple unique tokens' do
       # Creation
-      instance = SequiturGrammar.new([:a, :b, :c, :d].to_enum)
+      instance = SequiturGrammar.new(%i[a b c d].to_enum)
 
       # Initialization
       expect(instance.productions.size).to eq(1)
       expect(instance.start).to eq(instance.productions.first)
-      expect(instance.start.rhs).to eq([:a, :b, :c, :d])
+      expect(instance.start.rhs).to eq(%i[a b c d])
     end
 
     it 'could be created with a repeating digram' do
-      instance = SequiturGrammar.new([:a, :b, :a, :b].to_enum)
+      instance = SequiturGrammar.new(%i[a b a b].to_enum)
 
       # Expectations:
       # S : A A.
       # A : a b.
       expect(instance.productions.size).to eq(2)
       p_a = instance.productions[1]
-      expect(p_a.rhs).to eq([:a, :b])
+      expect(p_a.rhs).to eq(%i[a b])
       expect(instance.start.rhs).to eq([p_a, p_a])
     end
 
     it 'should enforce the utility rule' do
-      instance = SequiturGrammar.new([:a, :b, :c, :a, :b, :c].to_enum)
+      instance = SequiturGrammar.new(%i[a b c a b c].to_enum)
 
       # Expectations without utility rule:
       # S : B B.
@@ -69,7 +69,7 @@ describe SequiturGrammar do
       # A : a b c.
       expect(instance.productions.size).to eq(2)
       p_a = instance.productions.last
-      expect(p_a.rhs).to eq([:a, :b, :c])
+      expect(p_a.rhs).to eq(%i[a b c])
       expect(instance.start.rhs).to eq([p_a, p_a])
     end
 
@@ -124,7 +124,7 @@ describe SequiturGrammar do
       expect(p2.rhs).to eq([p1, p1])
       expect(p3.rhs).to eq(['letter_b', p2, 'letter_e'])
     end
-    
+
     it 'should work with Symbol instead of single char input tokens' do
       # Raw input is sequence of single characters
       raw_input = 'bbebeebebebbebee'
@@ -143,7 +143,7 @@ describe SequiturGrammar do
       expect(instance.productions.size).to eq(4)
       (p1, p2, p3) = instance.productions[1..3]
       expect(instance.start.rhs).to eq([p3, p2, p3])
-      expect(p1.rhs).to eq([:b, :e])
+      expect(p1.rhs).to eq(%i[b e])
       expect(p2.rhs).to eq([p1, p1])
       expect(p3.rhs).to eq([:b, p2, :e])
     end
@@ -279,7 +279,7 @@ SNIPPET
       expect(instance.productions.size).to eq(3)
       (p1, p2) = instance.productions[1..2]
       expect(instance.start.rhs).to eq([p2, p2])
-      expect(p1.rhs).to eq([:a, :b])
+      expect(p1.rhs).to eq(%i[a b])
       expect(p2.rhs).to eq([p1, :c, p1, :d])
     end
   end # context
