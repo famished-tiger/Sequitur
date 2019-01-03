@@ -1,5 +1,3 @@
-
-
 module Sequitur # Module for classes implementing the Sequitur algorithm
   # A production reference is a grammar symbol that may appear in the right-hand
   # side of a production P1 and that refers to a production P2.
@@ -73,6 +71,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @return [Fixnum] the hash value
     def hash
       raise StandardError, 'Nil production' if production.nil?
+
       return production.hash
     end
 
@@ -86,6 +85,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       unless aProduction.kind_of?(Production)
         raise StandardError, "Illegal production type #{aProduction.class}"
       end
+
       @production = aProduction
       production.incr_refcount
     end

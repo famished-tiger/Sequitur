@@ -131,6 +131,7 @@ class SequiturGrammar < DynamicGrammar
 
       refs = a_prod.references_of(useless_prod)
       next if refs.empty?
+
       referencing = a_prod
       break
     end

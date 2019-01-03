@@ -58,6 +58,7 @@ class Production
   # Decrement the reference count by one.
   def decr_refcount
     raise StandardError, 'Internal error' if @refcount.zero?
+
     @refcount -= 1
   end
 
@@ -164,6 +165,7 @@ class Production
     indices = [-2] # Dummy index!
     (0...rhs.size).each do |i|
       next if i == indices.last + 1
+
       indices << i if (rhs[i] == symb1) && (rhs[i + 1] == symb2)
     end
 

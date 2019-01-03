@@ -88,6 +88,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @return [Array of ProductionRef]
     def references_of(aProduction)
       return [] if references.empty?
+
       result = references.select { |a_ref| a_ref == aProduction }
       return result
     end

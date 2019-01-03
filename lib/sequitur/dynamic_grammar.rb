@@ -18,7 +18,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     attr_reader(:productions)
 
     # nodoc Trace the execution of the algorithm.
-    attr(:trace)
+    attr_accessor(:trace)
 
     # Constructor.
     # Build a grammar with one empty rule as start/start rule.

@@ -4,7 +4,7 @@ module Sequitur
     # Superclass for grammar formatters.
     class BaseFormatter
       # The IO output stream in which the formatter's result will be sent.
-      attr(:output)
+      attr_accessor(:output)
 
       # Constructor.
       # @param anIO [IO] an output IO where the formatter's result will

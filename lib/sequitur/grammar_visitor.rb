@@ -93,6 +93,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def broadcast(msg, *args)
       subscribers.each do |a_subscriber|
         next unless a_subscriber.respond_to?(msg)
+
         a_subscriber.send(msg, *args)
       end
     end

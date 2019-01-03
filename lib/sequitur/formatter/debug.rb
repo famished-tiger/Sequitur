@@ -13,7 +13,7 @@ module Sequitur
     #   formatter.run(some_grammar.visitor)
     class Debug < BaseFormatter
       # Current indentation level
-      attr(:indentation)
+      attr_accessor(:indentation)
 
       # Constructor.
       # @param anIO [IO] The output stream to which the rendered grammar

@@ -1,3 +1,10 @@
+### 0.1.20 / 2019-01-03
+Maintenance release.
+* [CHANGE] File `.travis.yml`: updated Ruby versions.
+* [CHANGE] File `appveyor.yml` updated Ruby versions.
+* [CHANGE] File 'Gemfile' Code re-styling to please Rubocop 0.62.0.
+* [CHANGE] File `LICENSE.txt` Updated copyright years.
+
 ### 0.1.19 / 2018-05-16
 Maintenance release.
 * [CHANGE] File `.travis.yml`: updated Ruby versions.
