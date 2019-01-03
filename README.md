@@ -7,7 +7,6 @@ _Ruby gem implementing the Sequitur algorithm_
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/nvi1be8mb0494dqw?svg=true)](https://ci.appveyor.com/project/famished-tiger/sequitur)
 [![Coverage Status](https://coveralls.io/repos/famished-tiger/Sequitur/badge.png?branch=master)](https://coveralls.io/r/famished-tiger/Sequitur)
 [![Gem Version](https://badge.fury.io/rb/sequitur.svg)](http://badge.fury.io/rb/sequitur)
-[![Dependency Status](https://gemnasium.com/famished-tiger/Sequitur.png)](https://gemnasium.com/famished-tiger/Sequitur)
 [![Inline docs](http://inch-ci.org/github/famished-tiger/Sequitur.svg?branch=master)](http://inch-ci.org/github/famished-tiger/Sequitur)
 [![Code Climate](https://codeclimate.com/github/famished-tiger/Sequitur.png)](https://codeclimate.com/github/famished-tiger/Sequitur)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt)
