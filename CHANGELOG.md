@@ -1,3 +1,7 @@
+## 0.1.21 - 2019-01-13
+- Removed Ruby versions older than 2.3 in CI testing because of breaking changes by Bundler 2.0  
+* [CHANGE] Files `Gemfile`, `.travis.yml`, `appveyor.yml` updated.
+
 ### 0.1.20 / 2019-01-03
 Maintenance release.
 * [CHANGE] File `.travis.yml`: updated Ruby versions.
