@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sequitur # Module for classes implementing the Sequitur algorithm
 # A visitor class dedicated in the visit of Grammar.
   class GrammarVisitor

@@ -1,3 +1,9 @@
+## [0.1.22] - 2019-08-18
+- Code refactoring to use string frozen magic comments (as a consequence, srl_ruby runs only on Rubies 2.3 or newer).  
+- Code restyling to please rubocop 0.7.40. 
+
+* [CHANGE] Files `Gemfile`, `.travis.yml`, `appveyor.yml` updated.
+
 ## 0.1.21 - 2019-01-13
 - Removed Ruby versions older than 2.3 in CI testing because of breaking changes by Bundler 2.0  
 * [CHANGE] Files `Gemfile`, `.travis.yml`, `appveyor.yml` updated.

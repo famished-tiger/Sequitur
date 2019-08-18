@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'dynamic_grammar'
 
 
@@ -111,7 +113,7 @@ class SequiturGrammar < DynamicGrammar
   # Return a production that is used less than twice in the grammar.
   def detect_useless_production
     useless = productions.index { |prod| prod.refcount < 2 }
-    useless = nil if useless && useless.zero?
+    useless = nil if useless&.zero?
 
     return useless
   end

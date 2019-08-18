@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'digram'
 require_relative 'symbol_sequence'
 require_relative 'production_ref'

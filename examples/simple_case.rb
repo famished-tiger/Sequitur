@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sequitur' # Load the Sequitur library
 
 # Purpose: show how to apply Sequitur on a stream of single characters

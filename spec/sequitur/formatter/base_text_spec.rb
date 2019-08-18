@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../spec_helper'
 require 'stringio'
 
@@ -32,11 +34,11 @@ describe BaseText do
     grm
   end
 
-  let(:destination) { StringIO.new('', 'w') }
+  let(:destination) { StringIO.new(+'', 'w') }
 
   context 'Standard creation & initialization:' do
     it 'should be initialized with an IO argument' do
-      expect { BaseText.new(StringIO.new('', 'w')) }.not_to raise_error
+      expect { BaseText.new(StringIO.new(+'', 'w')) }.not_to raise_error
     end
 
     it 'should know its output destination' do

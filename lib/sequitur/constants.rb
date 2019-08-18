@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 # File: constants.rb
 # Purpose: definition of Sequitur constants.
 
 module Sequitur # Module used as a namespace
   # The version number of the gem.
-  Version = '0.1.21'.freeze
+  Version = '0.1.22'
 
   # Brief description of the gem.
-  Description = 'Ruby implementation of the Sequitur algorithm'.freeze
+  Description = 'Ruby implementation of the Sequitur algorithm'
 
   # Constant Sequitur::RootDir contains the absolute path of Sequitur's
   # start directory. Note: it also ends with a slash character.

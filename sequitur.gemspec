@@ -1,6 +1,6 @@
-# File: sequitur.gemspec
-# Gem specification file for the Sequitur project.
+# frozen_string_literal: true
 
+# Gem specification file for the Sequitur project.
 require 'rubygems'
 
 # The next line generates an error with Bundler
@@ -55,7 +55,7 @@ EOSTRING
   # pkg.bindir = 'bin'
   # pkg.executables = %w(sequitur)
   pkg.license = 'MIT'
-  pkg.required_ruby_version = '>= 2.0.0'
+  pkg.required_ruby_version = '>= 2.3.0'
 end
 
 if $PROGRAM_NAME == __FILE__

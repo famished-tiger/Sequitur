@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../spec_helper'
 
 # Load the class under test
@@ -176,7 +178,7 @@ describe Production do
       instance = Production.new
       symbols = [:a, :b, 'c', :d, :e, 1000, instance]
       symbols.each { |symb| subject.append_symbol(symb) }
-      expectation = "#{subject.object_id} : "
+      expectation = +"#{subject.object_id} : "
       expectation << "a b 'c' d e 1000 #{instance.object_id}."
       expect(subject.to_string).to eq(expectation)
     end

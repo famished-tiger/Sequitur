@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sequitur
   # Namespace dedicated to grammar formatters.
   module Formatter

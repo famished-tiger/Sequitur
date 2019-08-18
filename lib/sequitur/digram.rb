@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # File: digram.rb
 
 module Sequitur # Module for classes implementing the Sequitur algorithm

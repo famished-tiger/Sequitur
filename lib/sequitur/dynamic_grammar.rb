@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'production'
 require_relative 'grammar_visitor'
 

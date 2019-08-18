@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sequitur # Module for classes implementing the Sequitur algorithm
   # A production reference is a grammar symbol that may appear in the right-hand
   # side of a production P1 and that refers to a production P2.
@@ -81,7 +83,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def bind_to(aProduction)
       return if aProduction == @production
 
-      production.decr_refcount if production
+      production&.decr_refcount
       unless aProduction.kind_of?(Production)
         raise StandardError, "Illegal production type #{aProduction.class}"
       end

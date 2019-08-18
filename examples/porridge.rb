@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sequitur' # Load the Sequitur library
 
 # Purpose: demo to show that sequitur gem works on example from sequitur.info website

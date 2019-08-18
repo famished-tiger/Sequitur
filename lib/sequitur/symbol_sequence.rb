@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sequitur # Module for classes implementing the Sequitur algorithm
   # Represents a sequence (concatenation) of grammar symbols
   # as they appear in rhs of productions
