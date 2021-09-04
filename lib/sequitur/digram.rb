@@ -28,7 +28,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     #   the sequence symbol1 symbol2 appears.
     def initialize(symbol1, symbol2, aProduction)
       @symbols = [symbol1, symbol2]
-      @key = symbol1.hash.to_s(16) + ':' + symbol2.hash.to_s(16)
+      @key = "#{symbol1.hash.to_s(16)}:#{symbol2.hash.to_s(16)}"
       @production = aProduction
     end
 

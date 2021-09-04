@@ -1,5 +1,12 @@
+## [0.1.23] - 2021-09-04
+- Remove dependencies towards `coverall`, `simplecov`  
+- Code restyling to please rubocop 1.19.1
+
+* [CHANGE] File 'sequitur.gemspec' Remove dependencies towards `coverall`, `simplecov` 
+* [CHANGE] File 'sequitur.gemspec' Ruby version must be 2.5+
+
 ## [0.1.22] - 2019-08-18
-- Code refactoring to use string frozen magic comments (as a consequence, srl_ruby runs only on Rubies 2.3 or newer).  
+- Code refactoring to use string frozen magic comments (as a consequence, sequitur runs only on Rubies 2.3 or newer).  
 - Code restyling to please rubocop 0.7.40. 
 
 * [CHANGE] Files `Gemfile`, `.travis.yml`, `appveyor.yml` updated.

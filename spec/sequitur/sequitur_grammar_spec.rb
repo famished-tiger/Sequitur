@@ -107,9 +107,7 @@ describe SequiturGrammar do
       raw_input = 'bbebeebebebbebee'
 
       # Convert them into multichar strings
-      input = raw_input.chars.map do |ch|
-        'letter_' + ch
-      end
+      input = raw_input.chars.map { |ch| "letter_#{ch}" }
 
       # Creation
       instance = SequiturGrammar.new(input.to_enum)

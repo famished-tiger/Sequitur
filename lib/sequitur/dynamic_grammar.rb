@@ -55,7 +55,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       puts to_string if trace
       prod = productions.delete_at(anIndex)
       # TODO: remove output
-      puts('Removed: ' + prod.to_string) if trace
+      puts("Removed: #{prod.to_string}") if trace
       prod.clear_rhs
 
       return prod

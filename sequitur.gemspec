@@ -44,18 +44,15 @@ EOSTRING
   pkg.test_files = Dir['spec/**/*_spec.rb']
 
   pkg.require_path = 'lib'
-
   pkg.extra_rdoc_files = ['README.md']
-  pkg.add_development_dependency 'coveralls', '~> 0.7', '>= 0.7.0'
   pkg.add_development_dependency 'rake', '~> 10.0.0', '>= 10.0.0'
   pkg.add_development_dependency 'rspec', '~> 3.0.0', '>= 3.0.0'
   pkg.add_development_dependency 'rubygems', '~> 2.0', '>= 2.0.0'
-  pkg.add_development_dependency 'simplecov', '~> 0.8.0', '>= 0.8.0'
 
   # pkg.bindir = 'bin'
   # pkg.executables = %w(sequitur)
   pkg.license = 'MIT'
-  pkg.required_ruby_version = '>= 2.3.0'
+  pkg.required_ruby_version = '>= 2.5.0'
 end
 
 if $PROGRAM_NAME == __FILE__

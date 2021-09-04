@@ -11,7 +11,7 @@ grammar = Sequitur.build_from(input_sequence)
 
 # To display the grammar rules on the console output
 # We use a formatter
-formatter = Sequitur::Formatter::BaseText.new(STDOUT)
+formatter = Sequitur::Formatter::BaseText.new($stdout)
 
 # Now render the rules. Each rule is displayed with the format:
 # rule_id : a_sequence_grammar_symbols.

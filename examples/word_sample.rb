@@ -20,7 +20,7 @@ grammar = Sequitur.build_from(input_sequence)
 
 
 # Use a formatter to display the grammar rules on the console output
-formatter = Sequitur::Formatter::BaseText.new(STDOUT)
+formatter = Sequitur::Formatter::BaseText.new($stdout)
 
 # Now render the rules
 formatter.render(grammar.visitor)

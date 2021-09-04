@@ -29,8 +29,8 @@ class SequiturGrammar < DynamicGrammar
   CollisionDiagnosis = Struct.new(
     :collision_found, # true if collision detected
     :digram, # The digram involved in a collision
-    :productions # The productions where the digram occurs
-  )
+    :productions) # The productions where the digram occurs
+
 
 
   # Assuming that a new input token was added to the start production,
