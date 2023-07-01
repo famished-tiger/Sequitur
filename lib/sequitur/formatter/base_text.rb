@@ -12,6 +12,8 @@ module Sequitur
     #   # Render the grammar (through a visitor)
     #   formatter.run(some_grammar.visitor)
     class BaseText < BaseFormatter
+      attr_reader :prod_lookup
+
       # Constructor.
       # @param anIO [IO] The output stream to which the rendered grammar
       # is written.
@@ -73,17 +75,11 @@ module Sequitur
 
       private
 
-      # Read accessor of the production lookup
-      def prod_lookup
-        return @prod_lookup
-      end
-
       # Generate a name of a given production.
       # @param aProduction [Production]
       def prod_name(aProduction)
         prod_index = prod_lookup[aProduction]
-        name = prod_index.zero? ? 'start' : "P#{prod_index}"
-        return name
+        prod_index.zero? ? 'start' : "P#{prod_index}"
       end
     end # class
   end # module

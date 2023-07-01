@@ -1,0 +1,5 @@
+inherit_from: ../.rubocop.yml
+
+Metrics/BlockLength:
+  Enabled: true
+  Max: 300 # Allow 'context' blocks to contain multiple 'it' blocks

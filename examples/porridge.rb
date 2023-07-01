@@ -3,16 +3,16 @@
 require 'sequitur' # Load the Sequitur library
 
 # Purpose: demo to show that sequitur gem works on example from sequitur.info website
-input_sequence = <<-SNIPPET
-pease porridge hot,
-pease porridge cold,
-pease porridge in the pot,
-nine days old.
+input_sequence = <<~SNIPPET
+  pease porridge hot,
+  pease porridge cold,
+  pease porridge in the pot,
+  nine days old.
 
-some like it hot,
-some like it cold,
-some like it in the pot,
-nine days old.
+  some like it hot,
+  some like it cold,
+  some like it in the pot,
+  nine days old.
 SNIPPET
 
 grammar = Sequitur.build_from(input_sequence)

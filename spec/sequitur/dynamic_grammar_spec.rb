@@ -5,14 +5,13 @@ require_relative '../spec_helper'
 # Load the class under test
 require_relative '../../lib/sequitur/dynamic_grammar'
 
-module Sequitur # Re-open the module to get rid of qualified names
-describe DynamicGrammar do
+describe Sequitur::DynamicGrammar do
   # Factory method. Build a production with the given sequence
   # of symbols as its rhs.
   def build_production(*symbols)
-    prod = Production.new
+    prod = Sequitur::Production.new
     symbols.each { |symb| prod.append_symbol(symb) }
-    return prod
+    prod
   end
 
   let(:p_a) { build_production(:a) }
@@ -20,10 +19,9 @@ describe DynamicGrammar do
   let(:p_c) { build_production(:c) }
   let(:p_bc) { build_production(p_b, p_c) }
 
-
   context 'Creation & initialization:' do
     it 'should be created without parameter' do
-      expect { DynamicGrammar.new }.not_to raise_error
+      expect { Sequitur::DynamicGrammar.new }.not_to raise_error
     end
 
     it 'should have an empty start/start production' do
@@ -32,7 +30,6 @@ describe DynamicGrammar do
       expect(subject.productions.first).to be_empty
     end
   end # context
-
 
   context 'Adding productions to the grammar:' do
     it 'should add a simple production' do
@@ -59,7 +56,6 @@ describe DynamicGrammar do
       expect(subject.productions.last).to eq(p_bc)
     end
   end # context
-
 
   context 'Removing a production from the grammar:' do
     it 'should remove an existing production' do
@@ -91,7 +87,7 @@ describe DynamicGrammar do
   context 'Visiting:' do
     it 'should return a visitor' do
       expect { subject.visitor }.not_to raise_error
-      expect(subject.visitor).to be_kind_of(GrammarVisitor)
+      expect(subject.visitor).to be_kind_of(Sequitur::GrammarVisitor)
     end
 
     it 'should accept a visitor' do
@@ -133,7 +129,6 @@ describe DynamicGrammar do
     end
   end # context
 
-
   context 'Generating a text representation of itself:' do
     it 'should generate a text representation when empty' do
       expectation = "#{subject.start.object_id} : ."
@@ -141,6 +136,5 @@ describe DynamicGrammar do
     end
   end # context
 end # describe
-end # module
 
 # End of file

@@ -19,7 +19,7 @@ module Sequitur
       # and render the visit events in the output stream.
       # @param aGrmOrVisitor [DynamicGrammar or GrammarVisitor]
       def render(aGrmOrVisitor)
-        a_visitor = if aGrmOrVisitor.kind_of?(GrammarVisitor)
+        a_visitor = if aGrmOrVisitor.is_a?(GrammarVisitor)
                       aGrmOrVisitor
                     else
                       aGrmOrVisitor.visitor

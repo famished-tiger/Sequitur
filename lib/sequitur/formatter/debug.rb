@@ -2,7 +2,6 @@
 
 require_relative 'base_formatter'
 
-
 module Sequitur
   module Formatter
     # A formatter class that can render the notification events

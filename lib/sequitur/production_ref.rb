@@ -42,11 +42,10 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Emit the text representation of a production reference.
     # @return [String]
     def to_s
-      return production.object_id.to_s
+      production.object_id.to_s
     end
 
     alias to_string to_s
-
 
     # Equality testing.
     #   A production ref is equal to another one when its
@@ -57,13 +56,11 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def ==(other)
       return true if object_id == other.object_id
 
-      result = if other.is_a?(ProductionRef)
-                 (production == other.production)
-               else
-                 (production == other)
-               end
-
-      return result
+      if other.is_a?(ProductionRef)
+        production == other.production
+      else
+        production == other
+      end
     end
 
     # Produce a hash value.
@@ -74,7 +71,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     def hash
       raise StandardError, 'Nil production' if production.nil?
 
-      return production.hash
+      production.hash
     end
 
     # Make this reference point to the given production.
@@ -84,7 +81,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       return if aProduction == @production
 
       production&.decr_refcount
-      unless aProduction.kind_of?(Production)
+      unless aProduction.is_a?(Production)
         raise StandardError, "Illegal production type #{aProduction.class}"
       end
 
@@ -102,7 +99,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @return [true / false] true when this object doesn't
     #   point to a production.
     def unbound?
-      return production.nil?
+      production.nil?
     end
 
     # Part of the 'visitee' role in the Visitor design pattern.

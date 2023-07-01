@@ -10,7 +10,6 @@ input_sequence = [1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5]
 # Generate the grammar from the sequence
 grammar = Sequitur.build_from(input_sequence)
 
-
 # Use a formatter to display the grammar rules on the console output
 formatter = Sequitur::Formatter::BaseText.new($stdout)
 

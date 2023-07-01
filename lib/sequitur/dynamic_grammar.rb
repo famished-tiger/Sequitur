@@ -34,8 +34,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Each production rule is emitted per line.
     # @return [String]
     def to_string
-      rule_text = productions.map(&:to_string).join("\n")
-      return rule_text
+      productions.map(&:to_string).join("\n")
     end
 
     # Add a given production to the grammar.
@@ -58,7 +57,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
       puts("Removed: #{prod.to_string}") if trace
       prod.clear_rhs
 
-      return prod
+      prod
     end
 
     # Add the given token to the grammar.
@@ -83,7 +82,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Factory method. Returns a visitor for this grammar.
     # @return [GrammarVisitor]
     def visitor
-      return GrammarVisitor.new(self)
+      GrammarVisitor.new(self)
     end
 
     protected

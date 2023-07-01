@@ -5,22 +5,26 @@ require_relative '../spec_helper'
 # Load the class under test
 require_relative '../../lib/sequitur/production'
 
-module Sequitur # Re-open the module to get rid of qualified names
-describe Production do
+describe Sequitur::Production do
+  # Factory method. Returns a Sequitur::Production
+  def make_production
+    Sequitur::Production.new
+  end
+
   # Helper method: convert list of digrams into an array
   # of symbol couples.
-  def to_symbols(theDigrams)
-    return theDigrams.map(&:symbols)
+  def to_symbols(digrams)
+    digrams.map(&:symbols)
   end
 
   let(:p_a) do
-      instance = Production.new
-      instance.append_symbol(:a)
-      instance
+    instance = make_production
+    instance.append_symbol(:a)
+    instance
   end
 
   let(:p_bc) do
-    instance = Production.new
+    instance = make_production
     instance.append_symbol('b')
     instance.append_symbol('c')
     instance
@@ -28,7 +32,7 @@ describe Production do
 
   context 'Creation & initialization:' do
     it 'should be created without argument' do
-      expect { Production.new }.not_to raise_error
+      expect { make_production }.not_to raise_error
     end
 
     it 'should not referenced yet' do
@@ -52,11 +56,11 @@ describe Production do
     end
 
     it 'should compare to a production reference' do
-      ref_a = ProductionRef.new(p_a)
+      ref_a = Sequitur::ProductionRef.new(p_a)
       expect(p_a).to eq(ref_a)
       expect(p_bc).not_to eq(ref_a)
 
-      ref_bc = ProductionRef.new(p_bc)
+      ref_bc = Sequitur::ProductionRef.new(p_bc)
       expect(p_a).not_to eq(ref_bc)
       expect(p_bc).to eq(ref_bc)
     end
@@ -78,12 +82,10 @@ describe Production do
       expect(subject.references).to eq([p_a])
       expect(subject.references_of(p_a).map(&:production)).to eq([p_a])
 
-
       # Case 3: production with repeated references
       subject.append_symbol(p_a) # second time
       expect(subject.references).to eq([p_a, p_a])
       expect(subject.references_of(p_a).map(&:production)).to eq([p_a, p_a])
-
 
       # Case 4: production with multiple distinct references
       subject.append_symbol(p_bc)
@@ -138,7 +140,7 @@ describe Production do
 
     it 'should append a production ref in its rhs' do
       # Side-effect: refcount of production to append is incremented
-      ref_a = ProductionRef.new(p_a)
+      ref_a = Sequitur::ProductionRef.new(p_a)
       expect(p_a.refcount).to be(1)
 
       input = [ref_a, :b, :c, :d, ref_a] # ref_a appears twice
@@ -157,7 +159,7 @@ describe Production do
 
     it 'should complain when appending ref to nil production' do
       # Side-effect: refcount of production to append is incremented
-      ref_a = ProductionRef.new(p_a)
+      ref_a = Sequitur::ProductionRef.new(p_a)
       expect(p_a.refcount).to be(1)
 
       # Unbind the reference
@@ -167,7 +169,6 @@ describe Production do
     end
   end # context
 
-
   context 'Text representation of a production rule:' do
     it 'should emit minimal text when empty' do
       expectation = "#{subject.object_id} : ."
@@ -175,7 +176,7 @@ describe Production do
     end
 
     it 'should emit its text representation' do
-      instance = Production.new
+      instance = make_production
       symbols = [:a, :b, 'c', :d, :e, 1000, instance]
       symbols.each { |symb| subject.append_symbol(symb) }
       expectation = +"#{subject.object_id} : "
@@ -204,17 +205,17 @@ describe Production do
 
     it 'should detect any repetition pattern' do
       # Positive cases
-      cases = %w(abab abcdab abcdcd abcdefcd)
+      cases = %w[abab abcdab abcdcd abcdefcd]
       cases.each do |word|
-        instance = Production.new
+        instance = make_production
         word.each_char { |symb| instance.append_symbol(symb) }
         expect(instance.repeated_digram?).to be_truthy
       end
 
       # Negative cases
-      cases = %w(abc abb abba abcdef)
+      cases = %w[abc abb abba abcdef]
       cases.each do |word|
-        instance = Production.new
+        instance = make_production
         word.each_char { |symb| instance.append_symbol(symb) }
         expect(instance.repeated_digram?).to be_falsey
       end
@@ -228,9 +229,8 @@ describe Production do
       expect(p_bc.refcount).to eq(0)
     end
 
-
     it 'should replace two-symbol sequence' do
-      %w(a b c d e b c e).each { |symb| subject.append_symbol(symb) }
+      %w[a b c d e b c e].each { |symb| subject.append_symbol(symb) }
       p_bc_before = p_bc.to_string
       subject.reduce_step(p_bc)
 
@@ -240,9 +240,8 @@ describe Production do
       expect(p_bc.to_string).to eq(p_bc_before)
     end
 
-
     it 'should replace a starting two-symbol sequence' do
-      %w(b c d e b c e).each { |symb| subject.append_symbol(symb) }
+      %w[b c d e b c e].each { |symb| subject.append_symbol(symb) }
       subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(5)
@@ -250,9 +249,8 @@ describe Production do
       expect(p_bc.refcount).to eq(2)
     end
 
-
     it 'should replace an ending two-symbol sequence' do
-      %w(a b c d e b c).each { |symb| subject.append_symbol(symb) }
+      %w[a b c d e b c].each { |symb| subject.append_symbol(symb) }
       subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(5)
@@ -261,7 +259,7 @@ describe Production do
     end
 
     it 'should replace two consecutive two-symbol sequences' do
-      %w(a b c b c d).each { |symb| subject.append_symbol(symb) }
+      %w[a b c b c d].each { |symb| subject.append_symbol(symb) }
       subject.reduce_step(p_bc)
 
       expect(subject.rhs.size).to eq(4)
@@ -282,10 +280,9 @@ describe Production do
 
       subject.derive_step(p_bc)
       expect(subject.rhs.size).to eq(3)
-      expect(subject.rhs).to eq(%w(b c d))
+      expect(subject.rhs).to eq(%w[b c d])
       expect(p_bc.refcount).to eq(0)
     end
-
 
     it 'should replace a production at the end' do
       ['d', p_bc].each { |symb| subject.append_symbol(symb) }
@@ -293,7 +290,7 @@ describe Production do
       subject.derive_step(p_bc)
 
       expect(subject.rhs.size).to eq(3)
-      expect(subject.rhs).to eq(%w(d b c))
+      expect(subject.rhs).to eq(%w[d b c])
       expect(p_bc.refcount).to eq(0)
     end
 
@@ -302,7 +299,7 @@ describe Production do
       subject.derive_step(p_bc)
 
       expect(subject.rhs.size).to eq(2)
-      expect(subject.rhs).to eq(%w(b c))
+      expect(subject.rhs).to eq(%w[b c])
     end
 
     it 'should replace a production in the middle' do
@@ -310,7 +307,7 @@ describe Production do
       subject.derive_step(p_bc)
 
       expect(subject.rhs.size).to eq(4)
-      expect(subject.rhs).to eq(%w(a b c d))
+      expect(subject.rhs).to eq(%w[a b c d])
     end
   end # context
 
@@ -358,6 +355,5 @@ describe Production do
     end
   end # context
 end # describe
-end # module
 
 # End of file

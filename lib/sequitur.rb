@@ -9,7 +9,6 @@ require_relative './sequitur/sequitur_grammar'
 require_relative './sequitur/formatter/debug'
 require_relative './sequitur/formatter/base_text'
 
-
 module Sequitur
   # Build a Sequitur-generated grammar based on the sequence of input tokens.
   #
@@ -19,12 +18,12 @@ module Sequitur
   # @return [SequiturGrammar] a grammar that encodes the input.
   def self.build_from(tokens)
     input_sequence = case tokens
-                       when String then tokens.chars
-                       when Enumerator then tokens
-                       else tokens.to_enum
+                     when String then tokens.chars
+                     when Enumerator then tokens
+                     else tokens.to_enum
                      end
 
-    return SequiturGrammar.new(input_sequence)
+    SequiturGrammar.new(input_sequence)
   end
 end # module
 

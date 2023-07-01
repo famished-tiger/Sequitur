@@ -4,8 +4,10 @@
 # Purpose: definition of Sequitur constants.
 
 module Sequitur # Module used as a namespace
+  # rubocop:disable Naming/ConstantName
+
   # The version number of the gem.
-  Version = '0.1.23'
+  Version = '0.1.24'
 
   # Brief description of the gem.
   Description = 'Ruby implementation of the Sequitur algorithm'
@@ -23,6 +25,7 @@ module Sequitur # Module used as a namespace
       "#{startdir}/" # Append trailing slash character to it
     end
   end
+  # rubocop:enable Naming/ConstantName
 end # module
 
 # End of file

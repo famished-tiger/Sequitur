@@ -37,13 +37,13 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # @param other [Digram] another to compare with
     # @return [true/false]
     def ==(other)
-      return key == other.key
+      key == other.key
     end
 
     # Does the digram consists of twice the same symbols?
     # @return [true/false] true when symbols.first == symbols.last
     def repeating?
-      return symbols[0] == symbols[1]
+      symbols[0] == symbols[1]
     end
   end # class
 end # module

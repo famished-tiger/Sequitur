@@ -19,11 +19,9 @@ RSpec::Core::RakeTask.new do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
 end
 
-
 # Run RSpec tests
 desc 'Run tests, with RSpec'
 task test: [:spec]
-
 
 # Default rake task
 task default: :test
