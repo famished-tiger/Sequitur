@@ -1,0 +1,60 @@
+module Sequitur
+  module Formatter
+    # A formatter class that can render a dynamic grammar in plain text.
+    # @example
+    #   some_grammar = ... # Points to a DynamicGrammar-like object
+    #   # Output the result to the standard console output
+    #   formatter = Sequitur::Formatter::BaseText.new(STDOUT)
+    #   # Render the grammar (through a visitor)
+    #   formatter.run(some_grammar.visitor)
+    class BaseText < BaseFormatter
+      attr_reader prod_lookup: untyped
+
+      # Constructor.
+      # @param anIO [IO] The output stream to which the rendered grammar
+      # is written.
+      def initialize: (untyped anIO) -> void
+
+      # Method called by a GrammarVisitor to which the formatter subscribed.
+      # Notification of a visit event: the visitor is about to visit a grammar
+      # @param aGrammar [DynamicGrammar-like object]
+      def before_grammar: (untyped aGrammar) -> untyped
+
+      # Method called by a GrammarVisitor to which the formatter subscribed.
+      # Notification of a visit event: the visitor is about to visit
+      # a production
+      # @param aProduction [aProduction]
+      def before_production: (untyped aProduction) -> untyped
+
+      # Method called by a GrammarVisitor to which the formatter subscribed.
+      # Notification of a visit event: the visitor is about to visit
+      # the rhs of a production
+      # @param _ [Array]
+      def before_rhs: (untyped _) -> untyped
+
+      # Method called by a GrammarVisitor to which the formatter subscribed.
+      # Notification of a visit event: the visitor is about to visit
+      # a terminal symbol from the rhs of a production
+      # @param aSymbol [Object]
+      def before_terminal: (untyped aSymbol) -> untyped
+
+      # Method called by a GrammarVisitor to which the formatter subscribed.
+      # Notification of a visit event: the visitor is about to visit
+      # a non-terminal (= an allusion to a production) in the rhs of a
+      # production
+      # @param aProduction [Production] a production occurring in the rhs
+      def before_non_terminal: (untyped aProduction) -> untyped
+
+      # Method called by a GrammarVisitor to which the formatter subscribed.
+      # Notification of a visit event: the visitor complete the visit
+      # of a production
+      def after_production: (untyped _) -> untyped
+
+      private
+
+      # Generate a name of a given production.
+      # @param aProduction [Production]
+      def prod_name: (untyped aProduction) -> untyped
+    end
+  end
+end

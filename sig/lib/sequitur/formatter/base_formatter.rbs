@@ -1,0 +1,20 @@
+module Sequitur
+  # Namespace dedicated to grammar formatters.
+  module Formatter
+    # Superclass for grammar formatters.
+    class BaseFormatter
+      # The IO output stream in which the formatter's result will be sent.
+      attr_accessor output: untyped
+
+      # Constructor.
+      # @param anIO [IO] an output IO where the formatter's result will
+      # be placed.
+      def initialize: (untyped anIO) -> void
+
+      # Given a grammar or a grammar visitor, perform the visit
+      # and render the visit events in the output stream.
+      # @param aGrmOrVisitor [DynamicGrammar or GrammarVisitor]
+      def render: (untyped aGrmOrVisitor) -> untyped
+    end
+  end
+end

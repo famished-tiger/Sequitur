@@ -1,3 +1,11 @@
+## [0.1.25] - 2023-07-03
+- First version using RBS (Ruby Type System): new folder `sig` with `*.rbs` files
+- File `appveyor.yml` updated to cover Rubies 2.6, .., 3.1
+- File `Gemfile`: removed dependencies to `simplecov` and `coverall`
+
+## [0.1.24] - 2023-07-01
+- Code restyling to please rubocop 1.53.1
+
 ## [0.1.23] - 2021-09-04
 - Remove dependencies towards `coverall`, `simplecov`  
 - Code restyling to please rubocop 1.19.1

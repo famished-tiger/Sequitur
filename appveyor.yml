@@ -1,8 +1,5 @@
 version: '{build}'
 max_jobs: 5
-image:
-  - Visual Studio 2019
-  - Ubuntu
 environment:
   matrix:
   - Ruby_version: 31-x64

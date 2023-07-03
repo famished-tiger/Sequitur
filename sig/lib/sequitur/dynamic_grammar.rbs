@@ -1,0 +1,58 @@
+module Sequitur
+  # Module for classes implementing the Sequitur algorithm
+  # A dynamic grammar is a context-free grammar that can be built incrementally.
+  #   Formally, a grammar has:
+  #   One start production
+  #   Zero or more other productions
+  #   Each production has a rhs that is a sequence of grammar symbols.
+  #   Grammar symbols are categorized into
+  #   -terminal symbols (i.e. String, Ruby Symbol,...)
+  #   -non-terminal symbols (i.e. ProductionRef)
+  class DynamicGrammar
+    # Link to the start production.
+    attr_reader start: untyped
+
+    # The set of production rules of the grammar
+    attr_reader productions: untyped
+
+    # nodoc Trace the execution of the algorithm.
+    attr_accessor trace: untyped
+
+    # Constructor.
+    # Build a grammar with one empty rule as start/start rule.
+    def initialize: () -> void
+
+    # Emit a text representation of the grammar.
+    # Each production rule is emitted per line.
+    # @return [String]
+    def to_string: () -> untyped
+
+    # Add a given production to the grammar.
+    # @param aProduction [Production]
+    def add_production: (untyped aProduction) -> untyped
+
+    # Remove a production with given index from the grammar
+    # @param anIndex [Fixnum]
+    # @return [Production] the production removed from the grammar.
+    def remove_production: (untyped anIndex) -> untyped
+
+    # Add the given token to the grammar.
+    #   Append the token to the rhs of the start/start rule.
+    # @param aToken [Object] input token to add
+    def add_token: (untyped aToken) -> untyped
+
+    # Part of the 'visitee' role in the Visitor design pattern.
+    #   A visitee is expected to accept the visit from a visitor object
+    # @param aVisitor [GrammarVisitor] the visitor object
+    def accept: (untyped aVisitor) -> untyped
+
+    # Factory method. Returns a visitor for this grammar.
+    # @return [GrammarVisitor]
+    def visitor: () -> untyped
+
+    # Append a given symbol to the rhs of passed production.
+    # @param aProduction [Production]
+    # @param aSymbol [Object]
+    def append_symbol_to: (untyped aProduction, untyped aSymbol) -> untyped
+  end
+end

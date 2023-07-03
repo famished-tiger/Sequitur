@@ -1,0 +1,68 @@
+module Sequitur
+  # Module for classes implementing the Sequitur algorithm
+  # A visitor class dedicated in the visit of Grammar.
+  class GrammarVisitor
+    # Link to the grammar to visit
+    attr_reader grammar: untyped
+
+    # List of objects that subscribed to the visit event notification.
+    attr_reader subscribers: untyped
+
+    # Build a visitor for the given grammar.
+    # @param aGrammar [DynamicGrammar-like] the grammar to visit.
+    def initialize: (untyped aGrammar) -> void
+
+    # Add a subscriber for the visit event notification.
+    # @param aSubscriber [Object]
+    def subscribe: (untyped aSubscriber) -> untyped
+
+    # Remove the given object from the subscription list.
+    # The object won't be notified of visit events.
+    # @param aSubscriber [Object]
+    def unsubscribe: (untyped aSubscriber) -> untyped
+
+    # The signal to start the visit.
+    def start: () -> untyped
+
+    # Visit event. The visitor is about to visit the grammar.
+    # @param aGrammar [DynamicGrammar-like] the grammar to visit.
+    def start_visit_grammar: (untyped aGrammar) -> untyped
+
+    # Visit event. The visitor is about to visit the given production.
+    # @param aProduction [Production] the production to visit.
+    def start_visit_production: (untyped aProduction) -> untyped
+
+    # Visit event. The visitor is about to visit the given rhs of production.
+    # @param rhs [SymbolSequence] the rhs of a production to visit.
+    def start_visit_rhs: (untyped rhs) -> untyped
+
+    # Visit event. The visitor is visiting the
+    # given reference production (= non-terminal symbol).
+    # @param aProdRef [ProductionRef] the production reference to visit.
+    def visit_prod_ref: (untyped aProdRef) -> untyped
+
+    # Visit event. The visitor is visiting the
+    # given terminal symbol.
+    # @param aTerminal [Object] the terminal to visit.
+    def visit_terminal: (untyped aTerminal) -> untyped
+
+    # Visit event. The visitor has completed its visit of the given rhs.
+    # @param rhs [SymbolSequence] the rhs of a production to visit.
+    def end_visit_rhs: (untyped rhs) -> untyped
+
+    # Visit event. The visitor has completed its visit of the given production.
+    # @param aProduction [Production] the production to visit.
+    def end_visit_production: (untyped aProduction) -> untyped
+
+    # Visit event. The visitor has completed the visit of the grammar.
+    # @param aGrammar [DynamicGrammar-like] the grammar to visit.
+    def end_visit_grammar: (untyped aGrammar) -> untyped
+
+    private
+
+    # Send a notification to all subscribers.
+    # @param msg [Symbol] event to notify
+    # @param args [Array] arguments of the notification.
+    def broadcast: (untyped msg, *untyped args) -> untyped
+  end
+end

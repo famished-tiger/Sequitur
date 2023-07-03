@@ -3,9 +3,8 @@ Sequitur
 _Ruby gem implementing the Sequitur algorithm_  
 [Homepage](https://github.com/famished-tiger/Sequitur)  
 
-[![Linux Build Status](https://travis-ci.org/famished-tiger/Sequitur.svg?branch=master)](https://travis-ci.org/famished-tiger/Sequitur)
+
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/nvi1be8mb0494dqw?svg=true)](https://ci.appveyor.com/project/famished-tiger/sequitur)
-[![Coverage Status](https://coveralls.io/repos/famished-tiger/Sequitur/badge.png?branch=master)](https://coveralls.io/r/famished-tiger/Sequitur)
 [![Gem Version](https://badge.fury.io/rb/sequitur.svg)](http://badge.fury.io/rb/sequitur)
 [![Inline docs](http://inch-ci.org/github/famished-tiger/Sequitur.svg?branch=master)](http://inch-ci.org/github/famished-tiger/Sequitur)
 [![Code Climate](https://codeclimate.com/github/famished-tiger/Sequitur.png)](https://codeclimate.com/github/famished-tiger/Sequitur)
@@ -247,4 +246,4 @@ More examples are available in the examples folder.
 
 Copyright
 ---------
-Copyright (c) 2014-2018, Dimitri Geshef. Sequitur is released under the MIT License see [LICENSE.txt](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt) for details.
+Copyright (c) 2014-2013, Dimitri Geshef. Sequitur is released under the MIT License see [LICENSE.txt](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt) for details.

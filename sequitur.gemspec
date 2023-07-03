@@ -37,7 +37,8 @@ SEQUITUR_GEMSPEC = Gem::Specification.new do |pkg|
     'LICENSE.txt', 'README.md',
     'lib/*.*', 'lib/**/*.rb',
     'spec/**/*.rb',
-    'examples/*.*'
+    'examples/*.*',
+    'sig/*.rbs', 'sig/**/*.rbs'
   ]
   pkg.files = file_list
   pkg.test_files = Dir['spec/**/*_spec.rb']

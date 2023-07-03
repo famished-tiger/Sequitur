@@ -1,0 +1,10 @@
+module Sequitur
+  # The version number of the gem.
+  Version: ::String
+
+  # Brief description of the gem.
+  Description: ::String
+
+  # The start folder of Sequitur.
+  RootDir: untyped
+end

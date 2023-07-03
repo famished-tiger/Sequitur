@@ -7,7 +7,7 @@ module Sequitur # Module used as a namespace
   # rubocop:disable Naming/ConstantName
 
   # The version number of the gem.
-  Version = '0.1.24'
+  Version = '0.1.25'
 
   # Brief description of the gem.
   Description = 'Ruby implementation of the Sequitur algorithm'
