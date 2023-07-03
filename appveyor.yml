@@ -1,6 +1,6 @@
 version: '{build}'
-
-verbosity: normal
+verbosity: 
+  - normal  
 max_jobs: 5
 image:
   - Visual Studio 2019
