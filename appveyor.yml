@@ -1,0 +1,32 @@
+version: '{build}'
+verbosity: normal
+max_jobs: 5
+image:
+  - Visual Studio 2019
+  - Ubuntu
+environment:
+  matrix:
+  - Ruby_version: 31-x64
+  - Ruby_version: 30-x64
+  - Ruby_version: 27-x64
+  - Ruby_version: 26-x64
+  - Ruby_version: 31
+  - Ruby_version: 30
+  - Ruby_version: 27
+  - Ruby_version: 26
+
+install:
+  - set PATH=C:\Ruby%Ruby_version%\bin;%PATH%
+  - gem update --system
+  - gem install bundler
+  - bundle install --retry=3 --clean --force
+
+build: off
+
+before_test:
+  - ruby -v
+  - gem -v
+  - bundle -v
+
+test_script:
+  - bundle exec rake
