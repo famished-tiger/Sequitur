@@ -1,4 +1,5 @@
 version: '{build}'
+
 verbosity: normal
 max_jobs: 5
 image:
