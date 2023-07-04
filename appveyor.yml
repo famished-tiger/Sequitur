@@ -5,14 +5,14 @@ environment:
   - Ruby_version: 31-x64
   - Ruby_version: 30-x64
   - Ruby_version: 27-x64
-  - Ruby_version: 26-x64
   - Ruby_version: 31
   - Ruby_version: 30
   - Ruby_version: 27
-  - Ruby_version: 26
 
 install:
   - set PATH=C:\Ruby%Ruby_version%\bin;%PATH%
+  - gem update --system --source http://rubygems.org/
+  - gem install bundler  
   - bundle install --retry=3 --clean --force
 
 build: off
