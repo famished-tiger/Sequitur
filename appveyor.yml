@@ -9,9 +9,10 @@ environment:
   - Ruby_version: 30
   - Ruby_version: 27
 
+#   - gem update --system --source http://rubygems.org/
 install:
   - set PATH=C:\Ruby%Ruby_version%\bin;%PATH%
-  - gem update --system --source http://rubygems.org/
+  - gem install rubygems-update
   - gem install bundler  
   - bundle install --retry=3 --clean --force
 
