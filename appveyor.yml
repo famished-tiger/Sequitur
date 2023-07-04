@@ -12,6 +12,7 @@ environment:
 #   - gem update --system --source http://rubygems.org/
 install:
   - set PATH=C:\Ruby%Ruby_version%\bin;%PATH%
+  - ruby --version
   - gem install rubygems-update
   - gem install bundler  
   - bundle install --retry=3 --clean --force
