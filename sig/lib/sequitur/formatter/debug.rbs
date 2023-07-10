@@ -9,30 +9,30 @@ module Sequitur
     #   # Render the visit notifications
     #   formatter.run(some_grammar.visitor)
     class Debug < BaseFormatter
-      # Current indentation level
-      attr_accessor indentation: untyped
+      # @return [Integer] Current indentation level
+      attr_accessor indentation: Integer
 
       # Constructor.
       # @param anIO [IO] The output stream to which the rendered grammar
       # is written.
-      def initialize: (untyped anIO) -> void
+      def initialize: (IO anIO) -> void
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit a grammar
-      # @param _ [DynamicGrammar-like object]
-      def before_grammar: (untyped _) -> untyped
+      # @param _ [DynamicGrammar]
+      def before_grammar: (DynamicGrammar _) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
       # a production
-      # @param _ [aProduction]
-      def before_production: (untyped _) -> untyped
+      # @param _ [Production]
+      def before_production: (Production _) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
       # the rhs of a production
       # @param _ [Array]
-      def before_rhs: (untyped _) -> untyped
+      def before_rhs: (::Array[untyped] _) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
@@ -51,7 +51,7 @@ module Sequitur
       # a non-terminal (= an allusion to a production) in the rhs of a
       # production
       # @param _ [Production] a production occurring in the rhs
-      def before_non_terminal: (untyped _) -> untyped
+      def before_non_terminal: (Production _) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor completed the visit of
@@ -63,25 +63,27 @@ module Sequitur
       # Notification of a visit event: the visitor completed the visit of
       # the rhs of a production
       # @param _ [Array]
-      def after_rhs: (untyped _) -> untyped
+      def after_rhs: (::Array[untyped] _) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor completed the visit
       # of a production
-      def after_production: (untyped _) -> untyped
+      # @param _ [Production]
+      def after_production: (Production _) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor completed the visit
       # of a grammar
-      def after_grammar: (untyped _) -> untyped
+      # @param _ [DynamicGrammar]
+      def after_grammar: (DynamicGrammar _) -> untyped
 
       private
 
-      def indent: () -> untyped
+      def indent: () -> Integer
 
-      def dedent: () -> untyped
+      def dedent: () -> Integer
 
-      def output_event: (untyped anEvent, untyped indentationLevel) -> untyped
+      def output_event: (Symbol anEvent, Integer indentationLevel) -> nil
     end
   end
 end

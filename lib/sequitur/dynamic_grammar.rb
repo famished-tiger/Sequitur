@@ -13,13 +13,13 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
   #   -terminal symbols (i.e. String, Ruby Symbol,...)
   #   -non-terminal symbols (i.e. ProductionRef)
   class DynamicGrammar
-    # Link to the start production.
+    # @return [Sequitur::Production] Link to the start production.
     attr_reader(:start)
 
-    # The set of production rules of the grammar
+    # @return [Array<Sequitur::Production>] The set of production rules of the grammar
     attr_reader(:productions)
 
-    # nodoc Trace the execution of the algorithm.
+    # @return [TrueClass, FalseClass] Trace the execution of the algorithm.
     attr_accessor(:trace)
 
     # Constructor.
@@ -38,7 +38,8 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Add a given production to the grammar.
-    # @param aProduction [Production]
+    # @param aProduction [Sequitur::Production]
+    # @return [Array<Sequitur::Production>]
     def add_production(aProduction)
       # TODO: remove output
       puts "Adding #{aProduction.object_id}" if trace
@@ -47,8 +48,8 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Remove a production with given index from the grammar
-    # @param anIndex [Fixnum]
-    # @return [Production] the production removed from the grammar.
+    # @param anIndex [Integer]
+    # @return [Sequitur::Production] the production removed from the grammar.
     def remove_production(anIndex)
       puts "Before production removal #{productions[anIndex].object_id}" if trace
       puts to_string if trace
@@ -69,7 +70,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 
     # Part of the 'visitee' role in the Visitor design pattern.
     #   A visitee is expected to accept the visit from a visitor object
-    # @param aVisitor [GrammarVisitor] the visitor object
+    # @param aVisitor [Sequitur::GrammarVisitor] the visitor object
     def accept(aVisitor)
       aVisitor.start_visit_grammar(self)
 
@@ -80,7 +81,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Factory method. Returns a visitor for this grammar.
-    # @return [GrammarVisitor]
+    # @return [Sequitur::GrammarVisitor]
     def visitor
       GrammarVisitor.new(self)
     end

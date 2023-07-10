@@ -17,7 +17,7 @@ module Sequitur
 
       # Given a grammar or a grammar visitor, perform the visit
       # and render the visit events in the output stream.
-      # @param aGrmOrVisitor [DynamicGrammar or GrammarVisitor]
+      # @param aGrmOrVisitor [DynamicGrammar, GrammarVisitor]
       def render(aGrmOrVisitor)
         a_visitor = if aGrmOrVisitor.is_a?(GrammarVisitor)
                       aGrmOrVisitor

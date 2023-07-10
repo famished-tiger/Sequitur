@@ -3,14 +3,14 @@
 module Sequitur # Module for classes implementing the Sequitur algorithm
   # A visitor class dedicated in the visit of Grammar.
   class GrammarVisitor
-    # Link to the grammar to visit
+    # @return [Sequitur::DynamicGrammar] Link to the grammar to visit
     attr_reader(:grammar)
 
-    # List of objects that subscribed to the visit event notification.
+    # @return [Object] List of objects that subscribed to the visit event notification.
     attr_reader(:subscribers)
 
     # Build a visitor for the given grammar.
-    # @param aGrammar [DynamicGrammar-like] the grammar to visit.
+    # @param aGrammar [DynamicGrammar] the grammar to visit.
     def initialize(aGrammar)
       @grammar = aGrammar
       @subscribers = []
@@ -35,13 +35,13 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Visit event. The visitor is about to visit the grammar.
-    # @param aGrammar [DynamicGrammar-like] the grammar to visit.
+    # @param aGrammar [DynamicGrammar] the grammar to visit.
     def start_visit_grammar(aGrammar)
       broadcast(:before_grammar, aGrammar)
     end
 
     # Visit event. The visitor is about to visit the given production.
-    # @param aProduction [Production] the production to visit.
+    # @param aProduction [Sequitur::Production] the production to visit.
     def start_visit_production(aProduction)
       broadcast(:before_production, aProduction)
     end
@@ -82,7 +82,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Visit event. The visitor has completed the visit of the grammar.
-    # @param aGrammar [DynamicGrammar-like] the grammar to visit.
+    # @param aGrammar [DynamicGrammar] the grammar to visit.
     def end_visit_grammar(aGrammar)
       broadcast(:after_grammar, aGrammar)
     end

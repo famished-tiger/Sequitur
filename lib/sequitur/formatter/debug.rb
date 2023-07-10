@@ -13,7 +13,7 @@ module Sequitur
     #   # Render the visit notifications
     #   formatter.run(some_grammar.visitor)
     class Debug < BaseFormatter
-      # Current indentation level
+      # @return [Integer] Current indentation level
       attr_accessor(:indentation)
 
       # Constructor.
@@ -26,7 +26,7 @@ module Sequitur
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit a grammar
-      # @param _ [DynamicGrammar-like object]
+      # @param _ [DynamicGrammar]
       def before_grammar(_)
         output_event(__method__, indentation)
         indent
@@ -35,7 +35,7 @@ module Sequitur
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
       # a production
-      # @param _ [aProduction]
+      # @param _ [Production]
       def before_production(_)
         output_event(__method__, indentation)
         indent
@@ -95,6 +95,7 @@ module Sequitur
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor completed the visit
       # of a production
+      # @param _ [Production]
       def after_production(_)
         dedent
         output_event(__method__, indentation)
@@ -103,6 +104,7 @@ module Sequitur
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor completed the visit
       # of a grammar
+      # @param _ [DynamicGrammar]
       def after_grammar(_)
         dedent
         output_event(__method__, indentation)
@@ -110,14 +112,19 @@ module Sequitur
 
       private
 
+      # @return [Integer]
       def indent
         @indentation += 1
       end
 
+      # @return [Integer]
       def dedent
         @indentation -= 1
       end
 
+      # @param anEvent [Symbol]
+      # @param indentationLevel [Integer]
+      # @return [NilClass]
       def output_event(anEvent, indentationLevel)
         output.puts "#{' ' * 2 * indentationLevel}#{anEvent}"
       end

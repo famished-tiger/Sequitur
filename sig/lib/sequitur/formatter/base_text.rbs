@@ -8,29 +8,29 @@ module Sequitur
     #   # Render the grammar (through a visitor)
     #   formatter.run(some_grammar.visitor)
     class BaseText < BaseFormatter
-      attr_reader prod_lookup: untyped
+      attr_reader prod_lookup: ::Hash[Production, Integer]
 
       # Constructor.
       # @param anIO [IO] The output stream to which the rendered grammar
       # is written.
-      def initialize: (untyped anIO) -> void
+      def initialize: (IO anIO) -> void
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit a grammar
-      # @param aGrammar [DynamicGrammar-like object]
-      def before_grammar: (untyped aGrammar) -> untyped
+      # @param aGrammar [DynamicGrammar]
+      def before_grammar: (DynamicGrammar aGrammar) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
       # a production
-      # @param aProduction [aProduction]
-      def before_production: (untyped aProduction) -> untyped
+      # @param aProduction [Production]
+      def before_production: (Production aProduction) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
       # the rhs of a production
       # @param _ [Array]
-      def before_rhs: (untyped _) -> untyped
+      def before_rhs: (::Array[untyped] _)
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor is about to visit
@@ -43,18 +43,20 @@ module Sequitur
       # a non-terminal (= an allusion to a production) in the rhs of a
       # production
       # @param aProduction [Production] a production occurring in the rhs
-      def before_non_terminal: (untyped aProduction) -> untyped
+      def before_non_terminal: (Production aProduction) -> untyped
 
       # Method called by a GrammarVisitor to which the formatter subscribed.
       # Notification of a visit event: the visitor complete the visit
       # of a production
-      def after_production: (untyped _) -> untyped
+      # @param _ [Production]
+      def after_production: (Production _) -> untyped
 
       private
 
       # Generate a name of a given production.
       # @param aProduction [Production]
-      def prod_name: (untyped aProduction) -> untyped
+      # @return [String]
+      def prod_name: (Production aProduction) -> String
     end
   end
 end

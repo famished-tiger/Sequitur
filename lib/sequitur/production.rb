@@ -14,13 +14,14 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
   # corresponding RHS.
   # Implementation note: the object id of the production is taken as its LHS.
   class Production
-    # The right-hand side (rhs) consists of a sequence of grammar symbols
+    # @return [Sequitur::SymbolSequence] The right-hand side (rhs)
+    #   consists of a sequence of grammar symbols
     attr_reader(:rhs)
 
-    # The reference count (= how times other productions reference this one)
+    # @return [Integer] The reference count (= how times other productions reference this one)
     attr_reader(:refcount)
 
-    # The sequence of digrams appearing in the RHS
+    # @return [Array<Sequitur::Digram>] The sequence of digrams appearing in the RHS
     attr_reader(:digrams)
 
     # Constructor.
@@ -32,8 +33,8 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Identity testing.
-    # @param other [] another production or production reference.
-    # @return true when the receiver and other are the same.
+    # @param other [Production, ProductionRef] another production or production reference.
+    # @return [TrueClass, FalseClass] true when the receiver and other are the same.
     def ==(other)
       return true if object_id == other.object_id
 
@@ -45,17 +46,19 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Is the rhs empty?
-    # @ return true if the rhs has no members.
+    # @return [TrueClass, FalseClass] true if the rhs has no members.
     def empty?
       rhs.empty?
     end
 
     # Increment the reference count by one.
+    # @return [Integer]
     def incr_refcount
       @refcount += 1
     end
 
     # Decrement the reference count by one.
+    # @return [Integer]
     def decr_refcount
       raise StandardError, 'Internal error' if @refcount.zero?
 
@@ -63,21 +66,21 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Select the references to production appearing in the rhs.
-    # @return [Array of ProductionRef]
+    # @return [Array<ProductionRef>]
     def references
       rhs.references
     end
 
     # Look in the rhs all the references to a production passed a argument.
-    # aProduction [aProduction or ProductionRef] The production to search for.
-    # @return [Array] the array of ProductionRef to the passed production
+    # @param a_prod [Production, ProductionRef] The production to search for.
+    # @return [Array<ProductionRef>]
     def references_of(a_prod)
       real_prod = a_prod.is_a?(ProductionRef) ? a_prod.production : a_prod
       rhs.references_of(real_prod)
     end
 
     # Enumerate the digrams appearing in the right-hand side (rhs)
-    # @return [Array] the list of digrams found in rhs of this production.
+    # @return [Array<Sequitur::Digram>] the list of digrams found in rhs of this production.
     def recalc_digrams
       return [] if rhs.size < 2
 
@@ -87,7 +90,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Does the rhs have exactly one digram only (= 2 symbols)?
-    # @return [true/false] true when the rhs contains exactly two symbols.
+    # @return [TrueClass, FalseClass] true when the rhs contains exactly two symbols.
     def single_digram?
       rhs.size == 2
     end
@@ -95,7 +98,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Detect whether the last digram occurs twice
     # Assumption: when a digram occurs twice in a production then it must occur
     # at the end of the rhs
-    # @return [true/false] true when the digram occurs twice in rhs.
+    # @return [TrueClass, FalseClass] true when the digram occurs twice in rhs.
     def repeated_digram?
       return false if rhs.size < 3
 
@@ -107,7 +110,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Retrieve the last digram appearing in the RHS (if any).
-    # @return [Digram] last digram in the rhs otherwise nil.
+    # @return [Sequitur::Digram, NilClass] last digram in the rhs otherwise nil.
     def last_digram
       digrams.empty? ? nil : digrams.last
     end
@@ -150,7 +153,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Find all the positions where the digram occurs in the rhs
     # @param symb1 [Object] first symbol of the digram
     # @param symb2 [Object] second symbol of the digram
-    # @return [Array] the list of indices where the digram occurs in rhs.
+    # @return [Array<Integer>] the list of indices where the digram occurs in rhs.
     # @example
     #   # Given the production p : a b c a b a b d
     #   #Then ...
@@ -176,7 +179,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Given that the production P passed as argument has exactly 2 symbols
     #   in its rhs s1 s2, substitute in the rhs of self all occurrences of
     #   s1 s2 by a reference to P.
-    # @param another [Production or ProductionRef] a production that
+    # @param another [Production, ProductionRef] a production that
     #   consists exactly of one digram (= 2 symbols).
     def reduce_step(another)
       (symb1, symb2) = another.rhs.symbols
@@ -190,7 +193,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
 
     # Replace every occurrence of 'another' production in self.rhs by
     #   the symbols in the rhs of 'another'.
-    # @param another [Production or ProductionRef] a production that
+    # @param another [Production, ProductionRef] a production that
     #   consists exactly of one digram (= 2 symbols).
     # @example Synopsis
     # # Given the production p_A : a p_B b p_B c
@@ -211,7 +214,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Part of the 'visitee' role in Visitor design pattern.
-    # @param aVisitor[GrammarVisitor]
+    # @param aVisitor[Sequitur::GrammarVisitor]
     def accept(aVisitor)
       aVisitor.start_visit_production(self)
       rhs.accept(aVisitor)

@@ -9,10 +9,11 @@ require_relative './sequitur/sequitur_grammar'
 require_relative './sequitur/formatter/debug'
 require_relative './sequitur/formatter/base_text'
 
+# Namespace for the classes of sequitur gem.
 module Sequitur
   # Build a Sequitur-generated grammar based on the sequence of input tokens.
   #
-  # @param tokens [StringOrEnumerator] The input sequence of input tokens.
+  # @param tokens [String, Enumerator] The input sequence of input tokens.
   #   Can be a sequence of characters (i.e. a String) or an Enumerator.
   #   Tokens returned by enumerator should respond to the :hash message.
   # @return [SequiturGrammar] a grammar that encodes the input.

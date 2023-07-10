@@ -13,8 +13,8 @@ module Sequitur
 
       # Given a grammar or a grammar visitor, perform the visit
       # and render the visit events in the output stream.
-      # @param aGrmOrVisitor [DynamicGrammar or GrammarVisitor]
-      def render: (untyped aGrmOrVisitor) -> untyped
+      # @param aGrmOrVisitor [DynamicGrammar, GrammarVisitor]
+      def render: ((DynamicGrammar | GrammarVisitor) aGrmOrVisitor) -> untyped
     end
   end
 end

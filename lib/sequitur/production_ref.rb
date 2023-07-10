@@ -17,11 +17,11 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
   #   # ... Production reference count is updated...
   #   puts prod.refcount # outputs 1
   class ProductionRef
-    # Link to the production to reference.
+    # @return [Sequitur::Production] Link to the production to reference.
     attr_reader(:production)
 
     # Constructor
-    # @param target [Production or ProductionRef]
+    # @param target [Production, ProductionRef]
     #   The production that is being referenced.
     def initialize(target)
       bind_to(target)
@@ -51,8 +51,8 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     #   A production ref is equal to another one when its
     #   refers to the same production or when it is compared to
     #   the production it refers to.
-    # @param other [ProductionRef]
-    # @return [true / false]
+    # @param other [Production, ProductionRef]
+    # @return [TrueClass, FalseClass]
     def ==(other)
       return true if object_id == other.object_id
 
@@ -67,7 +67,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     #   A reference has no identity on its own,
     #   the method returns the hash value of the
     #   referenced production
-    # @return [Fixnum] the hash value
+    # @return [Integer] the hash value
     def hash
       raise StandardError, 'Nil production' if production.nil?
 
@@ -75,7 +75,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Make this reference point to the given production.
-    # @param aProduction [Production or ProductionRef] the production
+    # @param aProduction [Production, ProductionRef] the production
     #   to refer to
     def bind_to(aProduction)
       return if aProduction == @production
@@ -90,20 +90,21 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Clear the reference to the target production.
+    # return [NilClass]
     def unbind
       production.decr_refcount
       @production = nil
     end
 
     # Check that the this object doesn't refer to any production.
-    # @return [true / false] true when this object doesn't
+    # @return [TrueClass, FalseClass] true when this object doesn't
     #   point to a production.
     def unbound?
       production.nil?
     end
 
     # Part of the 'visitee' role in the Visitor design pattern.
-    # @param aVisitor [GrammarVisitor] the visitor
+    # @param aVisitor [Sequitur::GrammarVisitor] the visitor
     def accept(aVisitor)
       aVisitor.visit_prod_ref(self)
     end

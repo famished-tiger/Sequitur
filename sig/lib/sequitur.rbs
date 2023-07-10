@@ -1,9 +1,9 @@
 module Sequitur
   # Build a Sequitur-generated grammar based on the sequence of input tokens.
   #
-  # @param tokens [StringOrEnumerator] The input sequence of input tokens.
+  # @param tokens [String, Enumerator] The input sequence of input tokens.
   #   Can be a sequence of characters (i.e. a String) or an Enumerator.
   #   Tokens returned by enumerator should respond to the :hash message.
   # @return [SequiturGrammar] a grammar that encodes the input.
-  def self.build_from: (untyped tokens) -> untyped
+  def self.build_from: ((String | ::Enumerator[untyped]) tokens) -> SequiturGrammar
 end

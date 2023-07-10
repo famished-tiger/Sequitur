@@ -4,7 +4,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
   # Represents a sequence (concatenation) of grammar symbols
   # as they appear in rhs of productions
   class SymbolSequence
-    # The sequence of symbols itself
+    # @return [Array] The sequence of symbols itself
     attr_reader(:symbols)
 
     # Create an empty sequence
@@ -59,9 +59,9 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Equality testing.
-    # @param other [SymbolSequence or Array] the other other sequence
+    # @param other [SymbolSequence, Array] the other other sequence
     #   to compare to.
-    # @true when an item from self equals the corresponding
+    # @return [TrueClass, FalseClass] true when an item from self equals the corresponding
     #   item from 'other'
     def ==(other)
       true if object_id == other.object_id
@@ -119,9 +119,9 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     # Given that the production P passed as argument has exactly 2 symbols
     #   in its rhs s1 s2, substitute in the rhs of self all occurrences of
     #   s1 s2 by a reference to P.
-    # @param index [Fixnum] the position of a two symbol sequence to be replaced
+    # @param index [Integer] the position of a two symbol sequence to be replaced
     #   by the production
-    # @param aProduction [Production or ProductionRef] a production that
+    # @param aProduction [Production, ProductionRef] a production that
     #   consists exactly of one digram (= 2 symbols).
     def reduce_step(index, aProduction)
       if symbols[index].is_a?(ProductionRef)
@@ -141,7 +141,7 @@ module Sequitur # Module for classes implementing the Sequitur algorithm
     end
 
     # Remove the element at given position
-    # @param position [Fixnum] a zero-based index.
+    # @param position [Integer] a zero-based index.
     def delete_at(position)
       invalidate_refs if symbols[position].is_a?(ProductionRef)
       symbols.delete_at(position)

@@ -1,5 +1,6 @@
-## [0.1.25] - 2023-07-03
+## [0.1.25] - 2023-07-10
 - First version using RBS (Ruby Type System): new folder `sig` with `*.rbs` files
+- Yard documentation updated to align with RBS
 - File `appveyor.yml` updated to cover Rubies 2.6, .., 3.1
 - File `Gemfile`: removed dependencies to `simplecov` and `coverall`
 

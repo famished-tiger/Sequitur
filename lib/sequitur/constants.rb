@@ -6,10 +6,10 @@
 module Sequitur # Module used as a namespace
   # rubocop:disable Naming/ConstantName
 
-  # The version number of the gem.
+  # @return [String] The version number of the gem.
   Version = '0.1.25'
 
-  # Brief description of the gem.
+  # @return [String] Brief description of the gem.
   Description = 'Ruby implementation of the Sequitur algorithm'
 
   # Constant Sequitur::RootDir contains the absolute path of Sequitur's
@@ -18,7 +18,7 @@ module Sequitur # Module used as a namespace
     # The initialisation of constant RootDir is guarded in order
     # to avoid multiple initialisation (not allowed for constants)
 
-    # The start folder of Sequitur.
+    # @return [String] The start folder of Sequitur.
     RootDir = begin
       require 'pathname' # Load Pathname class from standard library
       startdir = Pathname(__FILE__).dirname.parent.parent.expand_path

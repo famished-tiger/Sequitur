@@ -1,5 +1,4 @@
 module Sequitur
-  # Module for classes implementing the Sequitur algorithm
   # In a context-free grammar, a production is a rule in which
   # its left-hand side (LHS) consists solely of a non-terminal symbol
   # and the right-hand side (RHS) consists of a sequence of symbols.
@@ -9,13 +8,14 @@ module Sequitur
   # corresponding RHS.
   # Implementation note: the object id of the production is taken as its LHS.
   class Production
-    # The right-hand side (rhs) consists of a sequence of grammar symbols
+    # @return [Sequitur::SymbolSequence] The right-hand side (rhs)
+    #   consists of a sequence of grammar symbols
     attr_reader rhs: untyped
 
-    # The reference count (= how times other productions reference this one)
+    # @return [Integer] The reference count (= how times other productions reference this one)
     attr_reader refcount: untyped
 
-    # The sequence of digrams appearing in the RHS
+    # @return [Array<Sequitur::Digram>] The sequence of digrams appearing in the RHS
     attr_reader digrams: untyped
 
     # Constructor.
@@ -23,46 +23,48 @@ module Sequitur
     def initialize: () -> void
 
     # Identity testing.
-    # @param other [] another production or production reference.
-    # @return true when the receiver and other are the same.
-    def ==: (untyped other) -> (::TrueClass | untyped)
+    # @param other [Production, ProductionRef] another production or production reference.
+    # @return [TrueClass, FalseClass] true when the receiver and other are the same.
+    def ==: ((Production | ProductionRef) other) -> bool
 
     # Is the rhs empty?
-    # @ return true if the rhs has no members.
-    def empty?: () -> untyped
+    # @return [TrueClass, FalseClass] true if the rhs has no members.
+    def empty?: () -> bool
 
     # Increment the reference count by one.
-    def incr_refcount: () -> untyped
+    # @return [Integer]
+    def incr_refcount: () -> Integer
 
     # Decrement the reference count by one.
-    def decr_refcount: () -> untyped
+    # @return [Integer]
+    def decr_refcount: () -> Integer
 
     # Select the references to production appearing in the rhs.
-    # @return [Array of ProductionRef]
-    def references: () -> untyped
+    # @return [Array<ProductionRef>]
+    def references: () -> Array[Sequitur::ProductionRef]
 
     # Look in the rhs all the references to a production passed a argument.
-    # aProduction [aProduction or ProductionRef] The production to search for.
-    # @return [Array] the array of ProductionRef to the passed production
-    def references_of: (untyped a_prod) -> untyped
+    # @param a_prod [Production, ProductionRef] The production to search for.
+    # @return [Array<ProductionRef>]
+    def references_of: ((Production | ProductionRef) a_prod) -> Array[ProductionRef]
 
     # Enumerate the digrams appearing in the right-hand side (rhs)
-    # @return [Array] the list of digrams found in rhs of this production.
-    def recalc_digrams: () -> (::Array[untyped] | untyped)
+    # @return [Array<Sequitur::Digram>] the list of digrams found in rhs of this production.
+    def recalc_digrams: () -> Array[Sequitur::Digram]
 
     # Does the rhs have exactly one digram only (= 2 symbols)?
-    # @return [true/false] true when the rhs contains exactly two symbols.
-    def single_digram?: () -> untyped
+    # @return [TrueClass, FalseClass] true when the rhs contains exactly two symbols.
+    def single_digram?: () -> bool
 
     # Detect whether the last digram occurs twice
     # Assumption: when a digram occurs twice in a production then it must occur
     # at the end of the rhs
-    # @return [true/false] true when the digram occurs twice in rhs.
-    def repeated_digram?: () -> (::FalseClass | untyped)
+    # @return [TrueClass, FalseClass] true when the digram occurs twice in rhs.
+    def repeated_digram?: () -> bool
 
     # Retrieve the last digram appearing in the RHS (if any).
-    # @return [Digram] last digram in the rhs otherwise nil.
-    def last_digram: () -> untyped
+    # @return [Sequitur::Digram, NilClass] last digram in the rhs otherwise nil.
+    def last_digram: () -> (nil | Sequitur::Digram)
 
     # Emit a text representation of the production rule.
     # Text is of the form:
@@ -81,7 +83,7 @@ module Sequitur
     # Find all the positions where the digram occurs in the rhs
     # @param symb1 [Object] first symbol of the digram
     # @param symb2 [Object] second symbol of the digram
-    # @return [Array] the list of indices where the digram occurs in rhs.
+    # @return [Array<Integer>] the list of indices where the digram occurs in rhs.
     # @example
     #   # Given the production p : a b c a b a b d
     #   #Then ...
@@ -90,18 +92,18 @@ module Sequitur
     #   # Given the production p : a a b a a a c d
     #   # Then ...
     #   p.positions_of(a, a) # => [0, 3]
-    def positions_of: (untyped symb1, untyped symb2) -> untyped
+    def positions_of: (untyped symb1, untyped symb2) -> Array[Integer]
 
     # Given that the production P passed as argument has exactly 2 symbols
     #   in its rhs s1 s2, substitute in the rhs of self all occurrences of
     #   s1 s2 by a reference to P.
-    # @param another [Production or ProductionRef] a production that
+    # @param another [Production, ProductionRef] a production that
     #   consists exactly of one digram (= 2 symbols).
-    def reduce_step: (untyped another) -> untyped
+    def reduce_step: ((Production | ProductionRef) another) -> untyped
 
     # Replace every occurrence of 'another' production in self.rhs by
     #   the symbols in the rhs of 'another'.
-    # @param another [Production or ProductionRef] a production that
+    # @param another [Production, ProductionRef] a production that
     #   consists exactly of one digram (= 2 symbols).
     # @example Synopsis
     # # Given the production p_A : a p_B b p_B c
@@ -109,10 +111,10 @@ module Sequitur
     # # Then...
     # p_A.derive_step(p_B)
     # #Modifies p_A as into: p_A -> a x y b x y c
-    def derive_step: (untyped another) -> untyped
+    def derive_step: ((Production | ProductionRef) another) -> untyped
 
     # Part of the 'visitee' role in Visitor design pattern.
-    # @param aVisitor[GrammarVisitor]
-    def accept: (untyped aVisitor) -> untyped
+    # @param aVisitor[Sequitur::GrammarVisitor]
+    def accept: (Sequitur::GrammarVisitor aVisitor) -> untyped
   end
 end
