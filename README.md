@@ -192,10 +192,12 @@ prod_body = start_prod.rhs	# Return an Array object
 
 The RHS of a production is a sequence (i.e. Array) of symbols.
 How are the grammar symbols implemented?
--Terminal symbols are directly originating from the input sequence. They are inserted "as is" in the
-RHS. For instance, if the input sequence consists of integer values (i.e. Finum instances), then they
-will be inserted in the RHS of productions.
--Non-terminal symbols are implemented as `Sequitur::ProductionRef` objects.
+
+- Terminal symbols are directly originating from the input sequence.  They are
+  inserted "as is" in the RHS.  For instance, if the input sequence consists
+  of integer values (i.e. `Integer` instances), then they will be inserted in
+  the RHS of productions.
+- Non-terminal symbols are implemented as `Sequitur::ProductionRef` objects.
 
 A ProductionRef is reference to a Production object. The latter one can be accessed through the `ProductionRef#production` method.
 
