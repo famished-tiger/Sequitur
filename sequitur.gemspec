@@ -61,4 +61,6 @@ if $PROGRAM_NAME == __FILE__
   Gem::Package.build(SEQUITUR_GEMSPEC)
 end
 
+SEQUITUR_GEMSPEC.itself # make it loadable via Gemfile
+
 # End of file
