@@ -40,10 +40,12 @@ start : P1 P1 P1.
 P1 : a b c.
 ```
 
-In plain English:  
--The first rule (named start) always represents the whole input. Here, it indicates that the input
-is three time the pattern encoded by the rule called P1.  
--The second rule (named P1) represents the sequence a b c.  
+In plain English:
+
+- The first rule (named start) always represents the whole input.  Here, it
+  indicates that the input is three time the pattern encoded by the rule
+  called `P1`.
+- The second rule (named `P1`) represents the sequence `a b c`.
 
 **Can you give another example?**  
 Yep. Assume this time that the input is *'ababcabcdabcde'*.
@@ -63,10 +65,12 @@ In other words, it represents the string 'abc'.
 - Rule (P3) represents the pattern encoded by P2 then d. It is thus equivalent to 'abcd'.  
 
 **What is it used for?**  
-Sequitur can be used:  
-- As a lossless data compression algorithm (especially for structured text containing
-repeated elements)  
-- To detect hierarchical structure in sequences (e.g. traces in program execution)
+Sequitur can be used:
+
+- As a lossless data compression algorithm (especially for structured text
+  containing repeated elements)
+- To detect hierarchical structure in sequences (e.g. traces in program
+  execution)
 
 
 ## Synopsis  
@@ -131,12 +135,16 @@ P : body.
 ```
 
 Where:
-- The colon ':' character separates the head (= left-hand side) and the body (right-hand side, *rhs* in short)
-of the rule.
-- The left-hand side consists just of one symbol, P. P is a categorized as a *nonterminal symbol* and for our purposes
-a nonterminal symbol can be seen as the "name" of the production. By contrast, a terminal symbol is just one element
-from the input sequence (symbols as defined in formal grammar theory shouldn't be confused with Ruby's `Symbol` class).
-- the body is a sequence -possibly empty- of *symbols* (terminal or nonterminal).
+
+- The colon `:` character separates the head (= left-hand side) and the body
+  (right-hand side, *rhs* in short) of the rule.
+- The left-hand side consists just of one symbol, `P`.  `P` is a categorized
+  as a *nonterminal symbol* and for our purposes a nonterminal symbol can be
+  seen as the "name" of the production.  By contrast, a terminal symbol is
+  just one element from the input sequence (symbols as defined in formal
+  grammar theory shouldn't be confused with Ruby's `Symbol` class).
+- the body is a sequence -possibly empty- of *symbols* (terminal or
+  nonterminal).
 
 Basically, a production rule tells that P is equivalent to the sequence of symbols found in the
 right-hand side of the production. A nonterminal symbol that appears in the rhs of a production can be
