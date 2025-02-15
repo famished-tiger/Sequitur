@@ -206,8 +206,8 @@ A ProductionRef is reference to a Production object. The latter one can be acces
 The sequitur gem installation is fairly standard.  
 If your project has a `Gemfile` file, add `sequitur` to it. Otherwise, install the gem like this:
 
-```bash  
-$[sudo] gem install sequitur
+```sh
+gem install sequitur
 ```
 
 
