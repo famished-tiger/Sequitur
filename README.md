@@ -11,9 +11,10 @@ _Ruby gem implementing the Sequitur algorithm_
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt)
 
 ### What is the Sequitur algorithm? ###
-The following are good entry points to learn about the algorithm:  
-[Sequitur algorithm home](http://sequitur.info/)  
-[Wikipedia](http://en.wikipedia.org/wiki/Sequitur_algorithm)  
+The following are good entry points to learn about the algorithm:
+
+* [Sequitur algorithm home](http://www.sequitur.info/)
+* [Wikipedia](http://en.wikipedia.org/wiki/Sequitur_algorithm)
 
 ### Highlights ###
 * Pure Ruby implementation
