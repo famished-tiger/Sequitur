@@ -57,12 +57,15 @@ P2 : P1 c.
 P3 : P2 d.
 ```
 
-Translated in plain English:  
-- Rule (start) tells that the input consists of the sequence of P1 P2 P3 patterns followed by the letter e.  
-- Rule (P1) represents the sequence 'ab'.  
-- Rule (P2) represents the pattern encoded by P1 (thus 'ab') then 'c'.   
-In other words, it represents the string 'abc'.  
-- Rule (P3) represents the pattern encoded by P2 then d. It is thus equivalent to 'abcd'.  
+Translated in plain English:
+
+- Rule (`start`) tells that the input consists of the sequence of `P1 P2 P3
+  P3` patterns followed by the letter `e`.
+- Rule (`P1`) represents the sequence `ab`.
+- Rule (`P2`) represents the pattern encoded by `P1` (thus `ab`) then `c`.  In
+  other words, it represents the string `abc`.
+- Rule (`P3`) represents the pattern encoded by `P2` then `d`.  It is thus
+  equivalent to `abcd`.
 
 **What is it used for?**  
 Sequitur can be used:
