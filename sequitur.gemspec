@@ -48,6 +48,7 @@ SEQUITUR_GEMSPEC = Gem::Specification.new do |pkg|
   pkg.add_development_dependency 'rake', '~> 13.1.0', '>= 13.1.0'
   pkg.add_development_dependency 'rspec', '~> 3.10.0', '>= 3.10.0'
   pkg.add_development_dependency 'engtagger', '~> 0.4.0', '>= 0.4.0'
+  pkg.add_development_dependency 'yard'
 
   # pkg.bindir = 'bin'
   # pkg.executables = %w(sequitur)
