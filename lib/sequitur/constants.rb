@@ -3,11 +3,12 @@
 # File: constants.rb
 # Purpose: definition of Sequitur constants.
 
-module Sequitur # Module used as a namespace
+# Module used as a namespace for Sequitur classes
+module Sequitur
   # rubocop:disable Naming/ConstantName
 
   # @return [String] The version number of the gem.
-  Version = '0.1.25'
+  Version = '0.1.26'
 
   # @return [String] Brief description of the gem.
   Description = 'Ruby implementation of the Sequitur algorithm'

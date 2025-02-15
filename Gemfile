@@ -4,6 +4,6 @@ source 'https://rubygems.org'
 # Prevent Bundler to load the dependencies from our .gemspec file
 
 group :development do
-  gem 'rake', '>= 10.0.0'
-  gem 'rspec', '>= 3.0.0'
+  gem 'rake', '>= 13.1.0'
+  gem 'rspec', '>= 3.10.0'
 end

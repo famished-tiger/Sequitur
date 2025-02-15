@@ -246,4 +246,4 @@ More examples are available in the examples folder.
 
 Copyright
 ---------
-Copyright (c) 2014-2013, Dimitri Geshef. Sequitur is released under the MIT License see [LICENSE.txt](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt) for details.
+Copyright (c) 2014-2025, Dimitri Geshef. Sequitur is released under the MIT License see [LICENSE.txt](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt) for details.

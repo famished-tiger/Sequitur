@@ -42,7 +42,7 @@ module Sequitur # Re-open the module to get rid of qualified names
         expect(clone_a).to eq(instance)
 
         # Reference objects are distinct but points to same production
-        expect(clone_a.symbols[1].object_id).not_to eq(instance.symbols[1])
+        expect(clone_a.symbols[1]).not_to equal(instance.symbols[1])
 
         # Modifying the clone...
         clone_a.symbols[1] = 'diff'
@@ -91,9 +91,6 @@ module Sequitur # Re-open the module to get rid of qualified names
         expect(refs.size).to eq(2)
         expect(refs).to eq([ref, ref])
 
-        refs = subject.references
-        expect(refs.size).to eq(2)
-        expect(refs).to eq([ref, ref])
         specific_refs = subject.references_of(a_prod)
         expect(specific_refs).to eq(refs)
 
