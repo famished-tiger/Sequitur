@@ -132,7 +132,7 @@ First of all, what is a **grammar**? To simplify the matter, one can see a gramm
 grammar rules. These rules are called production rules or more briefly **productions**.  
 
 In a context-free grammar, productions have the form:  
-````
+```
 P : body.
 ```
 
