@@ -36,7 +36,7 @@ Notice that it is the same as the text 'abc' repeated three times. The Sequitur 
 this repetition and will generate the two following rules:
 
 ```
-start : P1 P1 P1.  
+start : P1 P1 P1.
 P1 : a b c.
 ```
 
@@ -49,10 +49,10 @@ is three time the pattern encoded by the rule called P1.
 Yep. Assume this time that the input is *'ababcabcdabcde'*.
 Then Sequitur algorithm will generate the rule set:  
 ```
-start : P1 P2 P3 P3 e.  
-P1 : a b.  
-P2 : P1 c.  
-P3 : P2 d.   
+start : P1 P2 P3 P3 e.
+P1 : a b.
+P2 : P1 c.
+P3 : P2 d.
 ```
 
 Translated in plain English:  
