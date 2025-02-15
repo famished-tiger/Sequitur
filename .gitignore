@@ -1,7 +1,10 @@
 coverage
-doc
 gems
 lab
 Gemfile.lock
 *.bat
 *.html
+
+# YARD
+/.yardoc/
+/doc/
