@@ -82,15 +82,14 @@ Sequitur can be used:
 
 The following Ruby snippet show how to apply Sequitur on the input string from the last example above.
 
-```ruby  
+```ruby
+require 'sequitur'  # Load the Sequitur library
 
-    require 'sequitur'  # Load the Sequitur library
+input_sequence =  'ababcabcdabcde'  # Let's analyze this string
 
-    input_sequence =  'ababcabcdabcde'  # Let's analyze this string
-
-    # Run the Sequitur algorithm which will result in a grammar (=rule set)
-    grammar = Sequitur.build_from(input_sequence)
-````
+# Run the Sequitur algorithm which will result in a grammar (=rule set)
+grammar = Sequitur.build_from(input_sequence)
+```
 
 The demo illustrates how easy it is to run the algorithm on a string. However, the next question is how
 can you make good use of the algorithm's result.  
@@ -100,28 +99,28 @@ The very first natural step is to be able to print out the (grammar) rules.
 Here's how:
 
 
-```ruby  
-    require 'sequitur'
-    input_sequence =  'ababcabcdabcde'
-    grammar = Sequitur.build_from(input_sequence)
+```ruby
+require 'sequitur'
+input_sequence =  'ababcabcdabcde'
+grammar = Sequitur.build_from(input_sequence)
 
-    # To display the grammar rules on the console output
-    # We use a grammar formatter
-    formatter = Sequitur::Formatter::BaseText.new(STDOUT)
+# To display the grammar rules on the console output
+# We use a grammar formatter
+formatter = Sequitur::Formatter::BaseText.new(STDOUT)
 
-    # Now render the rules. Each rule is displayed with the format:
-    # rule_id : a_sequence_grammar_symbols.
-    # Where:
-    # - rule_id is either 'start' or a name like 'Pxxxx' (xxxx is a sequential number)
-    # - a grammar symbol is either a terminal symbol
-    # (i.e. a character from the input) or a rule id
-    formatter.render(grammar.visitor)
+# Now render the rules. Each rule is displayed with the format:
+# rule_id : a_sequence_grammar_symbols.
+# Where:
+# - rule_id is either 'start' or a name like 'Pxxxx' (xxxx is a sequential number)
+# - a grammar symbol is either a terminal symbol
+# (i.e. a character from the input) or a rule id
+formatter.render(grammar.visitor)
 
-    # Rendered output is:
-    # start : P1 P2 P3 P3 e.
-    # P1 : a b.
-    # P2 : P1 c.
-    # P3 : P2 d.
+# Rendered output is:
+# start : P1 P2 P3 P3 e.
+# P1 : a b.
+# P2 : P1 c.
+# P3 : P2 d.
 ```
 
 ## Understanding the algorithm's results
@@ -159,11 +158,11 @@ seen as a reference to the production with same name.
 Recall the above example: a single call to the `Sequitur#build_from` factory method
 suffices to construct a grammar object.
 
-```ruby  
-    require 'sequitur'
+```ruby
+require 'sequitur'
 
-    input_sequence =  'ababcabcdabcde'
-    grammar = Sequitur.build_from(input_sequence)
+input_sequence =  'ababcabcdabcde'
+grammar = Sequitur.build_from(input_sequence)
 ```
 
 The return value `grammar` is a `Sequitur::SequiturGrammar` instance.
@@ -172,23 +171,23 @@ Unsurprisingly, the `Sequitur::SequiturGrammar` class defines an accessor method
 that returns the productions of the grammar as an array of `Sequitur::Production` objects.
 
 ```ruby
-	# Count the number of productions in the grammar
-	puts grammar.productions.size # => 4
+# Count the number of productions in the grammar
+puts grammar.productions.size # => 4
 
-	# Retrieve all productions of the grammar
-	all_prods = grammar.productions
+# Retrieve all productions of the grammar
+all_prods = grammar.productions
 
-	# Retrieve the start production
-	start_prod = grammar.production[0]
+# Retrieve the start production
+start_prod = grammar.production[0]
 ```
 
 Once we have a grip on a production, it is easy to access its right-hand side through the `Production#rhs` method.
 It returns an array of symbols.
 
 ```ruby
-	# ...Continuing the same example
-	# Retrieve the right-hand side of the production
-	prod_body = start_prod.rhs	# Return an Array object
+# ...Continuing the same example
+# Retrieve the right-hand side of the production
+prod_body = start_prod.rhs	# Return an Array object
 ```
 
 The RHS of a production is a sequence (i.e. Array) of symbols.
