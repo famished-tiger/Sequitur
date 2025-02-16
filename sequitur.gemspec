@@ -47,8 +47,8 @@ SEQUITUR_GEMSPEC = Gem::Specification.new do |pkg|
   pkg.extra_rdoc_files = ['README.md']
   pkg.add_development_dependency 'rake', '~> 13.1.0', '>= 13.1.0'
   pkg.add_development_dependency 'rspec', '~> 3.10.0', '>= 3.10.0'
-  pkg.add_development_dependency 'rubygems', '~> 3.2', '>= 3.2.0'
   pkg.add_development_dependency 'engtagger', '~> 0.4.0', '>= 0.4.0'
+  pkg.add_development_dependency 'yard'
 
   # pkg.bindir = 'bin'
   # pkg.executables = %w(sequitur)
@@ -60,5 +60,7 @@ if $PROGRAM_NAME == __FILE__
   require 'rubygems/package'
   Gem::Package.build(SEQUITUR_GEMSPEC)
 end
+
+SEQUITUR_GEMSPEC.itself # Make it loadable via Gemfile
 
 # End of file

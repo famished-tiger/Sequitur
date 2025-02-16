@@ -1,3 +1,13 @@
+## [0.1.27] - 2025-02-16
+Credits to `gemmaro` for the improvements:
+- Enhancements to document generation with YARD.
+- Updates to the `gemspec` and `Gemfile`.
+- Improved `README.md` markup for better rendering with YARD and on the GitHub repository page.
+
+## [0.1.26] - 2025-02-15
+- Tested against MRI Ruby 3.4.1
+- Version of dependencies updated
+
 ## [0.1.25] - 2023-07-10
 - First version using RBS (Ruby Type System): new folder `sig` with `*.rbs` files
 - Yard documentation updated to align with RBS

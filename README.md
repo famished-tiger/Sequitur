@@ -11,14 +11,15 @@ _Ruby gem implementing the Sequitur algorithm_
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/famished-tiger/Sequitur/blob/master/LICENSE.txt)
 
 ### What is the Sequitur algorithm? ###
-The following are good entry points to learn about the algorithm:  
-[Sequitur algorithm home](http://sequitur.info/)  
-[Wikipedia](http://en.wikipedia.org/wiki/Sequitur_algorithm)  
+The following are good entry points to learn about the algorithm:
+
+* [Sequitur algorithm home](http://sequitur.info/)  
+* [Wikipedia](http://en.wikipedia.org/wiki/Sequitur_algorithm)  
 
 ### Highlights ###
 * Pure Ruby implementation
 * No runtime dependency with other gems,
-* Test suite with 100%,
+* Test suite with 100% coverage,
 * Documentation: 100% coverage (according to YARD), green badge from inch.io
 * Algorithm works with different input token types (no limited to single character)
 
@@ -35,31 +36,33 @@ Notice that it is the same as the text 'abc' repeated three times. The Sequitur 
 this repetition and will generate the two following rules:
 
 ```
-start : P1 P1 P1.  
+start : P1 P1 P1. 
 P1 : a b c.
 ```
 
 In plain English:  
--The first rule (named start) always represents the whole input. Here, it indicates that the input
-is three time the pattern encoded by the rule called P1.  
--The second rule (named P1) represents the sequence a b c.  
+-The first rule (named `start`) always represents the whole input. Here, it indicates that the input
+is three time the pattern encoded by the rule called `P1`.  
+-The second rule (named `P1`) represents the sequence `a b c`.  
 
 **Can you give another example?**  
 Yep. Assume this time that the input is *'ababcabcdabcde'*.
 Then Sequitur algorithm will generate the rule set:  
 ```
-start : P1 P2 P3 P3 e.  
-P1 : a b.  
-P2 : P1 c.  
-P3 : P2 d.   
+start : P1 P2 P3 P3 e. 
+P1 : a b. 
+P2 : P1 c. 
+P3 : P2 d.  
 ```
 
-Translated in plain English:  
-- Rule (start) tells that the input consists of the sequence of P1 P2 P3 patterns followed by the letter e.  
-- Rule (P1) represents the sequence 'ab'.  
-- Rule (P2) represents the pattern encoded by P1 (thus 'ab') then 'c'.   
-In other words, it represents the string 'abc'.  
-- Rule (P3) represents the pattern encoded by P2 then d. It is thus equivalent to 'abcd'.  
+Translated in plain English:
+
+- Rule (`start`) tells that the input consists of the sequence of `P1 P2 
+  P3` patterns followed by the letter `e`.  
+- Rule (`P1`) represents the sequence `ab`.  
+- Rule (`P2`) represents the pattern encoded by `P1` (thus `ab`) then `c`. In 
+  other words, it represents the string `abc`.  
+- Rule (`P3`) represents the pattern encoded by `P2` then `d`. It is thus equivalent to `abcd`.  
 
 **What is it used for?**  
 Sequitur can be used:  
@@ -75,13 +78,12 @@ repeated elements)
 The following Ruby snippet show how to apply Sequitur on the input string from the last example above.
 
 ```ruby  
+require 'sequitur'  # Load the Sequitur library
 
-    require 'sequitur'  # Load the Sequitur library
+input_sequence =  'ababcabcdabcde'  # Let's analyze this string
 
-    input_sequence =  'ababcabcdabcde'  # Let's analyze this string
-
-    # Run the Sequitur algorithm which will result in a grammar (=rule set)
-    grammar = Sequitur.build_from(input_sequence)
+# Run the Sequitur algorithm which will result in a grammar (=rule set)
+grammar = Sequitur.build_from(input_sequence)
 ````
 
 The demo illustrates how easy it is to run the algorithm on a string. However, the next question is how
@@ -93,27 +95,27 @@ Here's how:
 
 
 ```ruby  
-    require 'sequitur'
-    input_sequence =  'ababcabcdabcde'
-    grammar = Sequitur.build_from(input_sequence)
+require 'sequitur'
+input_sequence =  'ababcabcdabcde'
+grammar = Sequitur.build_from(input_sequence)
 
-    # To display the grammar rules on the console output
-    # We use a grammar formatter
-    formatter = Sequitur::Formatter::BaseText.new(STDOUT)
+# To display the grammar rules on the console output
+# We use a grammar formatter
+formatter = Sequitur::Formatter::BaseText.new(STDOUT)
 
-    # Now render the rules. Each rule is displayed with the format:
-    # rule_id : a_sequence_grammar_symbols.
-    # Where:
-    # - rule_id is either 'start' or a name like 'Pxxxx' (xxxx is a sequential number)
-    # - a grammar symbol is either a terminal symbol
-    # (i.e. a character from the input) or a rule id
-    formatter.render(grammar.visitor)
+# Now render the rules. Each rule is displayed with the format:
+# rule_id : a_sequence_grammar_symbols.
+# Where:
+# - rule_id is either 'start' or a name like 'Pxxxx' (xxxx is a sequential number)
+# - a grammar symbol is either a terminal symbol
+# (i.e. a character from the input) or a rule id
+formatter.render(grammar.visitor)
 
-    # Rendered output is:
-    # start : P1 P2 P3 P3 e.
-    # P1 : a b.
-    # P2 : P1 c.
-    # P3 : P2 d.
+# Rendered output is:
+# start : P1 P2 P3 P3 e.
+# P1 : a b.
+# P2 : P1 c.
+# P3 : P2 d.
 ```
 
 ## Understanding the algorithm's results
@@ -125,12 +127,12 @@ First of all, what is a **grammar**? To simplify the matter, one can see a gramm
 grammar rules. These rules are called production rules or more briefly **productions**.  
 
 In a context-free grammar, productions have the form:  
-````
+```
 P : body.
 ```
 
 Where:
-- The colon ':' character separates the head (= left-hand side) and the body (right-hand side, *rhs* in short)
+- The colon `':'` character separates the head (= left-hand side) and the body (right-hand side, *rhs* in short)
 of the rule.
 - The left-hand side consists just of one symbol, P. P is a categorized as a *nonterminal symbol* and for our purposes
 a nonterminal symbol can be seen as the "name" of the production. By contrast, a terminal symbol is just one element
@@ -148,10 +150,10 @@ Recall the above example: a single call to the `Sequitur#build_from` factory met
 suffices to construct a grammar object.
 
 ```ruby  
-    require 'sequitur'
+require 'sequitur'
 
-    input_sequence =  'ababcabcdabcde'
-    grammar = Sequitur.build_from(input_sequence)
+input_sequence =  'ababcabcdabcde'
+grammar = Sequitur.build_from(input_sequence)
 ```
 
 The return value `grammar` is a `Sequitur::SequiturGrammar` instance.
@@ -160,44 +162,43 @@ Unsurprisingly, the `Sequitur::SequiturGrammar` class defines an accessor method
 that returns the productions of the grammar as an array of `Sequitur::Production` objects.
 
 ```ruby
-	# Count the number of productions in the grammar
-	puts grammar.productions.size # => 4
+# Count the number of productions in the grammar
+puts grammar.productions.size # => 4
 
-	# Retrieve all productions of the grammar
-	all_prods = grammar.productions
+# Retrieve all productions of the grammar
+all_prods = grammar.productions
 
-	# Retrieve the start production
-	start_prod = grammar.production[0]
+# Retrieve the start production
+start_prod = grammar.production[0]
 ```
 
 Once we have a grip on a production, it is easy to access its right-hand side through the `Production#rhs` method.
 It returns an array of symbols.
 
 ```ruby
-	# ...Continuing the same example
-	# Retrieve the right-hand side of the production
-	prod_body = start_prod.rhs	# Return an Array object
+# ...Continuing the same example
+# Retrieve the right-hand side of the production
+prod_body = start_prod.rhs	# Return an Array object
 ```
 
 The RHS of a production is a sequence (i.e. Array) of symbols.
 How are the grammar symbols implemented?
--Terminal symbols are directly originating from the input sequence. They are inserted "as is" in the
-RHS. For instance, if the input sequence consists of integer values (i.e. Finum instances), then they
-will be inserted in the RHS of productions.
--Non-terminal symbols are implemented as `Sequitur::ProductionRef` objects.
+- Terminal symbols are directly originating from the input sequence. They are
+  inserted "as is" in the RHS. For instance, if the input sequence consists
+	of integer values (i.e. Integer instances), then they will be inserted in
+	the RHS of productions.
+- Non-terminal symbols are implemented as `Sequitur::ProductionRef` objects.
 
-A ProductionRef is reference to a Production object. The latter one can be accessed through the `ProductionRef#production` method.
+A ProductionRef is a reference to a Production object. The latter one can be accessed through the `ProductionRef#production` method.
 
 
 ### Installation ###
 The sequitur gem installation is fairly standard.  
 If your project has a `Gemfile` file, add `sequitur` to it. Otherwise, install the gem like this:
 
-```bash  
-$[sudo] gem install sequitur
+```sh  
+gem install sequitur
 ```
-
-
 
 ### Good to know ###
 The above examples might give the impression that the input stream must consist of single
